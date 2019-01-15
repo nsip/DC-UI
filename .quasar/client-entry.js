@@ -199,6 +199,8 @@ import pParticles from 'src/plugins/particles'
 
 import pVuelidate from 'src/plugins/vuelidate'
 
+import pGrid from 'src/plugins/grid'
+
 
 
 
@@ -223,7 +225,7 @@ const { app, store, router } = createApp()
 
 
 
-;[pMessage,pValidator,pParticles,pVuelidate].forEach(plugin => {
+;[pMessage,pValidator,pParticles,pVuelidate,pGrid].forEach(plugin => {
   plugin({
     app,
     router,

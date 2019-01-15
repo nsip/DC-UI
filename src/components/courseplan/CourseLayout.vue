@@ -22,9 +22,12 @@
             <div class="col-3" style="padding-left:10px;">
                 <app-couser-search></app-couser-search>
             </div>
-            <div class="col-9" style="margin-top:50px;max-height: 220px;overflow-y: auto;">
+            <draggable class="col-9" v-model="lines" :options="{handle:'.my-handle'}" style="margin-top:50px;max-height: 220px;overflow-y: auto;">
                 <q-card class="addLesson" v-for="(line, index) in lines" :key="index">
                 <q-card-main class="row singlerow">
+                <div class="col-1" style="text-align:center">
+                    <q-icon class="my-handle" name="fas fa-bars" aria-hidden="true" size="25px" color="blue-grey-3" style="padding-top:20%"></q-icon>
+                </div>
                 <div class="col-4">
                 <q-btn
                     class="q-ma-sm full-width"
@@ -34,7 +37,7 @@
                     Lesson: {{ index + 1 }}
                 </q-btn>
                 </div>
-                <div class="col-6">
+                <div class="col-5">
                 <q-field
                     class="q-ma-sm"
                     :label-width="3"
@@ -42,7 +45,6 @@
                     label="Lesson Titile"
                 >
                     <q-input
-                        v-model="text"
                         color="deep-purple-5"/>
                 </q-field>
                 </div>
@@ -78,7 +80,7 @@
                 </div>
                 </q-card-main>
             </q-card>
-            </div>
+            </draggable>
         </div>
     </div>
 </template>
@@ -87,12 +89,14 @@
 import CouserRemainder from './CourseRemainder.vue'
 import CouserEditor from './CourseEditor.vue'
 import CouserSearch from './CourseSearch.vue'
+import draggable from 'vuedraggable'
 export default {
   props: ['item'],
   components: {
     appCouserReminder: CouserRemainder,
     appCouserEditor: CouserEditor,
-    appCouserSearch: CouserSearch
+    appCouserSearch: CouserSearch,
+    draggable
   },
   data () {
     return {
@@ -155,10 +159,9 @@ export default {
 .addLesson{
     margin-top:10px;
     border: 1px solid #ccc;
-    border-radius: 16px;
 }
 .singlerow{
-    margin-left:5%;
+    margin-left:0%;
 }
 .q-card-container{
     padding: 5px
@@ -179,5 +182,10 @@ export default {
 }
 h5{
     margin-bottom: 20px
+}
+.my-handle {
+  cursor: move;
+  cursor: -webkit-grabbing;
+
 }
 </style>
