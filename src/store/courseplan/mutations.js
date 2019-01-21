@@ -9,8 +9,8 @@ export function getWy (state, input) {
 export function getTitle (state, input) {
   state.lessons.title = input
 }
-export function addLesson (state, index) {
-  state.lessons.push(index)
+export function addLesson (state, id, title, content, isActive) {
+  state.lessons.push({id, title, content, isActive})
 }
 export function setActive (state) {
   state.lessons.isActive = false

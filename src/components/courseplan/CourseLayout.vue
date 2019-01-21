@@ -1,8 +1,5 @@
 <template>
     <div>
-        <div class="left-btn">
-            <q-btn push icon="adb" align="between" label="Reminder" color="deep-purple-9" @click="isShow=!isShow"></q-btn>
-        </div>
         <div style="margin:100px 0 0 100px; color:gray">
             <h5><b>Lesson Plan</b></h5>
             <p><i>Design the lesson in the editor, add the lesson by clicking the add button, and delete the lsesson by clicking the minus button</i></p>
@@ -83,7 +80,7 @@
                 </q-card-main>
                 </q-card>
             </draggable> -->
-            <q-card class="col-9">
+            <q-card class="col-9" style="margin-bottom: 50px">
                 <q-card-title class="relative-position q-ma-sm">
                     <b style="color:gray">Lesson List</b>
                     <q-btn
@@ -103,37 +100,50 @@
                     </q-btn>
                 </q-card-title>
                 <q-item-separator />
-                <q-card-main>
+                <q-card-main class="lesson-list">
                         <draggable class="row" v-model="lessons" :options="{handle:'.my-handle'}" style="text-align:center; position: relative;">
-                            <q-list class="addLesson q-ma-xs" style="float:left; display:inline" v-for="(lesson, index) in lessons" :key="lesson">
-                                <q-item-side
-                                    right>
+                            <div class="col-2" v-for="(lesson, index) in lessons" :key="lesson">
+                                <q-list class="q-ma-xs addLesson">
+                                    <q-item>
+                                    <q-item-side left>
+                                        <q-icon class="my-handle q-ma-sm" name="fas fa-bars" aria-hidden="true" size="18px" color="blue-grey-3"></q-icon>
+                                    </q-item-side>
+                                    <q-item-main></q-item-main>
+                                        <q-item-side
+                                            right>
+                                                <q-btn
+                                                    class="q-ma-xs"
+                                                    icon="fas fa-trash-alt"
+                                                    size="8px"
+                                                    outline
+                                                    round
+                                                    @click="removeLine(index)"
+                                                    />
+                                        </q-item-side>
+                                    </q-item>
+                                    <q-item>
                                         <q-btn
-                                            class="q-ma-xs"
-                                            icon="fas fa-trash-alt"
-                                            size="6px"
                                             outline
-                                            round
-                                            @click="removeLine(index)"
-                                            />
-                                </q-item-side>
-                                <q-icon class="my-handle" name="fas fa-bars" aria-hidden="true" size="25px" color="blue-grey-3"></q-icon>
-                                <q-btn
-                                    class="q-ma-sm"
-                                    outline
-                                    style="color: #4527a0;"
-                                    @click='seletedLesson()'>Lesson: {{ index + 1 }}</q-btn>
-                                <div>
-                                    <q-input
-                                        class="q-ma-sm"
-                                        color="deep-purple-5"
-                                        placeholder="Lesson title"
-                                        v-model="lesson.title"/>
-                                </div>
-                            </q-list>
+                                            style="color: #4527a0; width:100%"
+                                            @click='seletedLesson()'>Lesson {{ index + 1 }}</q-btn>
+                                    </q-item>
+                                    <q-item>
+                                        <div>
+                                            <q-input
+                                                class="q-ma-sm"
+                                                color="deep-purple-5"
+                                                placeholder="Lesson title"
+                                                v-model="lesson.title"/>
+                                        </div>
+                                    </q-item>
+                                </q-list>
+                            </div>
                             </draggable>
                 </q-card-main>
             </q-card>
+        </div>
+        <div class="left-btn">
+            <q-btn push icon="adb" align="between" label="Reminder" color="deep-purple-9" @click="isShow=!isShow"></q-btn>
         </div>
     </div>
 </template>
@@ -155,16 +165,17 @@ export default {
   data () {
     return {
       lessons: this.$store.state.courseplan.lessons,
+      index: this.$store.state.courseplan.lessons.id,
       isShow: true,
       blockRemoval: true,
       title: this.$store.state.courseplan.lessons.title
     }
   },
-  //   computed: {
-  //     lessons () {
-  //       return this.$store.state.courseplan.lessons
-  //     }
-  //   },
+  computed: {
+    lessonGet () {
+      return this.$store.getters.courseplan.lessons
+    }
+  },
   watch: {
     lessons () {
       this.blockRemoval = this.lessons.length <= 1
@@ -175,7 +186,8 @@ export default {
   },
   methods: {
     addLine () {
-      this.$store.commit('courseplan/addLesson', 1)
+      this.$store.commit('courseplan/addLesson', this.index + 1, '', '', false)
+      console.log(this.index)
       this.$store.state.courseplan.lessons.isActive = !this.$store.commit('courseplan/setActive')
     },
     // removeLesson (lesson) {
@@ -209,10 +221,10 @@ export default {
     }
     // selectedLesson () {
     // }
-  },
-  mounted () {
-    this.addLesson()
   }
+//   mounted () {
+//     this.addLesson()
+//   }
 }
 </script>
 
@@ -220,7 +232,8 @@ export default {
 .left-btn {
     position:fixed;
     bottom: -4px;
-    left: 10px
+    left: 10px;
+    display:block
 }
 .courseplan {
     margin: 50px 100px
@@ -255,7 +268,10 @@ h5{
 }
 .my-handle {
   cursor: move;
-  cursor: -webkit-grabbing;
-
+  cursor: -webkit-grabbing
+}
+.lesson-list {
+  max-height: 500px;
+  overflow-y:scroll
 }
 </style>

@@ -8,3 +8,6 @@ export function someAction (context) {
 // export function removeLesson (lesson) {
 //   lesson.commit('REMOVE_LESSON')
 // }
+export function loadlesson (context, lessons) {
+  context.commit('MUTATE_LESSON', lessons)
+}

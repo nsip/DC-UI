@@ -79,7 +79,7 @@ module.exports = function (ctx) {
         'QItemTile',
         'QEditor',
         'QTooltip',
-        'QSearch'
+        'QSearch',
       ],
       directives: [
         'Ripple',

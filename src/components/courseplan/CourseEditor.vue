@@ -2,6 +2,7 @@
   <div class="editor" v-show="isActive">
     <q-editor
       toolbar-text-color="white"
+      toolbar-outline
       toolbar-bg="deep-purple-9"
       min-height="40rem"
       v-model="model"
@@ -46,7 +47,7 @@
         verdana: 'Verdana'
       }"
     ></q-editor>
-    <div style="margin:30px 0">
+    <div style="float:right; margin:30px 0">
     <q-btn label="Save" color="deep-purple-9" @click="print" />
     <q-btn label="Clear" color="deep-purple-9" outline style="margin-left: 10px"/>
     </div>
@@ -76,7 +77,13 @@ export default {
     print () {
       // console.log(this.$store)
       this.$store.commit('courseplan/getWy', this.model)
-      alert('success')
+      this.$q.notify({
+        message: `You have saved the content and created a new lesson`,
+        timeout: 2000,
+        color: 'amber',
+        icon: 'fas fa-grin',
+        position: 'center'
+      })
       this.$store.commit('courseplan/addLesson', 1)
       this.isActive = this.$store.commit('courseplan/setActive')
       // console.log(this.$store.state.course.model)
