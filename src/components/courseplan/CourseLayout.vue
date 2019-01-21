@@ -16,14 +16,15 @@
             </transition>
             <div :class="isShow?'col-9':'col-6'">
                 <div>
-                <app-couser-editor v-for="(editor, index) in editors" :key="index"></app-couser-editor>
+                <app-couser-editor v-for="(lesson, index) in lessons" :key="index"></app-couser-editor>
                 </div>
+                <!-- <q-btn label="save" @click="print"/> -->
             </div>
             <div class="col-3" style="padding-left:10px;">
                 <app-couser-search></app-couser-search>
             </div>
-            <draggable class="col-9" v-model="lines" :options="{handle:'.my-handle'}" style="margin-top:50px;max-height: 220px;overflow-y: auto;">
-                <q-card class="addLesson" v-for="(line, index) in lines" :key="index">
+            <!-- <draggable class="col-9" v-model="lines" :options="{handle:'.my-handle'}" style="margin-top:50px;max-height: 220px;overflow-y: auto;">
+                <q-card class="addLesson" v-for="(line,index) in lines" :key="index">
                 <q-card-main class="row singlerow">
                 <div class="col-1" style="text-align:center">
                     <q-icon class="my-handle" name="fas fa-bars" aria-hidden="true" size="25px" color="blue-grey-3" style="padding-top:20%"></q-icon>
@@ -45,6 +46,7 @@
                     label="Lesson Titile"
                 >
                     <q-input
+                        v-model="line.name"
                         color="deep-purple-5"/>
                 </q-field>
                 </div>
@@ -79,8 +81,59 @@
                 </q-btn>
                 </div>
                 </q-card-main>
+                </q-card>
+            </draggable> -->
+            <q-card class="col-9">
+                <q-card-title class="relative-position q-ma-sm">
+                    <b style="color:gray">Lesson List</b>
+                    <q-btn
+                        flat
+                        outline
+                        color="deep-purple-5"
+                        icon="fas fa-plus"
+                        class="absolute"
+                        style="right: 8px;"
+                        @click="addLine">
+                        <q-tooltip
+                            anchor="bottom middle"
+                            self="top middle"
+                            :offset="[10, 10]"
+                            :delay="800"
+                        >Add Lesson</q-tooltip>
+                    </q-btn>
+                </q-card-title>
+                <q-item-separator />
+                <q-card-main>
+                        <draggable class="row" v-model="lessons" :options="{handle:'.my-handle'}" style="text-align:center; position: relative;">
+                            <q-list class="addLesson q-ma-xs" style="float:left; display:inline" v-for="(lesson, index) in lessons" :key="lesson">
+                                <q-item-side
+                                    right>
+                                        <q-btn
+                                            class="q-ma-xs"
+                                            icon="fas fa-trash-alt"
+                                            size="6px"
+                                            outline
+                                            round
+                                            @click="removeLine(index)"
+                                            />
+                                </q-item-side>
+                                <q-icon class="my-handle" name="fas fa-bars" aria-hidden="true" size="25px" color="blue-grey-3"></q-icon>
+                                <q-btn
+                                    class="q-ma-sm"
+                                    outline
+                                    style="color: #4527a0;"
+                                    @click='seletedLesson()'>Lesson: {{ index + 1 }}</q-btn>
+                                <div>
+                                    <q-input
+                                        class="q-ma-sm"
+                                        color="deep-purple-5"
+                                        placeholder="Lesson title"
+                                        v-model="lesson.title"/>
+                                </div>
+                            </q-list>
+                            </draggable>
+                </q-card-main>
             </q-card>
-            </draggable>
         </div>
     </div>
 </template>
@@ -90,6 +143,7 @@ import CouserRemainder from './CourseRemainder.vue'
 import CouserEditor from './CourseEditor.vue'
 import CouserSearch from './CourseSearch.vue'
 import draggable from 'vuedraggable'
+
 export default {
   props: ['item'],
   components: {
@@ -100,49 +154,64 @@ export default {
   },
   data () {
     return {
-      lines: [],
-      editors: [],
+      lessons: this.$store.state.courseplan.lessons,
       isShow: true,
-      blockRemoval: true
+      blockRemoval: true,
+      title: this.$store.state.courseplan.lessons.title
     }
   },
+  //   computed: {
+  //     lessons () {
+  //       return this.$store.state.courseplan.lessons
+  //     }
+  //   },
   watch: {
-    lines () {
-      this.blockRemoval = this.lines.length <= 1
-    },
-    editors () {
-      this.blockRemoval = this.editor.length <= 1
+    lessons () {
+      this.blockRemoval = this.lessons.length <= 1
     }
+    // editors () {
+    //   this.blockRemoval = this.editor.length <= 1
+    // }
   },
   methods: {
-    // editors: this.lines,
     addLine () {
-      let checkEmptyLines = this.lines.filter(line => line.number === null)
-      if (checkEmptyLines.length >= 1 && this.lines.length > 0) return
-      this.lines.push({
-        index: this.lines.length
-      })
-      this.editors.push({
-        index: this.editors.length
-      })
-    //   if (checkEmptyLines.length >= 1 && this.lines.length > 0) {
-    //     let i = this.editors.length
-    //     console.log(i)
-    //     document.querySelector('current-' + i - 1).style.display = 'none'
-    //   }
+      this.$store.commit('courseplan/addLesson', 1)
+      this.$store.state.courseplan.lessons.isActive = !this.$store.commit('courseplan/setActive')
     },
-    removeLine (lineId) {
+    // removeLesson (lesson) {
+    //   this.$store.dispatch('courseplan/removeLesson')
+    // }
+    // editors: this.lines,
+    // addLine () {
+    //   let checkEmptyLines = this.lines.filter(line => line.number === null)
+    //   if (checkEmptyLines.length >= 1 && this.lines.length > 0) return
+    //   this.lines.push({
+    //     index: this.lines.length
+    //   })
+    // //   this.editors.push({
+    // //     index: this.editors.length
+    // //   })
+    // //   if (checkEmptyLines.length >= 1 && this.lines.length > 0) {
+    // //     let i = this.editors.length
+    // //     console.log(i)
+    // //     document.querySelector('current-' + i - 1).style.display = 'none'
+    // //   }
+    // },
+    removeLine (index) {
       if (!this.blockRemoval) {
-        this.lines.splice(lineId, 1)
-        this.editors.splice(lineId, 1)
-        console.log(lineId)
+        // this.lines.splice(lineId, 1)
+        // this.editors.splice(lineId, 1)
+        // console.log(lineId)
+        // console.log(this.lines[index])
+        this.$delete(this.lessons, index)
+        // this.$delete(this.editors, index)
       }
-    },
-    selectedLesson () {
     }
+    // selectedLesson () {
+    // }
   },
   mounted () {
-    this.addLine()
+    this.addLesson()
   }
 }
 </script>
@@ -157,6 +226,7 @@ export default {
     margin: 50px 100px
 }
 .addLesson{
+    padding-top:0px;
     margin-top:10px;
     border: 1px solid #ccc;
 }

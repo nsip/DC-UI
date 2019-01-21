@@ -1,57 +1,22 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import ls from '../utils/localStorage'
-import router from '../router'
 import stage from './stage'
+import courseplan from './courseplan'
 
 Vue.use(Vuex)
 
-const state = {
-  user: ls.getItem('user'),
-  auth: ls.getItem('auth')
-}
+/*
+ * If not building with SSR mode, you can
+ * directly export the Store instantiation
+ */
 
-const mutations = {
-  UPDATE_USER (state, user) {
-    state.user = user
-    ls.setItem('user', user)
-  }
-  /*
-    UPDATE_AUTH(state, user) {
-        state.auth = auth
-        ls.setItem('auth', auth)
+export default function (/* { ssrContext } */) {
+  const Store = new Vuex.Store({
+    modules: {
+      stage,
+      courseplan
     }
-    */
+  })
+
+  return Store
 }
-
-const actions = {
-  login ({ commit }, user) {
-    if (user) commit('UPDATE_USER', user)
-    commit('UPDATE_AUTH', true)
-    router.push('/dashboard')
-  },
-  logout ({ commit }) {
-    commit('UPDATE_AUTH', false)
-    router.push({ name: 'Home', params: { logout: true } })
-  }
-}
-
-const store = new Vuex.Store({
-  state,
-  mutations,
-  actions,
-
-  modules: {
-    stage
-  }
-})
-
-export default store
-
-// export default {
-//   namespaced: true,
-//   state,
-//   getters,
-//   mutations,
-//   actions
-// }

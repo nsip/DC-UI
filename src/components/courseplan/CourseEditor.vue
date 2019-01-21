@@ -1,5 +1,5 @@
 <template>
-  <div class="editor">
+  <div class="editor" v-show="isActive">
     <q-editor
       toolbar-text-color="white"
       toolbar-bg="deep-purple-9"
@@ -46,15 +46,44 @@
         verdana: 'Verdana'
       }"
     ></q-editor>
+    <div style="margin:30px 0">
+    <q-btn label="Save" color="deep-purple-9" @click="print" />
+    <q-btn label="Clear" color="deep-purple-9" outline style="margin-left: 10px"/>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['editor'],
+  props: ['editor', 'index'],
   data () {
     return {
-      model: '<h3>Header 3</h3><div>Normal text;'
+      model: this.$store.state.courseplan.lessons.content,
+      isActive: !this.$store.state.courseplan.lessons.isActive
+    }
+  },
+  // computed: {
+  //   model: {
+  //     get () {
+  //       return this.$store.state.courseplan.model
+  //     },
+  //     set (value) {
+  //       this.$store.commit('courseplan/getWy', value)
+  //     }
+  //   }
+  // },
+  methods: {
+    print () {
+      // console.log(this.$store)
+      this.$store.commit('courseplan/getWy', this.model)
+      alert('success')
+      this.$store.commit('courseplan/addLesson', 1)
+      this.isActive = this.$store.commit('courseplan/setActive')
+      // console.log(this.$store.state.course.model)
+      // console.log(this.value)
+      console.log(this.model)
+      console.log(this.isActive)
+      // console.log(typeof this.model)
     }
   }
 }
@@ -62,7 +91,7 @@ export default {
 
 <style scoped>
 .editor{
-    margin-top: 0px
+  margin-bottom: 30px
 }
 .q-editor {
   box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12)
