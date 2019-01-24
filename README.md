@@ -1,5 +1,7 @@
 # DC-UI
 UI for the Digital Classroom
 
->>>>>> start 
+start 
+
+
 $ quasar dev

@@ -8,7 +8,8 @@ module.exports = function (ctx) {
       'validator',
       'particles',
       'vuelidate',
-      'grid'
+      'grid',
+      'before-each'
     ],
     css: [
       'app.styl'

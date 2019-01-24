@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import stage from './stage'
 import courseplan from './courseplan'
+import user from './user'
 
 Vue.use(Vuex)
 
@@ -14,7 +15,8 @@ export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       stage,
-      courseplan
+      courseplan,
+      user
     }
   })
 

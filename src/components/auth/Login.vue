@@ -29,7 +29,7 @@
                 <q-btn icon="fas fa-sign-in-alt" label="Log in" style="width: 50%" color="deep-purple-9" to="/dashboard"/>
             </div>
             <div style="text-align:center; margin-top:20px">
-                <router-link to="/register"><a>Create a new account?</a></router-link>
+                <router-link to="/auth/register"><a>Create a new account?</a></router-link>
             </div>
             </div>
     </div>

@@ -201,6 +201,8 @@ import pVuelidate from 'src/plugins/vuelidate'
 
 import pGrid from 'src/plugins/grid'
 
+import pBeforeeach from 'src/plugins/before-each'
+
 
 
 
@@ -225,7 +227,7 @@ const { app, store, router } = createApp()
 
 
 
-;[pMessage,pValidator,pParticles,pVuelidate,pGrid].forEach(plugin => {
+;[pMessage,pValidator,pParticles,pVuelidate,pGrid,pBeforeeach].forEach(plugin => {
   plugin({
     app,
     router,

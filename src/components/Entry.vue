@@ -2,6 +2,23 @@
 <!--Logined-->
     <!--Without Login-->
     <div class>
+        <div v-if="auth">
+            <q-btn
+                flat
+                color="withe"
+                size="md"
+            >
+                <span v-if="user.name">{{ user.name }}</span>
+            </q-btn>
+            <q-btn
+                flat
+                color="white"
+                size="md"
+                label="Logout"
+                icon="fas fa-sign-in-alt"
+                @click="logout" />
+        </div>
+        <div v-else>
         <q-btn
             flat
             color="withe"
@@ -16,19 +33,27 @@
             color="withe"
             label="Registe"
             icon="fas fa-user-plus"
-            @click="$router.push('/register')"
+            @click="$router.push('/auth/register')"
             />
+        </div>
     </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+
 export default {
   name: 'Entry',
   computed: {
-    ...mapState([
-      'auth',
-      'user'
-    ])
+    auth () {
+      return this.$store.state.user.auth
+    },
+    user () {
+      return this.$store.state.user.user
+    }
+  },
+  methods: {
+    logout () {
+      this.$store.dispatch('user/logout')
+    }
   }
 }
 </script>

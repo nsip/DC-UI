@@ -72,16 +72,15 @@
 <script>
 // import createCaptcha from '../../utils/createCaptcha'
 // import ls from '../../utils/localStorage'
+
 import { required, sameAs, email } from 'vuelidate/lib/validators'
 
 export default {
   data () {
     return {
       email: '',
-      // captchaTpl: '',
       password: '',
       cpassword: ''
-      // captcha: ''
     }
   },
   validations: {
@@ -91,26 +90,10 @@ export default {
       sameAsPassword: sameAs('password')
     }
   },
-  // created () {
-  //   this.getCaptcha()
-  // },
   methods: {
-    // getCaptcha () {
-    //   const { tpl, captcha } = createCaptcha(6)
-    //   this.captchaTpl = tpl
-    //   this.localCaptcha = captcha
-    // },
     //  Register
-    register (e) {
-      this.$nextTick(() => {
-        const target = e.target.type === 'submit' ? e.target : e.target.parentElement
-        if (target.canSubmit) {
-          this.submit()
-        }
-      })
-    },
     // provide data to local storage
-    submit () {
+    register () {
       // check picture
       // if (this.captcha.toUpperCase() !== this.localCaptcha) {
       //   this.getCaptcha()
@@ -118,14 +101,18 @@ export default {
       // check user
       const user = {
         name: this.email,
-        password: this.password,
-        avatar: `https://api.adorable.io/avatars/200/${this.username}.png`
+        password: this.password
+        // avatar: `https://api.adorable.io/avatars/200/${this.username}.png`
       }
-      console.log(user)
-      const localUser = this.$store.state.user
+      const localUser = this.$store.state.user.user
       if (localUser) {
         if (localUser.name === user.name) {
-        // this.showMsg('User name exist')
+          this.$q.notify({
+            message: `User is already exsiting`,
+            color: 'pink-5',
+            icon: 'fas fa-info-circle',
+            position: 'top'
+          })
         } else {
           this.login(user)
         }
@@ -135,7 +122,13 @@ export default {
       // }
     },
     login (user) {
-      this.store.dispatch('login', user)
+      this.$store.dispatch('user/login', user)
+      this.$q.notify({
+        message: `Thank you for signup`,
+        color: 'amber-5',
+        icon: 'far fa-laugh-wink',
+        position: 'top'
+      })
     }
   }
 }
