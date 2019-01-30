@@ -81,6 +81,7 @@ module.exports = function (ctx) {
         'QEditor',
         'QTooltip',
         'QSearch',
+        'QBtnDropdown'
       ],
       directives: [
         'Ripple',

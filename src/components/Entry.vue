@@ -3,13 +3,21 @@
     <!--Without Login-->
     <div class>
         <div v-if="auth">
-            <q-btn
+            <q-btn-dropdown
                 flat
                 color="withe"
                 size="md"
+                :label="user.name"
             >
-                <span v-if="user.name">{{ user.name }}</span>
-            </q-btn>
+                <q-list link>
+                    <q-item>
+                        <q-item-main>
+                            <q-item-tile><router-link to="/dashboard" style="text-decoration: none; color:#9575cd">My Dashboard</router-link></q-item-tile>
+                        </q-item-main>
+                    </q-item>
+                </q-list>
+                <!-- <span v-if="user.name">{{ user.name }}</span> -->
+            </q-btn-dropdown>
             <q-btn
                 flat
                 color="white"
@@ -25,7 +33,7 @@
             label="Login"
             size="md"
             icon="fas fa-sign-in-alt"
-            @click="$router.push('/login')"
+            @click="$router.push('/auth/login')"
             >
         </q-btn>
         <q-btn

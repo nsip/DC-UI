@@ -6,7 +6,8 @@ export function login ({commit}, user) {
   if (user) commit('UPDATE_USER', user)
   // update user login status
   commit('UPDATE_AUTH', true)
-  this.$router.push('/dashboard')
+  this.$router.push('/dashboard/' + user.name)
+  console.log(user.password)
 }
 export function logout ({commit}) {
   commit('UPDATE_AUTH', false)

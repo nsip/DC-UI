@@ -10,7 +10,7 @@
                 <q-list-header>
                     Course Name
                 </q-list-header>
-                <q-item v-for="content in item.content_areas" :key="content">{{content.name}}</q-item>
+                <q-item v-for="detail in item.content_areas" :key="detail">{{detail.name}}</q-item>
             <q-item-separator />
             <q-list-header>
                 The Tools

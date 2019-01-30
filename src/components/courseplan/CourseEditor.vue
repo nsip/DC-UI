@@ -1,11 +1,11 @@
 <template>
-  <div class="editor" v-show="isActive">
+  <div class="editor">
     <q-editor
       toolbar-text-color="white"
       toolbar-outline
       toolbar-bg="deep-purple-9"
       min-height="40rem"
-      v-model="model"
+      v-model="content"
       :toolbar="[
         ['bold', 'italic', 'underline'],
         ['token', 'hr', 'link', 'custom_btn'],
@@ -48,7 +48,7 @@
       }"
     ></q-editor>
     <div style="float:right; margin:30px 0">
-    <q-btn label="Save" color="deep-purple-9" @click="print" />
+    <q-btn label="Save" color="deep-purple-9" />
     <q-btn label="Clear" color="deep-purple-9" outline style="margin-left: 10px"/>
     </div>
   </div>
@@ -56,43 +56,44 @@
 
 <script>
 export default {
-  props: ['editor', 'index'],
-  data () {
-    return {
-      model: this.$store.state.courseplan.lessons.content,
-      isActive: !this.$store.state.courseplan.lessons.isActive
-    }
-  },
+  props: ['content']
+  // data () {
+  //   return {
+  //     input: this.content
+  //     // isActive: !this.$store.state.courseplan.lessons.isActive
+  //   }
+  // }
   // computed: {
-  //   model: {
+  //   input: {
   //     get () {
-  //       return this.$store.state.courseplan.model
+  //       return this.content
+  //       // return this.$store.state.courseplan.content
   //     },
   //     set (value) {
-  //       this.$store.commit('courseplan/getWy', value)
+  //       this.$store.commit('courseplan/updateLesson', value)
   //     }
   //   }
-  // },
-  methods: {
-    print () {
-      // console.log(this.$store)
-      this.$store.commit('courseplan/getWy', this.model)
-      this.$q.notify({
-        message: `You have saved the content and created a new lesson`,
-        timeout: 2000,
-        color: 'amber',
-        icon: 'fas fa-grin',
-        position: 'center'
-      })
-      this.$store.commit('courseplan/addLesson', 1)
-      this.isActive = this.$store.commit('courseplan/setActive')
-      // console.log(this.$store.state.course.model)
-      // console.log(this.value)
-      console.log(this.model)
-      console.log(this.isActive)
-      // console.log(typeof this.model)
-    }
-  }
+  // }
+  // methods: {
+  //   print () {
+  //     // console.log(this.$store)
+  //     this.$store.commit('courseplan/getWy', this.model)
+  //     this.$q.notify({
+  //       message: `You have saved the content and created a new lesson`,
+  //       timeout: 2000,
+  //       color: 'amber',
+  //       icon: 'fas fa-grin',
+  //       position: 'center'
+  //     })
+  //     this.$store.commit('courseplan/addLesson', 1)
+  //     this.isActive = this.$store.commit('courseplan/setActive')
+  //     // console.log(this.$store.state.course.model)
+  //     // console.log(this.value)
+  //     console.log(this.model)
+  //     console.log(this.isActive)
+  //     // console.log(typeof this.model)
+  //   }
+  // }
 }
 </script>
 

@@ -13,73 +13,13 @@
             </transition>
             <div :class="isShow?'col-9':'col-6'">
                 <div>
-                <app-couser-editor v-for="(lesson, index) in lessons" :key="index"></app-couser-editor>
+                <app-couser-editor :content="lessons[j].content"/>
                 </div>
                 <!-- <q-btn label="save" @click="print"/> -->
             </div>
             <div class="col-3" style="padding-left:10px;">
                 <app-couser-search></app-couser-search>
             </div>
-            <!-- <draggable class="col-9" v-model="lines" :options="{handle:'.my-handle'}" style="margin-top:50px;max-height: 220px;overflow-y: auto;">
-                <q-card class="addLesson" v-for="(line,index) in lines" :key="index">
-                <q-card-main class="row singlerow">
-                <div class="col-1" style="text-align:center">
-                    <q-icon class="my-handle" name="fas fa-bars" aria-hidden="true" size="25px" color="blue-grey-3" style="padding-top:20%"></q-icon>
-                </div>
-                <div class="col-4">
-                <q-btn
-                    class="q-ma-sm full-width"
-                    outline
-                    style="color: #4527a0;"
-                    @click='seletedLesson()'>
-                    Lesson: {{ index + 1 }}
-                </q-btn>
-                </div>
-                <div class="col-5">
-                <q-field
-                    class="q-ma-sm"
-                    :label-width="3"
-                    icon=""
-                    label="Lesson Titile"
-                >
-                    <q-input
-                        v-model="line.name"
-                        color="deep-purple-5"/>
-                </q-field>
-                </div>
-                <div class="col-2">
-                <q-btn
-                    class="q-ma-sm"
-                    color="blue-grey-3"
-                    @click="removeLine(index)"
-                    icon="fas fa-minus"
-                    outline
-                    round>
-                    <q-tooltip
-                        anchor="bottom middle"
-                        self="top middle"
-                        :offset="[10, 10]"
-                        :delay="800"
-                    >Delete Lesson</q-tooltip>
-                </q-btn>
-                <q-btn
-                    class="q-ma-sm"
-                    color="blue-grey-3"
-                    @click="addLine"
-                    icon="fas fa-plus"
-                    outline
-                    round>
-                    <q-tooltip
-                        anchor="bottom middle"
-                        self="top middle"
-                        :offset="[10, 10]"
-                        :delay="800"
-                    >Add Lesson</q-tooltip>
-                </q-btn>
-                </div>
-                </q-card-main>
-                </q-card>
-            </draggable> -->
             <q-card class="col-9" style="margin-bottom: 50px">
                 <q-card-title class="relative-position q-ma-sm">
                     <b style="color:gray">Lesson List</b>
@@ -102,7 +42,7 @@
                 <q-item-separator />
                 <q-card-main class="lesson-list">
                         <draggable class="row" v-model="lessons" :options="{handle:'.my-handle'}" style="text-align:center; position: relative;">
-                            <div class="col-2" v-for="(lesson, index) in lessons" :key="lesson">
+                            <div class="col-2" v-for="(lesson, index) in lessons" :key="index">
                                 <q-list class="q-ma-xs addLesson">
                                     <q-item>
                                     <q-item-side left>
@@ -125,7 +65,7 @@
                                         <q-btn
                                             outline
                                             style="color: #4527a0; width:100%"
-                                            @click='seletedLesson()'>Lesson {{ index + 1 }}</q-btn>
+                                            @click='seletedLesson(lesson.id)'>Lesson {{ index + 1 }}</q-btn>
                                     </q-item>
                                     <q-item>
                                         <div>
@@ -165,30 +105,43 @@ export default {
   data () {
     return {
       lessons: this.$store.state.courseplan.lessons,
-      index: this.$store.state.courseplan.lessons.id,
+      index: this.$store.state.courseplan.lessons.length,
+      j: 0,
       isShow: true,
       blockRemoval: true,
-      title: this.$store.state.courseplan.lessons.title
+      title: '',
+      content: ''
     }
   },
-  computed: {
-    lessonGet () {
-      return this.$store.getters.courseplan.lessons
-    }
-  },
+  //  computed: {
+  //  contentGet () {
+  //  this.content = this.$store.getters.courseplan.lessons[this.index].content
+  //  }
+  //  },
   watch: {
     lessons () {
       this.blockRemoval = this.lessons.length <= 1
     }
-    // editors () {
-    //   this.blockRemoval = this.editor.length <= 1
+    // contentGet () {
+    //   this.$store.commit('courseplan/getLesson', this.index)
     // }
   },
   methods: {
     addLine () {
-      this.$store.commit('courseplan/addLesson', this.index + 1, '', '', false)
+      this.index++
+      // this.$store.commit('courseplan/updateLesson', this.content)
+      // console.log(this.content)
+      this.$store.commit('courseplan/addLesson', {id: this.index, content: '', title: ''})
       console.log(this.index)
-      this.$store.state.courseplan.lessons.isActive = !this.$store.commit('courseplan/setActive')
+      console.log(this.content)
+      console.log(this.title)
+      // this.$store.state.courseplan.lessons.isActive = !this.$store.commit('courseplan/setActive')
+    },
+    seletedLesson (i) {
+      console.log(i)
+      this.j = i - 1
+      console.log(this.$store.state.courseplan.lessons[this.j].title)
+      console.log(this.$store.state.courseplan.lessons[this.j].content)
     },
     // removeLesson (lesson) {
     //   this.$store.dispatch('courseplan/removeLesson')

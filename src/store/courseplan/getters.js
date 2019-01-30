@@ -2,8 +2,8 @@
 export function someGetter (state) {
 }
 */
-export function getModel (state) {
-  return state.lessons.content
+export function getContent (state) {
+  return state.lessons
 }
 export function getTitle (state) {
   return state.lessons.title

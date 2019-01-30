@@ -79,6 +79,13 @@
         </div>
     </div>
 </template>
+
+<script>
+export default {
+  props: ['email']
+}
+</script>
+
 <style scope>
 .dashboard {
     padding: 50px 200px;

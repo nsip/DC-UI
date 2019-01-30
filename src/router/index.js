@@ -14,7 +14,6 @@ export default function (/* { store, ssrContext } */) {
   const Router = new VueRouter({
     scrollBehavior: () => ({ y: 0 }),
     routes,
-
     // Leave these as is and change from quasar.conf.js instead!
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
@@ -22,5 +21,13 @@ export default function (/* { store, ssrContext } */) {
     base: process.env.VUE_ROUTER_BASE
   })
 
+  Router.beforeEach((to, from, next) => {
+    const auth = Router.app.$options.store.state.auth
+    if (auth && to.path.indexOf('/auth/') !== -1) {
+      next('/')
+    } else {
+      next()
+    }
+  })
   return Router
 }

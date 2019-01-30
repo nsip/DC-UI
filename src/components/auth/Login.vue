@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div style="text-align: center; margin-top:80px">
-                <q-btn icon="fas fa-sign-in-alt" label="Log in" style="width: 50%" color="deep-purple-9" to="/dashboard"/>
+                <q-btn icon="fas fa-sign-in-alt" label="Log in" style="width: 50%" color="deep-purple-9" @click="submit" />
             </div>
             <div style="text-align:center; margin-top:20px">
                 <router-link to="/auth/register"><a>Create a new account?</a></router-link>
@@ -38,20 +38,46 @@
 <script>
 // import createCaptcha from '../../utils/createCaptcha'
 export default {
-// data() {
-//     return {
-//         // captcha
-//         captchaTpl: ''
-//     }
-// },
-// created() {
-//     this.getCaptcha()
-// },
-// methods: {
-//     getCaptcha() {
-//         const { tpl, capt }
-//     }
-// }
+  data () {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    submit () {
+      const user = {
+        name: this.email,
+        password: this.password
+      }
+      const localUser = this.$store.state.user.user
+      if (localUser) {
+        if (localUser.name !== user.name || localUser.password !== user.password) {
+          this.$q.notify({
+            message: `username or password isn't correct`,
+            color: 'red-8',
+            icon: 'fas fa-exclamation-circle',
+            position: 'top'
+          })
+        } else {
+          this.$store.dispatch('user/login', user)
+          this.$q.notify({
+            message: `Welecome back!!!`,
+            color: 'amber-5',
+            icon: 'far fa-laugh-wink',
+            position: 'top'
+          })
+        }
+      } else {
+        this.$q.notify({
+          message: `user doesn't exsit`,
+          color: 'pink-5',
+          icon: 'fas fa-info-circle',
+          position: 'top'
+        })
+      }
+    }
+  }
 }
 </script>
 <style scoped>

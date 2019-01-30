@@ -24,11 +24,11 @@ const routes = [
     component: () => import('components/auth/Register.vue')
   },
   {
-    path: '/login',
+    path: '/auth/login',
     name: 'login',
     component: () => import('components/auth/Login.vue')
   },
-  { path: '/dashboard', component: () => import('components/Dashboard.vue') },
+  { path: '/dashboard/:username', name: 'dashboard', component: () => import('components/Dashboard.vue'), props: true },
   { path: '/scope&sequnce', component: () => import('components/search/SearchLayout.vue') },
   { path: '/coursedetail', name: 'subject', component: () => import('components/courses/subject.vue'), props: true },
   { path: '/coursesummary', component: () => import('components/summary/CourseSummary.vue') },
