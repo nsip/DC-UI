@@ -14,9 +14,9 @@
             <div style="margin-top:30px">
                 <q-input
                     color="deep-purple-9"
-                    v-model="email" type="email"
-                    :before="[{icon: 'mail'}]"
-                    float-label="Enter your email address" />
+                    v-model="username" type="text"
+                    :before="[{icon: 'account_circle'}]"
+                    float-label="Enter your user name" />
                 <q-input color="deep-purple-9" v-model="password" type="password" :before="[{icon: 'fas fa-unlock'}]" float-label="Enter your password" />
                 <div style="margin-top: 20px">
                     <!--
@@ -40,14 +40,14 @@
 export default {
   data () {
     return {
-      email: '',
+      username: '',
       password: ''
     }
   },
   methods: {
     submit () {
       const user = {
-        name: this.email,
+        name: this.username,
         password: this.password
       }
       const localUser = this.$store.state.user.user

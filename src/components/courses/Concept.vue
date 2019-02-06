@@ -2,13 +2,13 @@
     <div>
         <h6><b>Concepts</b></h6>
         <div class="row">
-                <q-card inline class="q-ma-sm">
-                    <q-card-title>
-                        <b>Place</b>
-                    </q-card-title>
-                    <q-card-main>
-                        the significance of places and what they are like
-                    </q-card-main>
+            <q-card inline class="q-ma-sm">
+                <q-card-title>
+                    <b>Place</b>
+                </q-card-title>
+                <q-card-main>
+                    the significance of places and what they are like
+                </q-card-main>
             </q-card>
                 <q-card inline class="q-ma-sm">
                  <q-card-title>

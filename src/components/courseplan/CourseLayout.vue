@@ -95,7 +95,7 @@ import CouserSearch from './CourseSearch.vue'
 import draggable from 'vuedraggable'
 
 export default {
-  props: ['item'],
+  props: ['item', 'selectedarea', 'selectedcourse', 'selectedstage'],
   components: {
     appCouserReminder: CouserRemainder,
     appCouserEditor: CouserEditor,
@@ -110,7 +110,8 @@ export default {
       isShow: true,
       blockRemoval: true,
       title: '',
-      content: ''
+      content: '',
+      coursename: ''
     }
   },
   //  computed: {
@@ -118,9 +119,23 @@ export default {
   //  this.content = this.$store.getters.courseplan.lessons[this.index].content
   //  }
   //  },
+  created () {
+    this.coursename = this.item.name
+    this.$store.commit('courseplan/updateCourseArea', this.selectedarea)
+    this.$store.commit('courseplan/updateCoursestage', this.selectedstage)
+    this.$store.commit('courseplan/updateCourseName', this.coursename)
+    this.$store.commit('courseplan/updateCourseSbject', this.selectedcourse)
+    console.log(this.$store)
+  },
   watch: {
     lessons () {
       this.blockRemoval = this.lessons.length <= 1
+    },
+    coursename: function () {
+      console.log(this.coursename)
+      console.log(this.selectedarea)
+      console.log(this.selectedcourse)
+      console.log(this.selectedstage)
     }
     // contentGet () {
     //   this.$store.commit('courseplan/getLesson', this.index)
@@ -132,6 +147,7 @@ export default {
       // this.$store.commit('courseplan/updateLesson', this.content)
       // console.log(this.content)
       this.$store.commit('courseplan/addLesson', {id: this.index, content: '', title: ''})
+      this.$store.commit('courseplan/updatelesson', this.index, this.content)
       console.log(this.index)
       console.log(this.content)
       console.log(this.title)

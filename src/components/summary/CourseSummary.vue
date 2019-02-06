@@ -52,7 +52,7 @@
                         <q-popover>
                             <q-list link class="no-border">
                             <q-item v-close-overlay>
-                                <q-item-main><router-link :to="{name:'courseplaner', params:{item,selectedstage}}" class="link">Go to Lesson Plan</router-link></q-item-main>
+                                <q-item-main><router-link :to="{name:'courseplaner', params:{item, selectedarea, selectedcourse, selectedstage}}" class="link">Go to Lesson Plan</router-link></q-item-main>
                             </q-item>
                             <q-item v-close-overlay>
                                 <q-item-main label="Share" />
@@ -117,6 +117,9 @@ export default {
           this.$store.commit('stage/setStageData', response)
           this.resultData = response.data.courses
         })
+    //   console.log(this.selectedarea)
+    //   console.log(this.selectedcourse)
+    //   console.log(this.selectedstage)
     }
   },
   created () {

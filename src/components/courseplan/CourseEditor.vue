@@ -5,7 +5,7 @@
       toolbar-outline
       toolbar-bg="deep-purple-9"
       min-height="40rem"
-      v-model="content"
+      v-model="editContent"
       :toolbar="[
         ['bold', 'italic', 'underline'],
         ['token', 'hr', 'link', 'custom_btn'],
@@ -56,13 +56,22 @@
 
 <script>
 export default {
-  props: ['content']
-  // data () {
-  //   return {
-  //     input: this.content
-  //     // isActive: !this.$store.state.courseplan.lessons.isActive
-  //   }
-  // }
+  props: ['content'],
+  data () {
+    return {
+      editContent: ''
+      // isActive: !this.$store.state.courseplan.lessons.isActive
+    }
+  },
+  created () {
+    this.editContent = this.content
+  },
+  watch: {
+    editContent: function () {
+      console.log(this.editContent)
+      // return this.d
+    }
+  }
   // computed: {
   //   input: {
   //     get () {

@@ -3,13 +3,13 @@ export default {
   lessons: [
     {
       id: 1,
-      content: '12345',
-      title: 'hi'
+      content: 'Content ABC',
+      title: 'Titile 1'
     },
     {
       id: 2,
-      content: '7890',
-      title: 'hello'
+      content: 'Content DEF',
+      title: 'Titile 2'
     }
   ]
 }

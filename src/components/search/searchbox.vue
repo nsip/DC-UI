@@ -53,6 +53,7 @@
             />
         </q-field>
     </div>
+    <hr style="margin-top: 50px">
     <div class="row list">
       <!-- <q-input v-model="selectedstage" /> -->
       <!-- {{resultData}} -->
@@ -193,7 +194,7 @@ export default {
     color: grey
 }
 .search{
-  margin-top: 50px;
+  margin: 100px 0 0 0;
   text-align: center
 }
 </style>

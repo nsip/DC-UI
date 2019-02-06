@@ -48,6 +48,14 @@
           <q-item-side icon="fas fa-republican" />
           <q-item-main label="Course Summary" />
         </q-item>
+        <q-item @click.native="$router.push('/dashboard')">
+          <q-item-side icon="fas fa-republican" />
+          <q-item-main label="My Dashborad" />
+        </q-item>
+        <q-item @click.native="$router.push('/account-setting')">
+          <q-item-side icon="fas fa-republican" />
+          <q-item-main label="Account Setting" />
+        </q-item>
         <!--
         <q-item @click.native="openURL('https://discord.gg/5TDhbDg')">
           <q-item-side icon="chat" />

@@ -33,7 +33,7 @@
                     icon="far fa-file-alt"
                     @click='selectedComponent = "appConcept"' />
             </div>
-                        <div class="col-xs-12 col-zdlg-2-5">
+            <div class="col-xs-12 col-zdlg-2-5">
                 <q-btn
                     outline
                     color="deep-purple-9"
@@ -42,7 +42,7 @@
                     icon="fas fa-atom"
                     @click='selectedComponent = "appSkills"' />
             </div>
-                        <div class="col-xs-12 col-zdlg-2-5">
+            <div class="col-xs-12 col-zdlg-2-5">
                 <q-btn
                     outline
                     color="deep-purple-9"

@@ -9,9 +9,21 @@
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 sign-up">
             <div>
                 <img src="../../assets/115.jpg" style="height:100px; width:100px">
-                <h6>Please enter your information</h6>
+                <h6 style="margin: 10px 0">Please enter your information</h6>
             </div>
-            <div style="margin-top:30px">
+            <div>
+                <q-field
+                    :error="$v.username.$error"
+                    error-label="Please type a valid user name, only accept alphabet characters and number"
+                >
+                <q-input
+                    color="deep-purple-9"
+                    v-model="username"
+                    type="text"
+                    :before="[{icon: 'account_circle'}]"
+                    float-label="Set your user name"
+                    @blur="$v.username.$touch"/>
+                </q-field>
                 <q-field
                     :error="$v.email.$error"
                     error-label="Please type a valid email"
@@ -73,17 +85,19 @@
 // import createCaptcha from '../../utils/createCaptcha'
 // import ls from '../../utils/localStorage'
 
-import { required, sameAs, email } from 'vuelidate/lib/validators'
+import { required, sameAs, email, alphaNum } from 'vuelidate/lib/validators'
 
 export default {
   data () {
     return {
+      username: '',
       email: '',
       password: '',
       cpassword: ''
     }
   },
   validations: {
+    username: { required, alphaNum },
     email: { required, email },
     password: { required },
     cpassword: {
@@ -100,7 +114,8 @@ export default {
       // } else {
       // check user
       const user = {
-        name: this.email,
+        name: this.username,
+        email: this.email,
         password: this.password
         // avatar: `https://api.adorable.io/avatars/200/${this.username}.png`
       }
