@@ -33,7 +33,7 @@ const routes = [
   { path: '/scope&sequnce', component: () => import('components/search/SearchLayout.vue') },
   { path: '/coursedetail', name: 'subject', component: () => import('components/courses/subject.vue'), props: true },
   { path: '/coursesummary', component: () => import('components/summary/CourseSummary.vue') },
-  { path: '/courseplaner', name: 'courseplaner', component: () => import('components/courseplan/CourseLayout.vue'), props: true },
+  { path: '/courseplaner', name: 'courseplaner', component: () => import('components/courseplan/CoursePlan.vue'), props: true },
   // Undefine router
   {
     path: '*',

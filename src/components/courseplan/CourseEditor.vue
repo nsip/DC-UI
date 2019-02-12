@@ -48,7 +48,7 @@
       }"
     ></q-editor>
     <div style="float:right; margin:30px 0">
-    <q-btn label="Save" color="deep-purple-9" />
+    <q-btn label="Save" color="deep-purple-9" @click="save"/>
     <q-btn label="Clear" color="deep-purple-9" outline style="margin-left: 10px"/>
     </div>
   </div>
@@ -70,6 +70,11 @@ export default {
     editContent: function () {
       console.log(this.editContent)
       // return this.d
+    }
+  },
+  methods: {
+    save () {
+      this.$root.$emit('save', this.editContent)
     }
   }
   // computed: {

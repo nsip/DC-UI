@@ -12,5 +12,11 @@ export function someGetter (state) {
 //   return state.lesson
 // }
 export function lessonSet (state) {
-  state.lessonList.map(lessonId => state.lessons[lessonId])
+  return state.lessonList.map(lessonId => state.lessons[lessonId])
 }
+
+// const getters = {
+//   services ({ services, servicesList }) {
+//     return map(servicesList, id => service[keyForService(id)])
+//   }
+// }

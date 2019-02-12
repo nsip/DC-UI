@@ -12,9 +12,60 @@
             </div>
             </transition>
             <div :class="isShow?'col-9':'col-6'">
-                <div>
-                <app-couser-editor :content="lessons[j].content"/>
+              <div
+                  class="editor" v-for="(lesson, index) in lessons" :key="index"
+                  :style="lesson.isDisplay?'display:block':'display:none'">
+                <q-editor
+                  toolbar-text-color="white"
+                  toolbar-outline
+                  toolbar-bg="deep-purple-9"
+                  min-height="40rem"
+                  v-model="lesson.editcontent"
+                  :toolbar="[
+                    ['bold', 'italic', 'underline'],
+                    ['token', 'hr', 'link', 'custom_btn'],
+                    [
+                      {
+                        label: $q.i18n.editor.formatting,
+                        icon: $q.icon.editor.formatting,
+                        list: 'no-icons',
+                        options: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'code']
+                      },
+                      {
+                        label: $q.i18n.editor.defaultFont,
+                        icon: $q.icon.editor.font,
+                        fixedIcon: true,
+                        list: 'no-icons',
+                        options: ['default_font', 'arial', 'arial_black', 'comic_sans', 'courier_new', 'impact', 'lucida_grande', 'times_new_roman', 'verdana']
+                      },
+                      'removeFormat'
+                    ],
+                    [
+                      {
+                        label: $q.i18n.editor.align,
+                        icon: $q.icon.editor.align,
+                        fixedLabel: true,
+                        options: ['left', 'center', 'right', 'justify']
+                      }
+                    ],
+                    ['fullscreen'],
+                    ['undo', 'redo']
+                  ]"
+                  :fonts="{
+                    arial: 'Arial',
+                    arial_black: 'Arial Black',
+                    comic_sans: 'Comic Sans MS',
+                    courier_new: 'Courier New',
+                    impact: 'Impact',
+                    lucida_grande: 'Lucida Grande',
+                    times_new_roman: 'Times New Roman',
+                    verdana: 'Verdana'
+                  }"
+                ></q-editor>
+                <div style="float:right; margin:30px 0">
+                <q-btn label="Save & Add New Lesson" color="deep-purple-9" @click="save" />
                 </div>
+              </div>
                 <!-- <q-btn label="save" @click="print"/> -->
             </div>
             <div class="col-3" style="padding-left:10px;">
@@ -22,22 +73,21 @@
             </div>
             <q-card class="col-9" style="margin-bottom: 50px">
                 <q-card-title class="relative-position q-ma-sm">
-                    <b style="color:gray">Lesson List</b>
-                    <q-btn
+                    <b style="color:gray">List of {{coursename}} Lesson</b>
+                    <!-- <q-btn
                         flat
                         outline
                         color="deep-purple-5"
                         icon="fas fa-plus"
                         class="absolute"
-                        style="right: 8px;"
-                        @click="addLine">
+                        style="right: 8px;">
                         <q-tooltip
                             anchor="bottom middle"
                             self="top middle"
                             :offset="[10, 10]"
                             :delay="800"
                         >Add Lesson</q-tooltip>
-                    </q-btn>
+                    </q-btn> -->
                 </q-card-title>
                 <q-item-separator />
                 <q-card-main class="lesson-list">
@@ -57,7 +107,7 @@
                                                     size="8px"
                                                     outline
                                                     round
-                                                    @click="removeLine(index)"
+                                                    @click='removeLesson(index)'
                                                     />
                                         </q-item-side>
                                     </q-item>
@@ -65,7 +115,7 @@
                                         <q-btn
                                             outline
                                             style="color: #4527a0; width:100%"
-                                            @click='seletedLesson(lesson.id)'>Lesson {{ index + 1 }}</q-btn>
+                                            @click='selectedLesson(index)'>Lesson {{ index + 1 }}</q-btn>
                                     </q-item>
                                     <q-item>
                                         <div>
@@ -80,6 +130,17 @@
                             </div>
                             </draggable>
                 </q-card-main>
+                <q-item-separator />
+                <q-card-actions class="relative-position q-ma-sm">
+                  <b style="color:gray">Learning Arae: {{selectedarea}} | Subject: {{selectedcourse}} | Stage: {{selectedstage}}</b>
+                    <q-btn
+                        flat
+                        outline
+                        color="deep-purple-5"
+                        label="Submit All Lessons"
+                        class="absolute"
+                        style="right: 8px; padding-bottom:16px" />
+                </q-card-actions>
             </q-card>
         </div>
         <div class="left-btn">
@@ -87,10 +148,9 @@
         </div>
     </div>
 </template>
-
 <script>
 import CouserRemainder from './CourseRemainder.vue'
-import CouserEditor from './CourseEditor.vue'
+// import CouserEditor from './CourseEditor.vue'
 import CouserSearch from './CourseSearch.vue'
 import draggable from 'vuedraggable'
 
@@ -98,38 +158,28 @@ export default {
   props: ['item', 'selectedarea', 'selectedcourse', 'selectedstage'],
   components: {
     appCouserReminder: CouserRemainder,
-    appCouserEditor: CouserEditor,
+    // appCouserEditor: CouserEditor,
     appCouserSearch: CouserSearch,
     draggable
   },
   data () {
     return {
-      lessons: this.$store.state.courseplan.lessons,
-      index: this.$store.state.courseplan.lessons.length,
+      lessons: [
+        {
+          id: 1,
+          title: 'A',
+          editcontent: 'Content 1',
+          isDisplay: true
+        }
+      ],
       j: 0,
       isShow: true,
       blockRemoval: true,
-      title: '',
-      content: '',
       coursename: ''
     }
   },
-  //  computed: {
-  //  contentGet () {
-  //  this.content = this.$store.getters.courseplan.lessons[this.index].content
-  //  }
-  //  },
   created () {
     this.coursename = this.item.name
-    this.$store.commit('courseplan/updateCourseArea', this.selectedarea)
-    this.$store.commit('courseplan/updateCoursestage', this.selectedstage)
-    this.$store.commit('courseplan/updateCourseName', this.coursename)
-    this.$store.commit('courseplan/updateCourseSbject', this.selectedcourse)
-    console.log(this.$store)
-    this.$root.$on('save', ({editContent}) => {
-      this.content = editContent
-    })
-    console.log(this.content)
   },
   watch: {
     lessons () {
@@ -141,65 +191,37 @@ export default {
       console.log(this.selectedcourse)
       console.log(this.selectedstage)
     }
-    // contentGet () {
-    //   this.$store.commit('courseplan/getLesson', this.index)
-    // }
   },
   methods: {
-    addLine () {
-      this.index++
-      // this.$store.commit('courseplan/updateLesson', this.content)
-      // console.log(this.content)
-      this.$store.commit('courseplan/addLesson', {id: this.index, content: '', title: ''})
-      this.$store.commit('courseplan/updateLesson', this.content)
-      this.$store.commit('courseplan/updateTitle', this.title)
-      console.log(this.index)
-      console.log(this.content)
-      console.log(this.title)
-      console.log(this.$store.state)
-      // this.$store.state.courseplan.lessons.isActive = !this.$store.commit('courseplan/setActive')
+    save () {
+      var index = this.lessons.length
+      var i
+      for (i = 0; i < this.lessons.length; i++) {
+        this.lessons[i].isDisplay = false
+      }
+      this.lessons.push({id: index++, editcontent: '', title: '', isDisplay: true})
+      console.log(index)
     },
-    seletedLesson (i) {
-      console.log(i)
-      this.j = i - 1
-      console.log(this.$store.state.courseplan.lessons[this.j].title)
-      console.log(this.$store.state.courseplan.lessons[this.j].content)
+    selectedLesson (selectedId) {
+      var i
+      console.log(selectedId)
+      for (i = 0; i < this.lessons.length; i++) {
+        this.lessons[i].isDisplay = false
+      }
+      this.lessons[selectedId].isDisplay = true
+      console.log(this.lessons[selectedId].editcontent)
     },
-    // removeLesson (lesson) {
-    //   this.$store.dispatch('courseplan/removeLesson')
-    // }
-    // editors: this.lines,
-    // addLine () {
-    //   let checkEmptyLines = this.lines.filter(line => line.number === null)
-    //   if (checkEmptyLines.length >= 1 && this.lines.length > 0) return
-    //   this.lines.push({
-    //     index: this.lines.length
-    //   })
-    // //   this.editors.push({
-    // //     index: this.editors.length
-    // //   })
-    // //   if (checkEmptyLines.length >= 1 && this.lines.length > 0) {
-    // //     let i = this.editors.length
-    // //     console.log(i)
-    // //     document.querySelector('current-' + i - 1).style.display = 'none'
-    // //   }
-    // },
-    removeLine (index) {
+    removeLesson (index) {
       if (!this.blockRemoval) {
-        // this.lines.splice(lineId, 1)
-        // this.editors.splice(lineId, 1)
-        // console.log(lineId)
-        // console.log(this.lines[index])
-        this.$delete(this.lessons, index)
-        // this.$delete(this.editors, index)
+        if (index === this.lessons.length - 1) {
+          this.lessons[index - 1].isDisplay = true
+          this.lessons.splice(index, 1)
+        } else {
+          this.lessons.splice(index, 1)
+        }
       }
     }
-    // selectedLesson () {
-    // }
   }
-//   mounted () {
-//     this.addLesson()
-//   }
 }
 </script>
 
@@ -248,5 +270,11 @@ h5{
 .lesson-list {
   max-height: 500px;
   overflow-y:scroll
+}
+.editor{
+  margin-bottom: 30px
+}
+.q-editor {
+  box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12)
 }
 </style>

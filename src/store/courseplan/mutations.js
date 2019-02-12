@@ -18,12 +18,12 @@ export function addLesson (state, newlesson) {
   state.lessons.push(newlesson)
   // console.log(lesson)
 }
-export function updatelesson (state, id, input) {
-  state.lessons[id].content = input
+export function updateLesson (state, input) {
+  state.lessons[2].content = input
 }
-// export function updateLesson (state, lesssonId) {
-//   state.lessons[lesssonId].content
-// }
+export function updateTitle (state, input) {
+  state.lessons[2].title = input
+}
 export function setActive (state) {
   state.lessons.isActive = false
 }
