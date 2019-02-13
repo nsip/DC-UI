@@ -131,7 +131,7 @@
                             </draggable>
                 </q-card-main>
                 <q-item-separator />
-                <q-card-actions class="relative-position q-ma-sm">
+                <q-card-title class="relative-position q-ma-sm">
                   <b style="color:gray">Learning Arae: {{selectedarea}} | Subject: {{selectedcourse}} | Stage: {{selectedstage}}</b>
                     <q-btn
                         flat
@@ -139,8 +139,9 @@
                         color="deep-purple-5"
                         label="Submit All Lessons"
                         class="absolute"
-                        style="right: 8px; padding-bottom:16px" />
-                </q-card-actions>
+                        style="right: 8px;"
+                        @click="submit" />
+                </q-card-title>
             </q-card>
         </div>
         <div class="left-btn">
@@ -166,7 +167,7 @@ export default {
     return {
       lessons: [
         {
-          id: 1,
+          id: 0,
           title: 'A',
           editcontent: 'Content 1',
           isDisplay: true
@@ -201,6 +202,10 @@ export default {
       }
       this.lessons.push({id: index++, editcontent: '', title: '', isDisplay: true})
       console.log(index)
+      // for (i = 0; i < this.lessons.length; i++) {
+      //   this.lessons[i].editcontent
+      //   this.lessons[i].title
+      // }
     },
     selectedLesson (selectedId) {
       var i
@@ -210,6 +215,11 @@ export default {
       }
       this.lessons[selectedId].isDisplay = true
       console.log(this.lessons[selectedId].editcontent)
+    },
+    submit () {
+      const submitLessons = this.lessons
+      // console.log(submitLessons[0])
+      this.$store.dispatch('user/post', {submitLessons})
     },
     removeLesson (index) {
       if (!this.blockRemoval) {
