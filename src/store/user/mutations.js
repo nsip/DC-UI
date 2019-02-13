@@ -12,3 +12,8 @@ export function UPDATE_AUTH (state, auth) {
   state.auth = auth
   ls.setItem('auth', auth)
 }
+// update lessons
+export function UPDATE_LESSONS (state, newLesson) {
+  state.lessons = newLesson
+  ls.setItem('lessons', newLesson)
+}

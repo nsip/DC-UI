@@ -16,7 +16,10 @@
         </q-btn>
         <q-toolbar-title>
           <a href="/" style="color:white; text-decoration-line: none">
-            App
+          <h4 style="margin: 5px 0">
+            <i class="fab fa-drupal" style="font-size:40px; margin: 0 5px 0 0"></i>
+            <b>Hellow</b>
+          </h4>
           </a>
           <div slot="subtitle"></div>
         </q-toolbar-title>

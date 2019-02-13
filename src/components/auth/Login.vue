@@ -2,14 +2,11 @@
 <q-page class="card-postion">
     <div class="row card" style="margin:100px auto; height:600px; width:1000px">
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 background">
-            <div style="color:white">
-                <h5>Welcome back :)</h5>
-            </div>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 sign-up">
             <div>
-                <img src="../../assets/115.jpg" style="height:100px; width:100px">
-                <h6></h6>
+                <img src="../../assets/homelogo.png" style="height:100px; width:100px">
+                <h6 style="margin: 10px 0; color:gray"><b>Welecome back :)</b></h6>
             </div>
             <div style="margin-top:30px">
                 <q-input

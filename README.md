@@ -1,7 +1,10 @@
 # DC-UI
 UI for the Digital Classroom
 
-start 
+install application: 
 
+$ npm install
+
+start application: 
 
 $ quasar dev

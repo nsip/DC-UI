@@ -2,14 +2,11 @@
 <q-page class="card-postion">
     <div class="row card" style="margin:100px auto; height:600px; width:1000px">
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 background">
-            <div style="color:white">
-                <h5>Welcome to our website</h5>
-            </div>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 sign-up">
             <div>
-                <img src="../../assets/115.jpg" style="height:100px; width:100px">
-                <h6 style="margin: 10px 0">Please enter your information</h6>
+                <img src="../../assets/homelogo.png" style="height:100px; width:100px">
+                <h6 style="margin: 10px 0; color:gray"><b>Please enter your information</b></h6>
             </div>
             <div>
                 <q-field
@@ -74,7 +71,7 @@
                 </div>
                 -->
             </div>
-            <div style="text-align: center; margin-top:30px">
+            <div style="text-align: center; margin-top:20px">
                 <q-btn @click="register" icon="fas fa-user-plus" label="SIGN UP" style="width: 50%" color="deep-purple-9" />
             </div>
             </div>
