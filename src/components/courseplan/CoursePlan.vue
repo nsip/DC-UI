@@ -8,7 +8,11 @@
         <div class="row courseplan">
             <transition name="slide-fade">
             <div v-if="!isShow" class="col-3" style="padding-right:10px">
-                <app-couser-reminder :item="item" />
+                <app-couser-reminder
+                  :course="course"
+                  :selectedarea="selectedarea"
+                  :selectedcourse="selectedcourse"
+                  :selectedstage="selectedstage" />
             </div>
             </transition>
             <div :class="isShow?'col-9':'col-6'">
@@ -156,7 +160,7 @@ import CouserSearch from './CourseSearch.vue'
 import draggable from 'vuedraggable'
 
 export default {
-  props: ['item', 'selectedarea', 'selectedcourse', 'selectedstage'],
+  props: ['course', 'selectedarea', 'selectedcourse', 'selectedstage'],
   components: {
     appCouserReminder: CouserRemainder,
     // appCouserEditor: CouserEditor,
@@ -180,7 +184,7 @@ export default {
     }
   },
   created () {
-    this.coursename = this.item.name
+    this.coursename = this.course.name
   },
   watch: {
     lessons () {
