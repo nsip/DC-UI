@@ -43,8 +43,12 @@
           <i class="fab fa-reddit" style="font-size:20px"></i>
           <i class="fab fa-reddit" style="font-size:15px"></i>
         </q-list-header>
-        <q-item @click.native="$router.push('/scope&sequnce')" style="margin-top:50px">
+        <!-- <q-item @click.native="$router.push('/scope&sequnce')" style="margin-top:50px">
           <q-item-side icon="fas fa-graduation-cap" />
+          <q-item-main label="Scope & Sequence" />
+        </q-item> -->
+        <q-item @click.native="$router.push('/scopeandsequnce')">
+          <q-item-side icon="fas fa-republican" />
           <q-item-main label="Scope & Sequence" />
         </q-item>
         <q-item @click.native="$router.push('/coursesummary')">

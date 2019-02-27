@@ -17,6 +17,8 @@
                             color="deep-purple"
                             v-model="selectedarea"
                             :options="areas"
+                            @blur="$v.selectedarea.$touch"
+                            :error="$v.selectedarea.$error"
                         />
                     </div>
                     <div class="col-1 arrow">
@@ -28,7 +30,9 @@
                             class="q-ma-sm"
                             color="deep-purple"
                             v-model="selectedcourse"
-                            :options="courses"/>
+                            :options="courses"
+                            :error="$v.selectedcourse.$error"
+                            @blur="$v.selectedcourse.$touch"/>
                     </div>
                     <div class="col-1 arrow" style="text-align:center">
                         <i class="fas fa-long-arrow-alt-right q-ma-lg"></i>
@@ -39,13 +43,16 @@
                             class="q-ma-sm"
                             color="deep-purple"
                             v-model="selectedstage"
-                            :options="stages"/>
+                            :options="stages"
+                            @blur="$v.selectedstage.$touch"
+                            :error="$v.selectedstage.$error"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-10"></div>
                     <div class="col-2" style="text-align:right">
                         <q-btn
+                            :disable="!selectedarea || !selectedcourse || !selectedstage"
                             class="q-ma-lg full-width"
                             label="Search"
                             color="deep-purple-9"
@@ -112,6 +119,7 @@
 
 <script>
 import {areas, courses, stages} from '../../data'
+import { required } from 'vuelidate/lib/validators'
 // import axios from 'axios'
 
 export default {
@@ -127,6 +135,11 @@ export default {
       resultOverview: [],
       resultAll: []
     }
+  },
+  validations: {
+    selectedarea: { required },
+    selectedcourse: { required },
+    selectedstage: { required }
   },
   // watch: {
   // selectedstage (newValue, oldValue) {

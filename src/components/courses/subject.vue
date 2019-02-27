@@ -2,7 +2,7 @@
     <div class="">
         <div class="coursedetail">
             <div class="right-btn">
-                <q-btn push icon="lightbulb_outline" align="between" label="lesson plan" color="deep-purple-9" :to="{name:'courseplaner',params: {item, selectedstage}}">
+                <q-btn push icon="lightbulb_outline" align="between" label="lesson plan" color="deep-purple-9" :to="{name:'courseplaner',params: {course, selectedarea, selectedcourse, selectedstage}}">
             </q-btn>
             </div>
         <div class="row">
@@ -53,15 +53,15 @@
             </div>
         </div>
             <div style="margin-top:80px">
-            <h5><b>Course Name: {{ item.name }}</b></h5>
+            <h5><b>Course Name: {{ course.name }}</b></h5>
             <hr>
             </div>
             <div class="courseinfo">
             <transition name="component-fade" mode="out-in">
                 <component
                     :is="selectedComponent"
-                    :item="item"
-                    :overviewData="overviewData"
+                    :course="course"
+                    :Overview="Overview"
                     >
                 </component>
             </transition>
@@ -76,10 +76,10 @@ import Concept from './Concept.vue'
 import Outcomes from './Outcomes.vue'
 import Skills from './Skills.vue'
 import Tools from './Tools.vue'
-import axios from 'axios'
+// import axios from 'axios'
 
 export default {
-  props: ['item', 'selectedstage'],
+  props: ['course', 'selectedarea', 'selectedcourse', 'selectedstage'],
   components: {
     appCourse: Course,
     appConcept: Concept,
@@ -90,16 +90,46 @@ export default {
   data: () => {
     return {
       selectedComponent: 'appCourse',
+      Overview: [],
       info: null
     }
   },
-  created (selectedstage) {
-    axios.get(`./../../demoData/stage${selectedstage}/overview.json`)
-      .then(res => {
-        this.$store.commit('stage/setStageData', res)
-        console.log(res)
-      })
-      .catch(error => console.log(error))
+  mounted () {
+    const axios = require('axios')
+    axios({
+      url: 'http://localhost:1330/graphql',
+      method: 'post',
+      data: {
+        query: `query ContentQuery($state: String!, $learning_area: String!, $subject: String!, $stage: String!) {
+                overview(state: $state, learning_area: $learning_area, subject: $subject, stage: $stage){
+                    concepts {
+                        name
+                        description
+                    }
+                    inquiry_skills {
+                        name
+                        skills {
+                            skill
+                            ac
+                        }
+                    }
+                    tools {
+                        name
+                        examples
+                    }
+                }
+            }`,
+        variables: {
+          state: 'nsw',
+          learning_area: this.selectedarea,
+          subject: this.selectedcourse,
+          stage: this.selectedstage
+        }
+      }
+    }).then((result) => {
+      this.Overview = result.data.data.overview
+      console.log(result.data.data.overview)
+    })
   }
 }
 </script>

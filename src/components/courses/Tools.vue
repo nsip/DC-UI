@@ -2,41 +2,24 @@
     <div>
         <h6><b>Tools</b></h6>
         <div class="row">
-            <q-card inline class="q-ma-sm">
+            <q-card inline class="q-ma-sm" v-for="tool in Overview.tools" :key="tool.name">
                 <q-card-title>
-                    <b>Maps</b>
+                    <b>{{tool.name}}</b>
                 </q-card-title>
                 <q-card-main>
                     <ul>
-                        <li>relief maps, political maps, topographic maps, choropleth maps, flowline maps, cadastral maps, thematic maps, isoline maps, land use maps, précis maps, special-purpose maps, cartograms, synoptic charts</li>
-                        <li>maps to identify direction, scale and distance, area and grid references, degrees and minutes of latitude and longitude, bearings, aspect, altitude, area, density, contour lines, gradient, local relief</li>
-                    </ul>
-                </q-card-main>
-            </q-card>
-            <q-card inline class="q-ma-sm">
-                <q-card-title>
-                    <b>Fieldwork</b>
-                </q-card-title>
-                <q-card-main>
-                    <ul>
-                        <li>observing, measuring, collecting and recording data, developing and conducting surveys and interviews</li>
-                        <li>fieldwork instruments such as weather instruments, vegetation identification charts, compasses, clinometers, GPS, GIS or remote sensing</li>
-                    </ul>
-                </q-card-main>
-            </q-card>
-            <q-card inline class="q-ma-sm">
-                <q-card-title>
-                    <b>Graphs and statistics</b>
-                </q-card-title>
-                <q-card-main>
-                    <ul>
-                        <li>data tables, pie graphs, column graphs, compound column graphs, line graphs, scatter graphs, climate graphs, population profiles, multiple tables and graphs presented on a geographical theme, statistics to find patterns and trends, and to account for change</li>
+                        <li v-for="example in tool.examples" :key="example">{{example}}</li>
                     </ul>
                 </q-card-main>
             </q-card>
         </div>
     </div>
 </template>
+<script>
+export default {
+  props: ['Overview']
+}
+</script>
 
 <style scoped>
 h6 {

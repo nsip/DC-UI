@@ -1,10 +1,9 @@
 <template>
     <div>
         <h6><b>Unit Focus</b></h6>
-        <p>{{item.focus}}</p>
+        <p>{{course.focus}}</p>
         <h6><b>Key Inquiry questions</b></h6>
-        <div class="">
-            <q-list v-for="injury in item.inquiry_questions" :key="injury ">
+            <q-list v-for="injury in course.inquiry_questions" :key="injury">
                 <q-item>
                     <q-item-main>
                         {{injury}}
@@ -30,13 +29,12 @@
                 </q-item>
                 -->
             </q-list>
-        </div>
     </div>
 </template>
 
 <script>
 export default {
-  props: ['item']
+  props: ['course']
 }
 </script>
 

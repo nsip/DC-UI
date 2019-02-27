@@ -1,7 +1,7 @@
 <template>
     <div>
         <h6><b>Outcomes</b></h6>
-            <div class="outcome-list" v-for="outcome in item.outcomes" :key="outcome">
+            <div class="outcome-list" v-for="outcome in course.outcomes" :key="outcome.id">
                 <q-list>
                     <!--
                     <q-list-header>
@@ -67,15 +67,16 @@
                 -->
                 </q-list>
             </div>
-            <h6><b>Related Life Skills outcomes</b></h6>
+            <!-- <h6><b>Related Life Skills outcomes</b></h6>
             <div class="row">
-            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 skill-outcome" v-for="lifeskills in item.lifeskills_outcomes" :key="lifeskills">
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 skill-outcome" v-for="lifeskill in course.lifeskills_outcomes" :key="lifeskill">
                 <q-card inline class="q-ma-sm">
                     <q-card-main>
-                        {{lifeskills}}
+                        {{lifeskill}}
                     </q-card-main>
                 </q-card>
             </div>
+            </div> -->
             <!--
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 skill-outcome">
             <q-card inline class="q-ma-sm">
@@ -106,13 +107,12 @@
             </q-card>
             </div>
             -->
-            </div>
     </div>
 </template>
 
 <script>
 export default {
-  props: ['item']
+  props: ['course']
 }
 </script>
 

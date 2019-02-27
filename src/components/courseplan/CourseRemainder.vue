@@ -10,22 +10,38 @@
                 <q-list-header>
                     Course Name
                 </q-list-header>
-                <q-item v-for="detail in course.content_areas" :key="detail">{{detail.name}}</q-item>
-            <q-item-separator />
-            <q-list-header>
-                The Tools
-            </q-list-header>
+                <div class="fix-hight">
+                    <q-item v-for="detail in course.content_areas" :key="detail">
+                        <q-item-main>{{detail.name}}</q-item-main>
+                    </q-item>
+                </div>
+                <q-item-separator />
+                <q-list-header>
+                    The Tools
+                </q-list-header>
+                <div class="fix-hight">
                 <q-item v-for="concept in Overview.concepts" :key="concept.name">
-                    {{concept.name}}
+                    <q-item-main>{{concept.name}}</q-item-main>
                 </q-item>
-            <q-item-separator />
-            <q-list-header>
-                The Skills
-            </q-list-header>
-            <q-item-separator />
-            <q-list-header>
-                The Concepts
-            </q-list-header>
+                </div>
+                <q-item-separator />
+                <q-list-header>
+                    The Skills
+                </q-list-header>
+                <div class="fix-hight">
+                    <q-item v-for="skill in Overview.inquiry_skills" :key="skill.name">
+                        <q-item-main>{{skill.name}}</q-item-main>
+                    </q-item>
+                </div>
+                <q-item-separator />
+               <q-list-header>
+                  The Concepts
+                </q-list-header>
+                <div class="fix-hight">
+                    <q-item v-for="tool in Overview.tools" :key="tool.name">
+                        <q-item-main>{{tool.name}}</q-item-main>
+                    </q-item>
+                </div>
             </q-list>
             </q-card>
         </div>
@@ -73,7 +89,7 @@ export default {
 }
 </script>
 <style scoped>
-b{
+b {
     color: gray;
 }
 .reminder {
@@ -81,5 +97,9 @@ b{
 }
 .reminder p{
     color: gray
+}
+.fix-hight {
+    max-height: 103px;
+    overflow: scroll
 }
 </style>

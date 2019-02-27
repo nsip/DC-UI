@@ -23,7 +23,7 @@
                   toolbar-text-color="white"
                   toolbar-outline
                   toolbar-bg="deep-purple-9"
-                  min-height="40rem"
+                  min-height="42rem"
                   v-model="lesson.editcontent"
                   :toolbar="[
                     ['bold', 'italic', 'underline'],

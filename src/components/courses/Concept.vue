@@ -2,38 +2,14 @@
     <div>
         <h6><b>Concepts</b></h6>
         <div class="row">
-            <q-card inline class="q-ma-sm">
+            <q-card inline class="q-ma-sm" v-for="concept in Overview.concepts" :key="concept.name">
                 <q-card-title>
-                    <b>Place</b>
+                    <b>{{concept.name}}</b>
                 </q-card-title>
                 <q-card-main>
-                    the significance of places and what they are like
+                    {{concept.description}}
                 </q-card-main>
             </q-card>
-                <q-card inline class="q-ma-sm">
-                 <q-card-title>
-                        Space
-                    </q-card-title>
-                    <q-card-main>
-                        the significance of location and spatial distribution, and ways people organise and manage spaces that we live in
-                    </q-card-main>
-            </q-card>
-                <q-card inline class="q-ma-sm">
-                 <q-card-title>
-                        Environment
-                    </q-card-title>
-                    <q-card-main>
-                        the significance of the environment in human life, and the important interrelationships between humans and the environment
-                    </q-card-main>
-                </q-card>
-                <q-card inline class="q-ma-sm">
-                 <q-card-title>
-                        Interconnection
-                    </q-card-title>
-                    <q-card-main>
-                        no object of geographical study can be viewed in isolation
-                    </q-card-main>
-                </q-card>
         </div>
         <!--
         <q-list>
@@ -70,7 +46,7 @@
 
 <script>
 export default {
-  props: ['overviewData']
+  props: ['Overview']
 }
 </script>
 

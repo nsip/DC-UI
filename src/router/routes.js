@@ -30,9 +30,10 @@ const routes = [
   },
   { path: '/dashboard', name: 'dashboard', component: () => import('components/dashboard/Dashboard.vue'), props: true },
   { path: '/account-setting', name: 'setting', component: () => import('components/dashboard/Setting.vue'), props: true },
-  { path: '/scope&sequnce', component: () => import('components/search/SearchLayout.vue') },
+  // { path: '/scope&sequnce', component: () => import('components/search/searchbox.vue') },
   { path: '/coursedetail', name: 'subject', component: () => import('components/courses/subject.vue'), props: true },
   { path: '/coursesummary', component: () => import('components/summary/CourseSummary.vue') },
+  { path: '/scopeandsequnce', component: () => import('components/search/ScopeSequnce.vue') },
   { path: '/courseplaner', name: 'courseplaner', component: () => import('components/courseplan/CoursePlan.vue'), props: true },
   // Undefine router
   {
