@@ -121,7 +121,7 @@
 <script>
 import { required } from 'vuelidate/lib/validators'
 import {areas, courses, stages, years} from '../../data'
-import axios from 'axios'
+// import axios from 'axios'
 
 export default {
   data: () => {
@@ -199,21 +199,77 @@ export default {
   },
   computed: {
     yearsList () {
-      if (this.selectedstage) {
-        let stageData = this.$store.getters['stage/getStageData']
-        let a = years.filter(el => el.value === stageData.data.yrLvls[0] || el.value === stageData.data.yrLvls[1])
+      if (this.selectedstage === '1') {
+        let a = [{
+          label: 'Year 1',
+          value: 1
+        },
+        {
+          label: 'Year 2',
+          value: 2
+        }]
+        return a
+      } if (this.selectedstage === '2') {
+        let a = [{
+          label: 'Year 3',
+          value: 3
+        },
+        {
+          label: 'Year 4',
+          value: 4
+        }]
+        return a
+      } if (this.selectedstage === '3') {
+        let a = [{
+          label: 'Year 5',
+          value: 5
+        },
+        {
+          label: 'Year 6',
+          value: 6
+        }]
+        return a
+      } if (this.selectedstage === '4') {
+        let a = [{
+          label: 'Year 7',
+          value: 7
+        },
+        {
+          label: 'Year 8',
+          value: 8
+        }]
+        return a
+      } if (this.selectedstage === '5') {
+        let a = [{
+          label: 'Year 9',
+          value: 9
+        },
+        {
+          label: 'Year 10',
+          value: 10
+        }]
+        return a
+      } if (this.selectedstage === '6') {
+        let a = [{
+          label: 'Year 11',
+          value: 11
+        },
+        {
+          label: 'Year 12',
+          value: 12
+        }]
         return a
       }
       return years
     }
-  },
-  created () {
-    axios
-      .get('./../../demoData/stage5.json')
-      .then(response => {
-        this.$store.commit('stage/setStageData', response)
-      })
   }
+  // created () {
+  //   axios
+  //     .get('./../../demoData/stage5.json')
+  //     .then(response => {
+  //       this.$store.commit('stage/setStageData', response)
+  //     })
+  // }
 }
 </script>
 <style scoped>

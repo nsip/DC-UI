@@ -33,6 +33,10 @@ export let courses = [
   {
     label: 'Geography',
     value: 'geography'
+  },
+  {
+    label: 'History',
+    value: 'history'
   }
 ]
 
