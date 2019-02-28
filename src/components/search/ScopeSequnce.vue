@@ -4,7 +4,7 @@
   <p><b>Choose Learning area, Subject, Stage and Year to get the courses information</b></p>
   </div>
   <div class="row searchbox">
-    <div class="col-6">
+    <div class="col-5">
       <div class="q-ma-lg">
         <q-field
             icon="fas fa-book-open"
@@ -38,7 +38,7 @@
         </q-field>
         </div>
         </div>
-        <div class="col-6">
+      <div class="col-5">
         <div class="q-ma-lg">
         <q-field
             icon="fas fa-school"
@@ -72,12 +72,18 @@
         </q-field>
         </div>
     </div>
-    </div>
-    <div class="search-btn">
-      <div class="q-ma-lg">
-        <q-btn color="deep-purple-9" size="md" style="width: 200px" @click="getReslut" :disable="!selectedarea || !selectedcourse|| !selectedyear || !selectedstage">Search</q-btn>
+    <div class="search-btn col-2">
+      <div>
+        <q-btn class="full-width" color="deep-purple-9" :loading="loading" @click="getReslut" :disable="!selectedarea || !selectedcourse|| !selectedyear || !selectedstage">
+          Search
+          <span slot="loading">
+            <q-spinner class="on-left" />
+            Searching...
+        </span>
+        </q-btn>
       </div>
     </div>
+  </div>
     <hr style="margin-top: 50px">
     <div class="row list">
       <!-- <q-input v-model="selectedstage" /> -->
@@ -134,6 +140,7 @@ export default {
       courses,
       stages,
       years,
+      loading: false,
       isdisable: true,
       resultCotent: [],
       resultOverview: [],
@@ -149,53 +156,66 @@ export default {
   methods: {
     getReslut () {
       const axios = require('axios')
-      axios({
-        url: 'http://localhost:1330/graphql',
-        method: 'post',
-        data: {
-          query: `query ContentQuery($state: String!, $learning_area: String!, $subject: String!, $stage: String!) {
-                content(state: $state, learning_area: $learning_area, subject: $subject, stage: $stage){
-                    courses {
-                        name
-                        outcomes {
-                            id
-                            description
-                        }
-                        lifeskills_outcomes
-                        inquiry_questions
-                        focus
-                        content_areas {
-                            name
-                        }
-                    }
-                }
-                overview(state: $state, learning_area: $learning_area, subject: $subject, stage: $stage){
-                    concepts {
-                        name
-                    }
-                    inquiry_skills {
-                        name
-                    }
-                    tools {
-                        name
-                    }
-                }
-            }`,
-          variables: {
-            state: 'nsw',
-            learning_area: this.selectedarea,
-            subject: this.selectedcourse,
-            stage: this.selectedstage
+      this.loading = true
+      setTimeout(() => {
+        this.loading = false
+        axios({
+          url: 'http://localhost:1330/graphql',
+          method: 'post',
+          data: {
+            query: `query ContentQuery($state: String!, $learning_area: String!, $subject: String!, $stage: String!) {
+                  content(state: $state, learning_area: $learning_area, subject: $subject, stage: $stage){
+                      courses {
+                          name
+                          outcomes {
+                              id
+                              description
+                          }
+                          lifeskills_outcomes
+                          inquiry_questions
+                          focus
+                          content_areas {
+                              name
+                          }
+                      }
+                  }
+                  overview(state: $state, learning_area: $learning_area, subject: $subject, stage: $stage){
+                      concepts {
+                          name
+                      }
+                      inquiry_skills {
+                          name
+                      }
+                      tools {
+                          name
+                      }
+                  }
+              }`,
+            variables: {
+              state: 'nsw',
+              learning_area: this.selectedarea,
+              subject: this.selectedcourse,
+              stage: this.selectedstage
+            }
           }
-        }
-      }).then((result) => {
-        this.resultAll = result.data.data
-        this.resultCotent = result.data.data.content
-        this.resultOverview = result.data.data.overview
-        // console.log(result.data.data)
-        // console.log(result.data.data.content)
-      })
+        }).then((result) => {
+          this.resultAll = result.data.data
+          this.resultCotent = result.data.data.content
+          this.resultOverview = result.data.data.overview
+          // console.log(result.data.data)
+          // console.log(result.data.data.content)
+        })
+      }, 2000)
     }
+    // simulateProgress (number) {
+    //   // we set loading state
+    //   this[`loading${number}`] = true
+    //   // simulate a delay
+    //   setTimeout(() => {
+    //     // we're done, we reset loading state
+    //     this[`loading${number}`] = false
+    //   }, 3000)
+    // }
   },
   computed: {
     yearsList () {
@@ -295,7 +315,9 @@ export default {
   text-align: center
 }
 .search-btn{
-  margin: 10px 300px 0 300px;
-  text-align: right;
+  text-align: center;
+  display:flex;
+  justify-content:center;
+  align-items:center
 }
 </style>
