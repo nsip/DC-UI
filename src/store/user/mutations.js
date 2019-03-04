@@ -13,7 +13,7 @@ export function UPDATE_AUTH (state, auth) {
   ls.setItem('auth', auth)
 }
 // update lessons
-export function UPDATE_LESSONS (state, newLesson) {
-  state.lessons = newLesson
-  ls.setItem('lessons', newLesson)
+export function UPDATE_LESSONS (state, {newlessons}) {
+  state.lessons = newlessons
+  ls.setItem('lessons', newlessons)
 }

@@ -1,80 +1,67 @@
 <template>
 <q-page>
   <div class="search">
-  <p><b>Choose Learning area, Subject, Stage and Year to get the courses information</b></p>
-  </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <h5 class="q-ma-lg" style="margin-top:150px; color:gray"><b>Choose Learning area, Subject, Stage and Year to get the courses information</b></h5>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div>
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="text-align:center">
+          <img src="../../assets/searchlogo.png" style="width:350px; height:350px">
+      </div>
+    </div>
   <div class="row searchbox">
-    <div class="col-5">
-      <div class="q-ma-lg">
-        <q-field
-            icon="fas fa-book-open"
-            label="Select a learning area"
-            :label-width="4"
-            :error="$v.selectedarea.$error"
-            error-label="Please select the learning area"
-        >
+    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 input">
             <q-select
-            chips
-            color="deep-purple"
-            v-model="selectedarea"
-            :options="areas"
-            @blur="$v.selectedarea.$touch"
+              class="select"
+              stack-label="Select the learning area"
+              color="white"
+              inverted-light
+              separator
+              v-model="selectedarea"
+              :options="areas"
+              @blur="$v.selectedarea.$touch"
             />
-        </q-field>
-        <q-field
-            icon="fas fa-balance-scale"
-            label="Pick a subject"
-            :label-width="4"
-            :error="$v.selectedcourse.$error"
-            error-label="Please select the subject"
-        >
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 input">
             <q-select
-            chips
-            color="deep-purple"
-            v-model="selectedcourse"
-            :options="courses"
-            @blur="$v.selectedcourse.$touch"
+              class="select"
+              stack-label="Pick the subject"
+              inverted-light
+              color="white"
+              v-model="selectedcourse"
+              separator
+              :options="courses"
+              @blur="$v.selectedcourse.$touch"
             />
-        </q-field>
-        </div>
-        </div>
-      <div class="col-5">
-        <div class="q-ma-lg">
-        <q-field
-            icon="fas fa-school"
-            label="Choses a stage"
-            :label-width="4"
-            :error="$v.selectedstage.$error"
-            error-label="Please select the stage"
-        >
-            <q-select
-            chips
-            color="deep-purple"
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 input">
+          <q-select
+            class="select"
+            stack-label="Choses the stage"
+            inverted-light
+            color="white"
+            separator
             v-model="selectedstage"
             :options="stages"
             @blur="$v.selectedstage.$touch"
-            />
-        </q-field>
-        <q-field
-            icon="fas fa-chalkboard"
-            label="Choses a year"
-            :label-width="4"
-            :error="$v.selectedyear.$error"
-            error-label="Please select the year"
-        >
+          />
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 input">
             <q-select
-            chips
-            color="deep-purple"
+            class="select"
+            stack-label="Choses the year"
+            inverted-light
+            color="white"
+            separator
             v-model="selectedyear"
             :options="yearsList"
             @blur="$v.selectedyear.$touch"
             />
-        </q-field>
-        </div>
     </div>
-    <div class="search-btn col-2">
+    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
       <div>
-        <q-btn class="full-width" color="deep-purple-9" :loading="loading" @click="getReslut" :disable="!selectedarea || !selectedcourse|| !selectedyear || !selectedstage">
+        <q-btn class="full-width search-btn select" color="deep-purple-9" :loading="loading" @click="getReslut" :disable="!selectedarea || !selectedcourse|| !selectedyear || !selectedstage">
           Search
           <span slot="loading">
             <q-spinner class="on-left" />
@@ -83,6 +70,7 @@
         </q-btn>
       </div>
     </div>
+  </div>
   </div>
     <hr style="margin-top: 50px">
     <div class="row list">
@@ -93,7 +81,7 @@
           enter-active-class="animated fadeInUp"
           class="group">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 one-card" v-for="course in resultCotent.courses" :key="course.name">
-        <q-card inline square class="q-ma-sm">
+        <q-card inline square color="white" text-color="black" class="q-ma-sm course-card">
           <q-card-title class="text-deep-purple-4">
             {{course.name}}
             <span slot="subtitle">Stage: {{ selectedstage }} - Year: {{ selectedyear }}</span>
@@ -293,8 +281,21 @@ export default {
 }
 </script>
 <style scoped>
+.search {
+  margin: 150px 200px 0px 200px
+}
+.search-btn {
+  height: 56px;
+}
+.select {
+  box-shadow: none;
+  border-radius: 0px
+}
+.input {
+  border-right: 1px lightgray solid
+}
 .searchbox {
-    margin: 50px 300px 0 300px
+  margin-top: 50px
 }
 .list {
   margin: 50px 200px 0 200px
@@ -310,14 +311,18 @@ export default {
     font-size: 18px;
     color: grey
 }
-.search{
-  margin: 100px 0 0 0;
-  text-align: center
-}
 .search-btn{
   text-align: center;
-  display:flex;
   justify-content:center;
   align-items:center
+}
+.course-card {
+  border: whitesmoke 1px solid;
+  box-shadow: none;
+  transition: box-shadow 1s, border 1s;
+}
+.course-card:hover {
+  box-shadow: 0 5px 5px rgba(0,0,0,0.2), 0 5px 5px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
+  border: whitesmoke 1px solid
 }
 </style>

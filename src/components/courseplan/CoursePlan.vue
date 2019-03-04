@@ -220,9 +220,11 @@ export default {
       this.lessons[selectedId].isDisplay = true
       console.log(this.lessons[selectedId].editcontent)
     },
+    // submit course plan to local storage
     submit () {
       const submitLessons = this.lessons
-      // console.log(submitLessons[0])
+      // console.log(submitLessons)
+      // console.log({submitLessons})
       this.$store.dispatch('user/post', {submitLessons})
     },
     removeLesson (index) {

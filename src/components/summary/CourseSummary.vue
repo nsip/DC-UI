@@ -1,65 +1,64 @@
 <template>
-    <div>
+    <q-page>
         <div class="summary">
-            <!--
-            <div class="right-btn">
-            <q-btn push icon="lightbulb_outline" align="between" label="lesson plan" color="deep-purple-9" :to="{name:'couserplaner', params:{data,selectedstage}}">
-                </q-btn>
-            </div>
-            -->
-            <div class="searchbox">
-                <p><b>Choose Learning area, Subject and Stage to get the courses summary</b></p>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <h5 class="q-ma-lg" style="margin-top:150px; color:gray"><b>Choose Learning area, Subject and Stage to get the courses summary</b></h5>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="text-align:center">
+                        <img src="../../assets/padlogo.png" style="width:350px; height:350px">
+                    </div>
+                </div>
+                <div class="row searchbox">
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 input">
                         <q-select
-                            class="q-ma-sm"
-                            float-label="Learning area"
-                            color="deep-purple"
+                            class="select"
+                            stack-label="Select the learning area"
+                            color="white"
+                            inverted-light
+                            separator
                             v-model="selectedarea"
                             :options="areas"
                             @blur="$v.selectedarea.$touch"
-                            :error="$v.selectedarea.$error"
                         />
                     </div>
-                    <div class="col-1 arrow">
-                        <i class="fas fa-long-arrow-alt-right q-ma-lg"></i>
-                    </div>
-                    <div class="col-4">
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 input">
                         <q-select
-                            float-label="Subject"
-                            class="q-ma-sm"
-                            color="deep-purple"
+                            class="select"
+                            stack-label="Pick the subject"
+                            inverted-light
+                            color="white"
                             v-model="selectedcourse"
+                            separator
                             :options="courses"
-                            :error="$v.selectedcourse.$error"
-                            @blur="$v.selectedcourse.$touch"/>
+                            @blur="$v.selectedcourse.$touch"
+                        />
                     </div>
-                    <div class="col-1 arrow" style="text-align:center">
-                        <i class="fas fa-long-arrow-alt-right q-ma-lg"></i>
-                    </div>
-                    <div class="col-3">
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 input">
                         <q-select
-                            float-label="Stage"
-                            class="q-ma-sm"
-                            color="deep-purple"
+                            class="select"
+                            stack-label="Choses the stage"
+                            inverted-light
+                            color="white"
+                            separator
                             v-model="selectedstage"
                             :options="stages"
                             @blur="$v.selectedstage.$touch"
-                            :error="$v.selectedstage.$error"/>
+                        />
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <div>
+                        <q-btn class="full-width search-btn select" color="deep-purple-9" :loading="loading" @click="getReslut" :disable="!selectedarea || !selectedcourse || !selectedstage">
+                          Search
+                        <span slot="loading">
+                            <q-spinner class="on-left" />
+                            Searching...
+                        </span>
+                        </q-btn>
+                    </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-10"></div>
-                    <div class="col-2" style="text-align:right">
-                        <q-btn
-                            :disable="!selectedarea || !selectedcourse || !selectedstage"
-                            class="q-ma-lg full-width"
-                            label="Search"
-                            color="deep-purple-9"
-                            @click="getReslut" />
-                    </div>
-                </div>
-            </div>
         </div>
         <hr>
         <div class="summary">
@@ -67,7 +66,7 @@
           appear
           enter-active-class="animated fadeInRight"
           class="group">
-            <q-card inline class="q-ma-sm" v-for="course in resultCotent.courses" :key="course.name">
+            <q-card inline class="q-ma-sm course-card" color="white" text-color="black" v-for="course in resultCotent.courses" :key="course.name">
                 <q-card-title class="relative-position">
                     <p><b>{{course.name}}</b></p>
                     <span slot="subtitle">10 weeks - 25 hours</span>
@@ -114,7 +113,7 @@
             </q-card>
         </transition-group>
         </div>
-    </div>
+    </q-page>
 </template>
 
 <script>
@@ -131,6 +130,8 @@ export default {
       areas,
       courses,
       stages,
+      loading: false,
+      isdisable: true,
       resultCotent: [],
       resultOverview: [],
       resultAll: []
@@ -165,11 +166,14 @@ export default {
   methods: {
     getReslut () {
       const axios = require('axios')
-      axios({
-        url: 'http://localhost:1330/graphql',
-        method: 'post',
-        data: {
-          query: `query ContentQuery($state: String!, $learning_area: String!, $subject: String!, $stage: String!) {
+      this.loading = true
+      setTimeout(() => {
+        this.loading = false
+        axios({
+          url: 'http://localhost:1330/graphql',
+          method: 'post',
+          data: {
+            query: `query ContentQuery($state: String!, $learning_area: String!, $subject: String!, $stage: String!) {
                 content(state: $state, learning_area: $learning_area, subject: $subject, stage: $stage){
                     courses {
                         name
@@ -195,32 +199,40 @@ export default {
                     }
                 }
             }`,
-          variables: {
-            state: 'nsw',
-            learning_area: this.selectedarea,
-            subject: this.selectedcourse,
-            stage: this.selectedstage
+            variables: {
+              state: 'nsw',
+              learning_area: this.selectedarea,
+              subject: this.selectedcourse,
+              stage: this.selectedstage
+            }
           }
-        }
-      }).then((result) => {
-        this.resultAll = result.data.data
-        this.resultCotent = result.data.data.content
-        this.resultOverview = result.data.data.overview
-        console.log(result.data.data)
-        console.log(result.data.data.content)
-      })
+        }).then((result) => {
+          this.resultAll = result.data.data
+          this.resultCotent = result.data.data.content
+          this.resultOverview = result.data.data.overview
+        })
+      }, 2000)
     }
   }
 }
 </script>
 
 <style scoped>
+.search-btn {
+  height: 56px;
+}
+.select {
+  box-shadow: none;
+  border-radius: 0px
+}
+.input {
+  border-right: 1px lightgray solid
+}
 h6 {
     color: grey
 }
 .summary {
-    margin: 0px 200px;
-    text-align: justify
+    margin: 150px 200px 0px 200px;
 }
 li {
     margin: 5px 0;
@@ -239,7 +251,7 @@ ul{
     color: grey
 }
 .searchbox {
-    margin: 100px 0 0 0
+    margin-top: 50px
 }
 hr {
     margin: 24px 0 50px 0
@@ -255,9 +267,13 @@ hr {
 .no-border{
   color: #4527a0;
 }
-.arrow {
-    text-align:center;
-    color:gray;
-    font-size:30px
+.course-card {
+  border: whitesmoke 1px solid;
+  box-shadow: none;
+  transition: box-shadow 1s, border 1s;
+}
+.course-card:hover {
+  box-shadow: 0 5px 5px rgba(0,0,0,0.2), 0 5px 5px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
+  border: whitesmoke 1px solid
 }
 </style>
