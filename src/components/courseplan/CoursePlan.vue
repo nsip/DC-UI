@@ -1,5 +1,5 @@
 <template>
-    <div>
+  <div>
         <div style="margin:100px 0 0 100px; color:gray">
             <h5><b>Lesson Plan</b></h5>
             <p><i>Design the lesson in the editor, add the lesson by clicking the add button, and delete the lsesson by clicking the minus button</i></p>
@@ -66,18 +66,58 @@
                     verdana: 'Verdana'
                   }"
                 ></q-editor>
-                <div style="float:right; margin:30px 0">
-                <q-btn label="Save & Add New Lesson" color="deep-purple-9" @click="save" />
-                </div>
               </div>
                 <!-- <q-btn label="save" @click="print"/> -->
             </div>
-            <div class="col-3" style="padding-left:10px;">
-                <app-couser-search></app-couser-search>
+            <div class="col-3 search" style="padding-left:10px;">
+                <!-- <app-couser-search
+                :selectLink="save">
+                {{selectLink}}
+                </app-couser-search> -->
+                <q-chips-input
+                  inverted
+                  color="deep-purple-9"
+                  chips-color="dark"
+                  chips-bg-color="white"
+                  v-model="keywords"
+                  float-label="Enter the key words"
+                  @keyup="search">
+                </q-chips-input>
+                <q-list class="searchResult">
+                  <q-item v-for="result in searchResult" :key="result.URL">
+                      <q-item-side>
+                        <q-checkbox  color="deep-purple-6" v-model="seletedurl" :val="result.URL" />
+                        <!-- {{result.DisplayURL}}
+                        {{result.Name}}
+                        {{result.Snippet}}
+                        {{result.URL}} -->
+                      </q-item-side>
+                      <q-item-main><a :href="result.URL"  target="_blank" class="urllink">{{result.Name}}</a>
+                        <q-tooltip class="tip" anchor="bottom middle" self="top middle" :offset="[10, 10]">
+                          {{result.Snippet}}
+                        </q-tooltip>
+                      </q-item-main>
+                  </q-item>
+                </q-list>
+                <div style="float:right; margin:30px 0">
+                <q-btn label="Save & Add New Lesson" color="deep-purple-9" @click="save" />
+                </div>
             </div>
-            <q-card class="col-9" style="margin-bottom: 50px">
+            <q-card class="col-9 l" style="margin-bottom: 50px">
                 <q-card-title class="relative-position q-ma-sm">
                     <b style="color:gray">List of {{coursename}} Lesson</b>
+                    <q-card-separator style="margin-top: 15px; margin-bottom: 15px"/>
+                    <span slot="subtitle">
+                      <q-field
+                        :label-width="2"
+                        icon="far fa-file-alt"
+                        label="Lesson Description"
+                      >
+                        <q-input
+                          v-model="description"
+                          color="deep-purple-9" />
+                      </q-field>
+                    </span>
                     <!-- <q-btn
                         flat
                         outline
@@ -144,9 +184,25 @@
                         label="Submit All Lessons"
                         class="absolute"
                         style="right: 8px;"
-                        @click="submit" />
+                        @click="submit"
+                        :to="{name:'dashboard'}">
+                        </q-btn>
                 </q-card-title>
             </q-card>
+            <q-card class="col-3 l" style="margin-bottom: 50px; border-left:none">
+                <q-card-title class="relative-position q-ma-sm">
+                  <b style="color:gray">Related Resouse Link</b>
+                  <q-card-separator style="margin-top: 15px; margin-bottom: 15px" />
+                </q-card-title>
+                <q-card-main class="link-list q-ma-xs" style="color:gray">
+                    <q-item v-for="link in seletedurl" :key="link">
+                      <q-item-side>
+                        <i class="far fa-minus-square"></i>
+                      </q-item-side>
+                      <a :href="link" target="_blank" class="urllink">{{link}}</a>
+                    </q-item>
+                </q-card-main>
+            </q-card >
         </div>
         <div class="left-btn">
             <q-btn push icon="adb" align="between" label="Reminder" color="deep-purple-9" @click="isShow=!isShow"></q-btn>
@@ -156,7 +212,7 @@
 <script>
 import CouserRemainder from './CourseRemainder.vue'
 // import CouserEditor from './CourseEditor.vue'
-import CouserSearch from './CourseSearch.vue'
+// import CouserSearch from './CourseSearch.vue'
 import draggable from 'vuedraggable'
 
 export default {
@@ -164,7 +220,7 @@ export default {
   components: {
     appCouserReminder: CouserRemainder,
     // appCouserEditor: CouserEditor,
-    appCouserSearch: CouserSearch,
+    // appCouserSearch: CouserSearch,
     draggable
   },
   data () {
@@ -174,13 +230,18 @@ export default {
           id: 0,
           title: 'A',
           editcontent: 'Content 1',
-          isDisplay: true
+          isDisplay: true,
+          url: []
         }
       ],
       j: 0,
       isShow: true,
       blockRemoval: true,
-      coursename: ''
+      coursename: '',
+      keywords: [],
+      searchResult: [],
+      seletedurl: []
+      // lessonurl: []
     }
   },
   created () {
@@ -190,6 +251,9 @@ export default {
     lessons () {
       this.blockRemoval = this.lessons.length <= 1
     },
+    // checkResult () {
+    //   this.checkResult = checkResult
+    // },
     coursename: function () {
       console.log(this.coursename)
       console.log(this.selectedarea)
@@ -203,8 +267,11 @@ export default {
       var i
       for (i = 0; i < this.lessons.length; i++) {
         this.lessons[i].isDisplay = false
+        this.lessons[i].url = this.seletedurl
+        console.log(this.lessons[i].url)
       }
-      this.lessons.push({id: index++, editcontent: '', title: '', isDisplay: true})
+      this.lessons.push({id: index++, editcontent: '', title: '', isDisplay: true, url: []})
+      this.seletedurl = []
       console.log(index)
       // for (i = 0; i < this.lessons.length; i++) {
       //   this.lessons[i].editcontent
@@ -218,14 +285,21 @@ export default {
         this.lessons[i].isDisplay = false
       }
       this.lessons[selectedId].isDisplay = true
+      this.seletedurl = this.lessons[selectedId].url
+      console.log(this.lessons[selectedId].url)
       console.log(this.lessons[selectedId].editcontent)
     },
     // submit course plan to local storage
     submit () {
+      const description = this.description
       const submitLessons = this.lessons
+      const area = this.selectedarea
+      const course = this.course.name
+      const subject = this.selectedcourse
+      const stage = this.selectedstage
       // console.log(submitLessons)
       // console.log({submitLessons})
-      this.$store.dispatch('user/post', {submitLessons})
+      this.$store.dispatch('user/post', {submitLessons, area, course, subject, stage, description})
     },
     removeLesson (index) {
       if (!this.blockRemoval) {
@@ -236,6 +310,41 @@ export default {
           this.lessons.splice(index, 1)
         }
       }
+    },
+    search () {
+      console.log(this.keywords)
+      const axios = require('axios')
+      axios({
+        url: 'http://localhost:1330/search/graphql',
+        method: 'post',
+        data: {
+          query: `query SearchQuery($terms: SearchInput) {
+            searchRequest(terms: $terms) {
+              WebPages {
+                Value {
+                  Name
+                  URL
+                  DisplayURL
+                  Snippet
+                }
+              }
+            }
+          }`,
+          variables: {
+            terms: {
+              learning_area: 'hise',
+              subject: this.selectedcourse,
+              stage: this.selectedstage,
+              course_name: this.coursename,
+              content_area: this.selectedarea,
+              keywords: this.keywords
+            }
+          }
+        }
+      }).then((res) => {
+        this.searchResult = res.data.data.searchRequest.WebPages.Value
+        console.log(this.searchResult)
+      })
     }
   }
 }
@@ -243,27 +352,27 @@ export default {
 
 <style scoped>
 .left-btn {
-    position:fixed;
-    bottom: -4px;
-    left: 10px;
-    display:block
+  position:fixed;
+  bottom: -4px;
+  left: 10px;
+  display:block
 }
 .courseplan {
-    margin: 50px 100px
+  margin: 50px 100px
 }
 .addLesson{
-    padding-top:0px;
-    margin-top:10px;
-    border: 1px solid #ccc;
+  padding-top:0px;
+  margin-top:10px;
+  border: 1px solid #ccc;
 }
 .singlerow{
-    margin-left:0%;
+  margin-left:0%;
 }
 .q-card-container{
-    padding: 5px
+  padding: 5px
 }
 .xs {
-    padding:0 5px
+  padding:0 5px
 }
 .slide-fade-enter-active {
   transition: all .8s ease;
@@ -277,7 +386,7 @@ export default {
   opacity: 0;
 }
 h5{
-    margin-bottom: 20px
+  margin-bottom: 20px
 }
 .my-handle {
   cursor: move;
@@ -292,5 +401,26 @@ h5{
 }
 .q-editor {
   box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12)
+}
+.searchResult {
+  height: 656px;
+  overflow: scroll
+}
+.tip {
+  width: 420px;
+}
+.urllink {
+  text-decoration: none;
+  color: gray;
+}
+.urllink:hover {
+  color: #4527a0;
+}
+.link-list {
+  overflow-x: scroll
+}
+.l {
+  box-shadow: none;
+  border: 1px lightgray solid;
 }
 </style>

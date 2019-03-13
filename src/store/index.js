@@ -19,6 +19,5 @@ export default function (/* { ssrContext } */) {
       user
     }
   })
-
   return Store
 }

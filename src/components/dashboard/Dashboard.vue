@@ -20,79 +20,29 @@
             </h5>
             <hr>
             </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <q-card inline class="q-ma-sm course-list">
+            <div class="row q-ma-sm">
+                <div v-for="lesson in lessons" :key="lesson.lessonId" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <q-card inline class="course-card">
                         <q-card-title>
-                            <b>Course Name</b>
-                            <span slot="subtitle">Learning Area: HISE | Subject: Geography | Stage: 3</span>
-                            <q-btn round flat icon="more_vert" slot="right" color="deep-purple-6">
-                            <q-popover>
-                                <q-list link class="no-border">
-                                <q-item v-close-overlay>
-                                    <q-item-main label="Modify Course" />
-                                </q-item>
-                                <q-item v-close-overlay>
-                                    <q-item-main label="Remove" />
-                                </q-item>
-                                </q-list>
-                            </q-popover>
-                            </q-btn>
+                            <b>{{lesson.thecourse}}</b>
+                            <span slot="subtitle">Learning Area: {{lesson.thearea}} | Subject: {{lesson.thesubject}} | Stage: {{lesson.thestage}}</span>
+                            <q-btn round flat icon="fas fa-edit" slot="right" color="deep-purple-6" @click="editLesson"/>
+                            <q-btn round flat icon="fas fa-trash-alt" slot="right" color="deep-purple-6" @click="deleteLesson(lesson.lessonId)" />
                         </q-card-title>
                         <q-card-separator />
                           <q-card-main>
-                            Course information:
-                            The significance of the environment in human life, and the important interrelationships between humans and the environment eg natural and human features of a place
-                        </q-card-main>
-                    </q-card>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <q-card inline class="q-ma-sm course-list">
-                        <q-card-title>
-                            <b>Course Name</b>
-                            <span slot="subtitle">Learning Area: HISE | Subject: Geography | Stage: 3</span>
-                            <q-btn round flat icon="more_vert" slot="right" color="deep-purple-6">
-                            <q-popover>
-                                <q-list link class="no-border">
-                                <q-item v-close-overlay>
-                                    <q-item-main label="Modify Course" />
+                            <q-list>
+                                <q-item>
+                                    <q-item-side>
+                                        <q-item-tile>
+                                            Lesson Description
+                                        </q-item-tile>
+                                    </q-item-side>
+                                    <q-item-main>
+                                        <q-item-tile label>{{lesson.thedescription}}</q-item-tile>
+                                    </q-item-main>
                                 </q-item>
-                                <q-item v-close-overlay>
-                                    <q-item-main label="Remove" />
-                                </q-item>
-                                </q-list>
-                            </q-popover>
-                            </q-btn>
-                        </q-card-title>
-                        <q-card-separator />
-                          <q-card-main>
-                            Course information:
-                            The significance of the environment in human life, and the important interrelationships between humans and the environment eg natural and human features of a place
-                        </q-card-main>
-                    </q-card>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <q-card inline class="q-ma-sm course-list">
-                        <q-card-title>
-                            <b>Course Name</b>
-                            <span slot="subtitle">Learning Area: HISE | Subject: Geography | Stage: 3</span>
-                            <q-btn round flat icon="more_vert" slot="right" color="deep-purple-6">
-                            <q-popover>
-                                <q-list link class="no-border">
-                                <q-item v-close-overlay>
-                                    <q-item-main label="Modify Course" />
-                                </q-item>
-                                <q-item v-close-overlay>
-                                    <q-item-main label="Remove" />
-                                </q-item>
-                                </q-list>
-                            </q-popover>
-                            </q-btn>
-                        </q-card-title>
-                        <q-card-separator />
-                          <q-card-main>
-                            Course information:
-                            The significance of the environment in human life, and the important interrelationships between humans and the environment eg natural and human features of a place
+                            </q-list>
                         </q-card-main>
                     </q-card>
                 </div>
@@ -112,7 +62,26 @@ export default {
   },
   data () {
     return {
-      selectedComponent: 'appCourseList'
+      selectedComponent: 'appCourseList',
+      lessons: []
+    }
+  },
+  created () {
+    console.log(this.$store.state.user.lessons)
+    // this.lessons = this.$store.state.user.lessons[24]
+    this.lessons = this.$store.state.user.lessons
+    // const lessonId = this.$route.params.lessonId
+    // console.log(this.$route.params.lessonId)
+    // console.log(this.$store.getters.user.getLessonById(2))
+  },
+  methods: {
+    deleteLesson (index) {
+      this.$store.dispatch('user/deleteLesson', index)
+      console.log(index)
+      console.log(this.$store.state.user.lessons)
+    },
+    editLesson () {
+      this.$router.push({ name: 'courseplaner', params: { lessonId: this.lessonId } })
     }
   }
 }
@@ -134,12 +103,12 @@ export default {
     border-radius: 0;
     position: relative
 }
-.card-link:before,
+/* .card-link:before,
 .card-link:after {
     content: "";
     width: 0;
     height: 2px;
-    background: #4527a0; /*underline color*/
+    background: #4527a0;
     position: absolute;
     top: 100%;
     left: 50%;
@@ -155,14 +124,22 @@ export default {
 .card-link:hover,
 .card-link:active {
     box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+} */
+.course-card {
+    width: 100%;
+    background-color: white;
+    /* transition: background-color 1.5s, color 1.5s; */
+    cursor: default;
+    border: whitesmoke 1px solid;
+    box-shadow: none;
+    transition: box-shadow 1s, border 1s;
 }
-.course-list{
-    transition: background-color 1.5s, color 1.5s;
-    cursor: default
+.course-card:hover {
+  box-shadow: 0 5px 5px rgba(0,0,0,0.2), 0 5px 5px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
+  border: whitesmoke 1px solid
 }
-.course-list:hover {
+/* .course-list:hover {
     background-color: #d1c4e9;
     color:#673ab7;
-    /* box-shadow: */
-}
+} */
 </style>

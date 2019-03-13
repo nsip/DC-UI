@@ -13,7 +13,13 @@ export function UPDATE_AUTH (state, auth) {
   ls.setItem('auth', auth)
 }
 // update lessons
-export function UPDATE_LESSONS (state, {newlessons}) {
+export function UPDATE_LESSONS (state, newlessons) {
   state.lessons = newlessons
   ls.setItem('lessons', newlessons)
+}
+export function DELETE_LESSONS (state, i) {
+  console.log(state.lessons)
+  var index = state.lessons.findIndex(lesson => lesson.lessonId === i)
+  // console.log(index)
+  state.lessons.splice(index, 1)
 }

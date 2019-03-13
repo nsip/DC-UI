@@ -83,7 +83,6 @@ export default {
       }
     }).then((result) => {
       this.Overview = result.data.data.overview
-      console.log(result.data.data)
     })
   }
 }

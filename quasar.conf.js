@@ -74,6 +74,7 @@ module.exports = function (ctx) {
         'QSelect',
         'QField',
         'QChipsInput',
+        'QAutocomplete',
         'QCheckbox',
         'QPopover',
         'QItemSeparator',
