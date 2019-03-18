@@ -18,7 +18,6 @@ const routes = [
     component: () => import('components/auth/Login.vue')
   },
   { path: '/dashboard', name: 'dashboard', component: () => import('components/dashboard/Dashboard.vue'), props: true },
-  { path: '/:lessonId/modify', name: 'modify', component: () => import('components/courseplan/Coursemodify.vue'), props: true },
   { path: '/account-setting', name: 'setting', component: () => import('components/dashboard/Setting.vue'), props: true },
   // { path: '/scope&sequnce', component: () => import('components/search/searchbox.vue') },
   { path: '/coursedetail', name: 'subject', component: () => import('components/courses/subject.vue'), props: true },

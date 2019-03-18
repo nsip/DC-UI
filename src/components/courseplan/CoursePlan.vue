@@ -1,17 +1,15 @@
 <template>
   <div>
         <div style="margin:100px 0 0 100px; color:gray">
-            <h4><b>Lesson Plan
-              <i class="fas fa-scroll q-ma-sm"></i>
-            </b></h4>
-            <p><i>Design the lesson in the editor, add the lesson by clicking the add button, and delete the lesson by clicking the delete button</i></p>
+            <h5><b>Lesson Plan</b></h5>
+            <p><i>Design the lesson in the editor, add the lesson by clicking the add button, and delete the lsesson by clicking the minus button</i></p>
         </div>
         <hr>
         <div class="row courseplan">
             <transition name="slide-fade">
             <div v-if="!isShow" class="col-3" style="padding-right:10px">
                 <app-couser-reminder
-                  :course="coursename"
+                  :course="course"
                   :selectedarea="selectedarea"
                   :selectedcourse="selectedcourse"
                   :selectedstage="selectedstage" />
@@ -68,13 +66,14 @@
                     verdana: 'Verdana'
                   }"
                 ></q-editor>
-                <div style="float:right; margin:30px 0">
-                  <q-btn label="Save this lesson" color="deep-purple-9" @click="save(index)" />
-                </div>
               </div>
                 <!-- <q-btn label="save" @click="print"/> -->
             </div>
             <div class="col-3 search" style="padding-left:10px;">
+                <!-- <app-couser-search
+                :selectLink="save">
+                {{selectLink}}
+                </app-couser-search> -->
                 <q-chips-input
                   inverted
                   color="deep-purple-9"
@@ -88,6 +87,10 @@
                   <q-item v-for="result in searchResult" :key="result.URL">
                       <q-item-side>
                         <q-checkbox  color="deep-purple-6" v-model="seletedurl" :val="result.URL" />
+                        <!-- {{result.DisplayURL}}
+                        {{result.Name}}
+                        {{result.Snippet}}
+                        {{result.URL}} -->
                       </q-item-side>
                       <q-item-main><a :href="result.URL"  target="_blank" class="urllink">{{result.Name}}</a>
                         <q-tooltip class="tip" anchor="bottom middle" self="top middle" :offset="[10, 10]">
@@ -96,18 +99,13 @@
                       </q-item-main>
                   </q-item>
                 </q-list>
+                <div style="float:right; margin:30px 0">
+                <q-btn label="Save & Add New Lesson" color="deep-purple-9" @click="save" />
+                </div>
             </div>
             <q-card class="col-9 l" style="margin-bottom: 50px">
                 <q-card-title class="relative-position q-ma-sm">
                     <b style="color:gray">List of {{coursename}} Lesson</b>
-                     <q-btn
-                        class="absolute"
-                        icon="fas fa-plus"
-                        outline
-                        flat
-                        color="deep-purple-9"
-                        style="right: 8px;"
-                        @click="add"/>
                     <q-card-separator style="margin-top: 15px; margin-bottom: 15px"/>
                     <span slot="subtitle">
                       <q-field
@@ -186,7 +184,8 @@
                         label="Submit All Lessons"
                         class="absolute"
                         style="right: 8px;"
-                        @click="submit">
+                        @click="submit"
+                        :to="{name:'dashboard'}">
                         </q-btn>
                 </q-card-title>
             </q-card>
@@ -196,15 +195,9 @@
                   <q-card-separator style="margin-top: 15px; margin-bottom: 15px" />
                 </q-card-title>
                 <q-card-main class="link-list q-ma-xs" style="color:gray">
-                    <q-item v-for="(link,index) in seletedurl" :key="index">
+                    <q-item v-for="link in seletedurl" :key="link">
                       <q-item-side>
-                        <q-btn
-                          flat
-                          round
-                          icon="fas fa-minus-circle"
-                          outline
-                          color="deep-purple-5"
-                          @click="deletelink(index)"/>
+                        <i class="far fa-minus-square"></i>
                       </q-item-side>
                       <a :href="link" target="_blank" class="urllink">{{link}}</a>
                     </q-item>
@@ -232,14 +225,13 @@ export default {
   },
   data () {
     return {
-      lessonId: undefined,
       lessons: [
         {
           id: 0,
           title: 'A',
           editcontent: 'Content 1',
           isDisplay: true,
-          url: ''
+          url: []
         }
       ],
       j: 0,
@@ -252,11 +244,6 @@ export default {
       // lessonurl: []
     }
   },
-  // beforeRouteEnter (to, from, next) {
-  //   next(vm => {
-  //     vm.setLessonId(vm.$route.params.lessonId)
-  //   })
-  // },
   created () {
     this.coursename = this.course.name
   },
@@ -272,27 +259,25 @@ export default {
       console.log(this.selectedarea)
       console.log(this.selectedcourse)
       console.log(this.selectedstage)
-      console.log(this.lessons.length)
     }
   },
   methods: {
-    // save every single lesson
-    save (index) {
-      this.lessons[index].url = this.seletedurl
-      console.log(this.lessons[index].url)
-      this.seletedurl = []
-    },
-    // create new lesson
-    add () {
+    save () {
       var index = this.lessons.length
       var i
       for (i = 0; i < this.lessons.length; i++) {
         this.lessons[i].isDisplay = false
+        this.lessons[i].url = this.seletedurl
+        console.log(this.lessons[i].url)
       }
+      this.lessons.push({id: index++, editcontent: '', title: '', isDisplay: true, url: []})
       this.seletedurl = []
-      this.lessons.push({id: index++, editcontent: '', title: '', isDisplay: true, url: ''})
+      console.log(index)
+      // for (i = 0; i < this.lessons.length; i++) {
+      //   this.lessons[i].editcontent
+      //   this.lessons[i].title
+      // }
     },
-    // select lesson
     selectedLesson (selectedId) {
       var i
       console.log(selectedId)
@@ -300,11 +285,9 @@ export default {
         this.lessons[i].isDisplay = false
       }
       this.lessons[selectedId].isDisplay = true
-      if (this.lessons[selectedId].url === '') {
-        this.seletedurl = []
-      } else {
-        this.seletedurl = this.lessons[selectedId].url
-      }
+      this.seletedurl = this.lessons[selectedId].url
+      console.log(this.lessons[selectedId].url)
+      console.log(this.lessons[selectedId].editcontent)
     },
     // submit course plan to local storage
     submit () {
@@ -318,7 +301,6 @@ export default {
       // console.log({submitLessons})
       this.$store.dispatch('user/post', {submitLessons, area, course, subject, stage, description})
     },
-    // delete lesson
     removeLesson (index) {
       if (!this.blockRemoval) {
         if (index === this.lessons.length - 1) {
@@ -328,9 +310,6 @@ export default {
           this.lessons.splice(index, 1)
         }
       }
-    },
-    deletelink (index) {
-      this.seletedurl.splice(index, 1)
     },
     search () {
       console.log(this.keywords)
@@ -379,15 +358,12 @@ export default {
   display:block
 }
 .courseplan {
-  margin: 50px 200px
+  margin: 50px 100px
 }
 .addLesson{
   padding-top:0px;
   margin-top:10px;
   border: 1px solid #ccc;
-}
-.addLesson:hover{
-  box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12)
 }
 .singlerow{
   margin-left:0%;
@@ -424,15 +400,11 @@ h5{
   margin-bottom: 30px
 }
 .q-editor {
-  max-height: 711px;
   box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12)
 }
 .searchResult {
   height: 656px;
-  overflow: scroll;
-}
-.searchResult:hover {
-  box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12)
+  overflow: scroll
 }
 .tip {
   width: 420px;

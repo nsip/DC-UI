@@ -22,11 +22,11 @@
             </div>
             <div class="row q-ma-sm">
                 <div v-for="lesson in lessons" :key="lesson.lessonId" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <q-card inline class="course-card q-ma-sm">
+                    <q-card inline class="course-card">
                         <q-card-title>
                             <b>{{lesson.thecourse}}</b>
                             <span slot="subtitle">Learning Area: {{lesson.thearea}} | Subject: {{lesson.thesubject}} | Stage: {{lesson.thestage}}</span>
-                            <q-btn round flat icon="fas fa-edit" slot="right" color="deep-purple-6" :to="{name: 'modify', params:{ lessonId: lesson.lessonId, lesson }}"/>
+                            <q-btn round flat icon="fas fa-edit" slot="right" color="deep-purple-6" @click="editLesson"/>
                             <q-btn round flat icon="fas fa-trash-alt" slot="right" color="deep-purple-6" @click="deleteLesson(lesson.lessonId)" />
                         </q-card-title>
                         <q-card-separator />
@@ -79,10 +79,10 @@ export default {
       this.$store.dispatch('user/deleteLesson', index)
       console.log(index)
       console.log(this.$store.state.user.lessons)
+    },
+    editLesson () {
+      this.$router.push({ name: 'courseplaner', params: { lessonId: this.lessonId } })
     }
-    // editLesson () {
-    //   this.$router.push({ name: 'modify', params: { lessonId: this.lessonId } })
-    // }
   }
 }
 </script>
