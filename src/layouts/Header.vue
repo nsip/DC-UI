@@ -18,7 +18,7 @@
           <a href="/" style="color:white; text-decoration-line: none">
           <h4 style="margin: 5px 0">
             <i class="fab fa-drupal" style="font-size:40px; margin: 0 5px 0 0"></i>
-            <b>Hellow</b>
+            <b>Hello</b>
           </h4>
           </a>
           <div slot="subtitle"></div>

@@ -232,7 +232,7 @@ h6 {
     color: grey
 }
 .summary {
-    margin: 150px 200px 0px 200px;
+    margin: 50px 200px 0px 200px;
 }
 li {
     margin: 5px 0;

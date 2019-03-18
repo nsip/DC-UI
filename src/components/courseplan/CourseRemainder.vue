@@ -2,13 +2,13 @@
     <div>
         <div class="reminder">
             <q-card>
-            <q-card-title>
+            <q-card-title style="max-height:63px; overflow: scroll">
                 <b>The content must be included</b>
             </q-card-title>
             <q-card-separator inset/>
             <q-list>
-                <q-list-header>
-                    Course Name
+                <q-list-header style="max-height:46px; overflow: scroll">
+                    Course Name: {{course}}
                 </q-list-header>
                 <div class="fix-hight">
                     <q-item v-for="detail in course.content_areas" :key="detail">
@@ -98,7 +98,7 @@ b {
     color: gray
 }
 .fix-hight {
-    max-height: 103px;
+    max-height: 146px;
     overflow: scroll
 }
 </style>
