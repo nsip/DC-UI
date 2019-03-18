@@ -43,10 +43,22 @@ export function post ({commit, state}, {submitLessons, area, course, subject, st
         thestage,
         thedescription
       })
+    } else {
+      for (let i of lessons) {
+        if (parseInt(i.lessonId) === parseInt(lessonId)) {
+          i.lesson = lesson
+          i.thearea = area
+          i.thecourse = course
+          i.thesubject = subject
+          i.thestage = stage
+          i.thedescription = description
+          break
+        }
+      }
     }
     commit('UPDATE_LESSONS', lessons)
     console.log(lessons)
-    // router.push({ name: 'dashboard', params: {lessonId} })
+    this.$router.push({ name: 'dashboard', params: {lessonId} })
   }
 }
 export function deleteLesson ({commit, state}, payload) {

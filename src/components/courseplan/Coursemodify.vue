@@ -11,10 +11,10 @@
             <transition name="slide-fade">
             <div v-if="!isShow" class="col-3" style="padding-right:10px">
                 <app-couser-reminder
-                  :course="coursename"
-                  :selectedarea="selectedarea"
-                  :selectedcourse="selectedcourse"
-                  :selectedstage="selectedstage" />
+                  :course="lesson.thecourse"
+                  :selectedarea="lesson.thearea"
+                  :selectedcourse="lesson.thesubject"
+                  :selectedstage="lesson.thestage" />
             </div>
             </transition>
             <div :class="isShow?'col-9':'col-6'">
@@ -69,7 +69,7 @@
                   }"
                 ></q-editor>
                 <div style="float:right; margin:30px 0">
-                  <q-btn label="Save this lesson" color="deep-purple-9" @click="save(index)" />
+                <q-btn label="Save this lesson" color="deep-purple-9" @click="save(index)" />
                 </div>
               </div>
                 <!-- <q-btn label="save" @click="print"/> -->
@@ -99,8 +99,8 @@
             </div>
             <q-card class="col-9 l" style="margin-bottom: 50px">
                 <q-card-title class="relative-position q-ma-sm">
-                    <b style="color:gray">List of {{coursename}} Lesson</b>
-                     <q-btn
+                    <b style="color:gray">List of {{lesson.thecourse}} Lesson</b>
+                    <q-btn
                         class="absolute"
                         icon="fas fa-plus"
                         outline
@@ -116,7 +116,7 @@
                         label="Lesson Description"
                       >
                         <q-input
-                          v-model="description"
+                          v-model="lesson.thedescription"
                           color="deep-purple-9" />
                       </q-field>
                     </span>
@@ -178,7 +178,7 @@
                 </q-card-main>
                 <q-item-separator />
                 <q-card-title class="relative-position q-ma-sm">
-                  <b style="color:gray">Learning Arae: {{selectedarea}} | Subject: {{selectedcourse}} | Stage: {{selectedstage}}</b>
+                  <b style="color:gray">Learning Arae: {{lesson.thearea}} | Subject: {{lesson.thesubject}} | Stage: {{lesson.thestage}}</b>
                     <q-btn
                         flat
                         outline
@@ -214,16 +214,21 @@
         <div class="left-btn">
             <q-btn push icon="adb" align="between" label="Reminder" color="deep-purple-9" @click="isShow=!isShow"></q-btn>
         </div>
-    </div>
+  </div>
 </template>
+
 <script>
 import CouserRemainder from './CourseRemainder.vue'
-// import CouserEditor from './CourseEditor.vue'
-// import CouserSearch from './CourseSearch.vue'
+// // import CouserEditor from './CourseEditor.vue'
+// // import CouserSearch from './CourseSearch.vue'
 import draggable from 'vuedraggable'
-
 export default {
-  props: ['course', 'selectedarea', 'selectedcourse', 'selectedstage'],
+  props: {
+    lesson: {
+      type: Object,
+      default: () => {}
+    }
+  },
   components: {
     appCouserReminder: CouserRemainder,
     // appCouserEditor: CouserEditor,
@@ -237,52 +242,40 @@ export default {
         {
           id: 0,
           title: 'A',
-          editcontent: 'Content 1',
+          editcontent: '',
           isDisplay: true,
           url: ''
         }
       ],
-      j: 0,
       isShow: true,
       blockRemoval: true,
       coursename: '',
       keywords: [],
       searchResult: [],
       seletedurl: []
-      // lessonurl: []
     }
-  },
-  // beforeRouteEnter (to, from, next) {
-  //   next(vm => {
-  //     vm.setLessonId(vm.$route.params.lessonId)
-  //   })
-  // },
-  created () {
-    this.coursename = this.course.name
   },
   watch: {
     lessons () {
       this.blockRemoval = this.lessons.length <= 1
-    },
-    // checkResult () {
-    //   this.checkResult = checkResult
-    // },
-    coursename: function () {
-      console.log(this.coursename)
-      console.log(this.selectedarea)
-      console.log(this.selectedcourse)
-      console.log(this.selectedstage)
-      console.log(this.lessons.length)
     }
   },
+  created () {
+    this.lessonId = this.lesson.lessonId
+    this.lessons = this.lesson.lesson
+    this.j = this.lessons.length
+  },
+  // computed: {
+  //   seletedurl () {
+
+  //   }
+  // },
   methods: {
-    // save every single lesson
     save (index) {
       this.lessons[index].url = this.seletedurl
       console.log(this.lessons[index].url)
       this.seletedurl = []
     },
-    // create new lesson
     add () {
       var index = this.lessons.length
       var i
@@ -292,10 +285,8 @@ export default {
       this.seletedurl = []
       this.lessons.push({id: index++, editcontent: '', title: '', isDisplay: true, url: ''})
     },
-    // select lesson
     selectedLesson (selectedId) {
       var i
-      console.log(selectedId)
       for (i = 0; i < this.lessons.length; i++) {
         this.lessons[i].isDisplay = false
       }
@@ -306,19 +297,18 @@ export default {
         this.seletedurl = this.lessons[selectedId].url
       }
     },
-    // submit course plan to local storage
     submit () {
-      const description = this.description
+      const lessonId = this.lessonId
+      const description = this.lesson.thedescription
       const submitLessons = this.lessons
-      const area = this.selectedarea
-      const course = this.course.name
-      const subject = this.selectedcourse
-      const stage = this.selectedstage
+      const area = this.lesson.thearea
+      const course = this.lesson.thecourse
+      const subject = this.lesson.thesubject
+      const stage = this.lesson.thestage
       // console.log(submitLessons)
       // console.log({submitLessons})
-      this.$store.dispatch('user/post', {submitLessons, area, course, subject, stage, description})
+      this.$store.dispatch('user/post', {submitLessons, area, course, subject, stage, description, lessonId})
     },
-    // delete lesson
     removeLesson (index) {
       if (!this.blockRemoval) {
         if (index === this.lessons.length - 1) {
@@ -333,7 +323,6 @@ export default {
       this.seletedurl.splice(index, 1)
     },
     search () {
-      console.log(this.keywords)
       const axios = require('axios')
       axios({
         url: 'http://localhost:1330/search/graphql',
@@ -364,7 +353,6 @@ export default {
         }
       }).then((res) => {
         this.searchResult = res.data.data.searchRequest.WebPages.Value
-        console.log(this.searchResult)
       })
     }
   }
@@ -424,12 +412,12 @@ h5{
   margin-bottom: 30px
 }
 .q-editor {
-  max-height: 711px;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12)
+  box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
+  max-height: 711px
 }
 .searchResult {
   height: 656px;
-  overflow: scroll;
+  overflow: scroll
 }
 .searchResult:hover {
   box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12)
