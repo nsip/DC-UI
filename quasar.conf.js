@@ -9,7 +9,7 @@ module.exports = function (ctx) {
       'particles',
       'vuelidate',
       'grid',
-      'before-each'
+      'before-each',
     ],
     css: [
       'app.styl'
@@ -85,7 +85,7 @@ module.exports = function (ctx) {
         'QBtnDropdown',
         'QParallax',
         'QSpinner',
-        'QSpinnerAudio'
+        'QSpinnerAudio',
       ],
       directives: [
         'Ripple',
@@ -93,7 +93,8 @@ module.exports = function (ctx) {
       ],
       // Quasar plugins
       plugins: [
-        'Notify'
+        'Notify',
+        'Dialog'
       ],
       iconSet: 'fontawesome'
       // i18n: 'de' // Quasar language

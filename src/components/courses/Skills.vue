@@ -6,7 +6,7 @@
                         <b>{{inquiry_skill.name}}</b>
                     </q-list-header>
                 <q-item>
-                    <q-item-main>
+                    <q-item-main class="text-dark">
                         <ul>
                             <li v-for="skill in inquiry_skill.skills" :key="skill.skill">
                                 {{skill.skill}}

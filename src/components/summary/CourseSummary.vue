@@ -38,7 +38,7 @@
                     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 input">
                         <q-select
                             class="select"
-                            stack-label="Choses the stage"
+                            stack-label="Choose the stage"
                             inverted-light
                             color="white"
                             separator
@@ -60,17 +60,17 @@
                     </div>
                 </div>
         </div>
-        <hr>
-        <div class="summary">
+        <hr class="line">
+        <div class="summary row list">
         <transition-group
           appear
           enter-active-class="animated fadeInRight"
           class="group">
-            <q-card inline class="q-ma-sm course-card" color="white" text-color="black" v-for="course in resultCotent.courses" :key="course.name">
-                <q-card-title class="relative-position">
+            <q-card inline class="q-ma-sm course-card" color="white" text-color="dark" v-for="course in resultCotent.courses" :key="course.name">
+                <q-card-title class="relative-position text-deep-purple-6">
                     <p><b>{{course.name}}</b></p>
                     <span slot="subtitle">10 weeks - 25 hours</span>
-                    <q-btn round flat icon="more_vert" slot="right">
+                    <q-btn round flat icon="more_vert" slot="right" color="deep-purple-4">
                         <q-popover>
                             <q-list link class="no-border">
                             <q-item v-close-overlay>
@@ -142,28 +142,10 @@ export default {
     selectedcourse: { required },
     selectedstage: { required }
   },
-  // watch: {
-  // selectedstage (newValue, oldValue) {
-  //   this.resultData = null
-  //   axios
-  //     .get(`./../../demoData/stage${newValue}/content.json`)
-  //     .then(response => {
-  //       this.$store.commit('stage/setStageData', response)
-  //       this.resultData = response.data.courses
-  //     })
-  //     //   console.log(this.selectedarea)
-  //     //   console.log(this.selectedcourse)
-  //     //   console.log(this.selectedstage)
-  // }
-  // },
-  // created () {
-  // axios
-  //   .get('./../../demoData/stage5.json')
-  //   .then(response => {
-  //     this.$store.commit('stage/setStageData', response)
-  //   })
-  // }
   methods: {
+    clearData () {
+      this.selectedarea = this.selectedcourse = this.selectedstage = ''
+    },
     getReslut () {
       const axios = require('axios')
       this.loading = true
@@ -207,9 +189,20 @@ export default {
             }
           }
         }).then((result) => {
-          this.resultAll = result.data.data
-          this.resultCotent = result.data.data.content
-          this.resultOverview = result.data.data.overview
+          if (result.data.data.content === null) {
+            this.$q.notify({
+              color: 'amber',
+              textColor: 'white',
+              icon: 'fas fa-info',
+              message: 'The results do not exist, please click here to choose others',
+              position: 'bottom',
+              actions: [ { label: 'OK', handler: () => this.clearData() } ]
+            })
+          } else {
+            this.resultAll = result.data.data
+            this.resultCotent = result.data.data.content
+            this.resultOverview = result.data.data.overview
+          }
         })
       }, 2000)
     }
@@ -229,40 +222,40 @@ export default {
   border-right: 1px lightgray solid
 }
 h6 {
-    color: grey
+  color: grey
+}
+.line {
+  margin: 50px 0 0 0
 }
 .summary {
-    margin: 50px 200px 0px 200px;
+  margin: 50px 200px 0px 200px;
 }
 li {
-    margin: 5px 0;
+  margin: 5px 0;
 }
 .q-card-separator {
-    margin-bottom: 10px
+  margin-bottom: 10px
 }
 .q-card-main b {
-    color: #4527a0
+  color: #4527a0
 }
 ul{
-    list-style:  none;
+  list-style:  none;
 }
 .searchbox p {
-    font-size: 18px;
-    color: grey
+  font-size: 18px;
+  color: grey
 }
 .searchbox {
-    margin-top: 50px
-}
-hr {
-    margin: 24px 0 50px 0
+  margin-top: 50px
 }
 .right-btn{
-    position:fixed;
-    bottom: -4px;
-    right: 10px
+  position:fixed;
+  bottom: -4px;
+  right: 10px
 }
-.link{
-    text-decoration:none;
+.link {
+  text-decoration: none
 }
 .no-border{
   color: #4527a0;

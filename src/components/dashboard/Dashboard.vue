@@ -22,8 +22,8 @@
             </div>
             <div class="row q-ma-sm">
                 <div v-for="lesson in lessons" :key="lesson.lessonId" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <q-card inline class="course-card q-ma-sm">
-                        <q-card-title>
+                    <q-card inline class="course-card" text-color="dark">
+                        <q-card-title class="text-deep-purple-6">
                             <b>{{lesson.thecourse}}</b>
                             <span slot="subtitle">Learning Area: {{lesson.thearea}} | Subject: {{lesson.thesubject}} | Stage: {{lesson.thestage}}</span>
                             <q-btn round flat icon="fas fa-edit" slot="right" color="deep-purple-6" :to="{name: 'modify', params:{ lessonId: lesson.lessonId, lesson }}"/>
@@ -76,13 +76,17 @@ export default {
   },
   methods: {
     deleteLesson (index) {
-      this.$store.dispatch('user/deleteLesson', index)
-      console.log(index)
-      console.log(this.$store.state.user.lessons)
+      this.$q.dialog({
+        title: 'Comfirm',
+        message: 'Are you sure to delete this lesson?',
+        color: 'deep-purple-6',
+        ok: true,
+        cancel: true
+      }).then(() => {
+        this.$store.dispatch('user/deleteLesson', index)
+      }).catch(() => {
+      })
     }
-    // editLesson () {
-    //   this.$router.push({ name: 'modify', params: { lessonId: this.lessonId } })
-    // }
   }
 }
 </script>
@@ -103,29 +107,8 @@ export default {
     border-radius: 0;
     position: relative
 }
-/* .card-link:before,
-.card-link:after {
-    content: "";
-    width: 0;
-    height: 2px;
-    background: #4527a0;
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transition: all .8s ;
-}
-.card-link:hover:before{
-    left:0%;
-    width:50%;
-}
-.card-link:hover:after{
-    width: 50%;
-}
-.card-link:hover,
-.card-link:active {
-    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-} */
 .course-card {
+    margin-bottom: 10px;
     width: 100%;
     background-color: white;
     /* transition: background-color 1.5s, color 1.5s; */

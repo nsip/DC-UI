@@ -11,7 +11,7 @@
             <transition name="slide-fade">
             <div v-if="!isShow" class="col-3" style="padding-right:10px">
                 <app-couser-reminder
-                  :course="lesson.thecourse"
+                  :coursename="lesson.thecourse"
                   :selectedarea="lesson.thearea"
                   :selectedcourse="lesson.thesubject"
                   :selectedstage="lesson.thestage" />
@@ -68,13 +68,25 @@
                     verdana: 'Verdana'
                   }"
                 ></q-editor>
+                <q-list class="bottom-tips">
+                  <q-item>
+                    <q-item-side>
+                      <p>Title: {{ lesson.title }}</p>
+                    </q-item-side>
+                    <q-item-main style="text-align:center" text-color="dark">
+                      <p style="font-size:14px;"><i class="far fa-smile" style="margin-right:10px;"/>Please remeber click save button, when you make any changes.</p>
+                    </q-item-main>
+                    <q-item-side right>
+                      <p>Lesson No.{{ index + 1 }}</p>
+                    </q-item-side>
+                  </q-item>
+                </q-list>
                 <div style="float:right; margin:30px 0">
-                <q-btn label="Save this lesson" color="deep-purple-9" @click="save(index)" />
+                <q-btn label="Save this lesson" color="deep-purple-9" icon="save" @click="save(index)" />
                 </div>
               </div>
-                <!-- <q-btn label="save" @click="print"/> -->
             </div>
-            <div class="col-3 search" style="padding-left:10px;">
+            <div class="col-3" style="padding-left:10px;">
                 <q-chips-input
                   inverted
                   color="deep-purple-9"
@@ -82,12 +94,14 @@
                   chips-bg-color="white"
                   v-model="keywords"
                   float-label="Enter the key words"
+                  class="search-input"
                   @keyup="search">
                 </q-chips-input>
+                <div class="search">
                 <q-list class="searchResult">
                   <q-item v-for="result in searchResult" :key="result.URL">
                       <q-item-side>
-                        <q-checkbox  color="deep-purple-6" v-model="seletedurl" :val="result.URL" />
+                        <q-checkbox  color="deep-purple-6" v-model="seletedurl" :val="result" />
                       </q-item-side>
                       <q-item-main><a :href="result.URL"  target="_blank" class="urllink">{{result.Name}}</a>
                         <q-tooltip class="tip" anchor="bottom middle" self="top middle" :offset="[10, 10]">
@@ -96,6 +110,17 @@
                       </q-item-main>
                   </q-item>
                 </q-list>
+                <q-list class="bottom-tips">
+                  <q-item>
+                    <q-item-side style="text-align:center">
+                      <i class="far fa-smile" />
+                    </q-item-side>
+                    <q-item-main>
+                      <p class="tips">Please remeber click save button when you make any change in each lesson.</p>
+                    </q-item-main>
+                  </q-item>
+                </q-list>
+              </div>
             </div>
             <q-card class="col-9 l" style="margin-bottom: 50px">
                 <q-card-title class="relative-position q-ma-sm">
@@ -120,25 +145,11 @@
                           color="deep-purple-9" />
                       </q-field>
                     </span>
-                    <!-- <q-btn
-                        flat
-                        outline
-                        color="deep-purple-5"
-                        icon="fas fa-plus"
-                        class="absolute"
-                        style="right: 8px;">
-                        <q-tooltip
-                            anchor="bottom middle"
-                            self="top middle"
-                            :offset="[10, 10]"
-                            :delay="800"
-                        >Add Lesson</q-tooltip>
-                    </q-btn> -->
                 </q-card-title>
                 <q-item-separator />
                 <q-card-main class="lesson-list">
                         <draggable class="row" v-model="lessons" :options="{handle:'.my-handle'}" style="text-align:center; position: relative;">
-                            <div class="col-2" v-for="(lesson, index) in lessons" :key="index">
+                            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12" v-for="(lesson, index) in lessons" :key="index">
                                 <q-list class="q-ma-xs addLesson">
                                     <q-item>
                                     <q-item-side left>
@@ -179,19 +190,20 @@
                 <q-item-separator />
                 <q-card-title class="relative-position q-ma-sm">
                   <b style="color:gray">Learning Arae: {{lesson.thearea}} | Subject: {{lesson.thesubject}} | Stage: {{lesson.thestage}}</b>
+                  <div slot="right" class="row items-center">
                     <q-btn
                         flat
                         outline
                         color="deep-purple-5"
                         label="Submit All Lessons"
-                        class="absolute"
-                        style="right: 8px;"
                         @click="submit">
-                        </q-btn>
+                    </q-btn>
+                  </div>
                 </q-card-title>
             </q-card>
             <q-card class="col-3 l" style="margin-bottom: 50px; border-left:none">
                 <q-card-title class="relative-position q-ma-sm">
+                  <i style="color:#ffc107; margin-right:10px" class="fas fa-link" />
                   <b style="color:gray">Related Resouse Link</b>
                   <q-card-separator style="margin-top: 15px; margin-bottom: 15px" />
                 </q-card-title>
@@ -206,7 +218,7 @@
                           color="deep-purple-5"
                           @click="deletelink(index)"/>
                       </q-item-side>
-                      <a :href="link" target="_blank" class="urllink">{{link}}</a>
+                      <a :href="link" target="_blank" class="urllink">{{link.Name}}</a>
                     </q-item>
                 </q-card-main>
             </q-card >
@@ -367,12 +379,13 @@ export default {
   display:block
 }
 .courseplan {
-  margin: 50px 200px
+  margin: 50px 100px
 }
 .addLesson{
   padding-top:0px;
   margin-top:10px;
   border: 1px solid #ccc;
+  transition: box-shadow 1.5s
 }
 .addLesson:hover{
   box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12)
@@ -409,17 +422,31 @@ h5{
   overflow-y:scroll
 }
 .editor{
-  margin-bottom: 30px
+  margin-bottom: 30px;
+  transition: box-shadow 1.5s
+}
+.editor:hover {
+  box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12)
 }
 .q-editor {
-  box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
-  max-height: 711px
+  height: 711px;
+  max-height: 711px;
+  border: 1px solid #e0e0e0;
+  border-bottom: none;
+  overflow: scroll;
+  /* box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12) */
 }
 .searchResult {
-  height: 656px;
+  height: 655px;
+  max-height: 655px;
+  border-bottom: none;
   overflow: scroll
 }
-.searchResult:hover {
+.search {
+  transition: box-shadow 1.5s;
+  overflow: scroll;
+}
+.search:hover {
   box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12)
 }
 .tip {
@@ -438,5 +465,27 @@ h5{
 .l {
   box-shadow: none;
   border: 1px lightgray solid;
+}
+.tips {
+  font-size:10px;
+  margin: 0px;
+  color: #737373
+}
+.bottom-tips p {
+  margin: 0px;
+  color: #737373;
+}
+.bottom-tips i {
+  color:#ffc107;
+  font-size: 16px;
+}
+.bottom-tips {
+  max-height: 58px;
+  overflow: scroll
+}
+.search-input {
+  height: 56px;
+  max-height: 56px;
+  overflow: scroll
 }
 </style>

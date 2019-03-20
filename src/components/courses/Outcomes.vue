@@ -3,110 +3,19 @@
         <h6><b>Outcomes</b></h6>
             <div class="outcome-list" v-for="outcome in course.outcomes" :key="outcome.id">
                 <q-list>
-                    <!--
-                    <q-list-header>
-                        A student:
-                    </q-list-header>
-                    -->
                 <q-item>
                     <q-item-side>
                         <q-item-tile>
                             {{outcome.id}}
                         </q-item-tile>
                     </q-item-side>
-                    <q-item-main>
+                    <q-item-main class="text-dark">
                         A student {{outcome.description}}
                     </q-item-main>
                 </q-item>
                 <q-item-separator inset/>
-                <!--
-                    <q-item>
-                    <q-item-side>
-                        <q-item-tile>
-                            GE5-3
-                        </q-item-tile>
-                    </q-item-side>
-                    <q-item-main>
-                        Analyses the effect of interactions and connections between people, places and environments
-                    </q-item-main>
-                </q-item>
-                <q-item-separator inset/>
-                                <q-item>
-                    <q-item-side>
-                        <q-item-tile>
-                            GE5-5
-                        </q-item-tile>
-                    </q-item-side>
-                    <q-item-main>
-                        Assesses management strategies for places and environments for their sustainability
-                    </q-item-main>
-                </q-item>
-                <q-item-separator inset/>
-                                <q-item>
-                    <q-item-side>
-                        <q-item-tile>
-                            GE5-6
-                        </q-item-tile>
-                    </q-item-side>
-                    <q-item-main>
-                        Analyses differences in human wellbeing and ways to improve human wellbeing
-                    </q-item-main>
-                </q-item>
-                <q-item-separator inset/>
-                                <q-item>
-                    <q-item-side>
-                        <q-item-tile>
-                            GE5-7
-                        </q-item-tile>
-                    </q-item-side>
-                    <q-item-main>
-                        Acquires and processes geographical information by selecting and using appropriate and relevant geographical tools for inquiry
-                    </q-item-main>
-                </q-item>
-                <q-item-separator inset/>
-                -->
                 </q-list>
             </div>
-            <!-- <h6><b>Related Life Skills outcomes</b></h6>
-            <div class="row">
-            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 skill-outcome" v-for="lifeskill in course.lifeskills_outcomes" :key="lifeskill">
-                <q-card inline class="q-ma-sm">
-                    <q-card-main>
-                        {{lifeskill}}
-                    </q-card-main>
-                </q-card>
-            </div>
-            </div> -->
-            <!--
-            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 skill-outcome">
-            <q-card inline class="q-ma-sm">
-                <q-card-main>
-                    GELS-2
-                </q-card-main>
-            </q-card>
-            </div>
-            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 skill-outcome">
-            <q-card inline class="q-ma-sm">
-                <q-card-main>
-                    GELS-6
-                </q-card-main>
-            </q-card>
-            </div>
-            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 skill-outcome">
-            <q-card inline class="q-ma-sm">
-                <q-card-main>
-                    GELS-7
-                </q-card-main>
-            </q-card>
-            </div>
-            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 skill-outcome">
-            <q-card inline class="q-ma-sm">
-                <q-card-main>
-                    GELS-8
-                </q-card-main>
-            </q-card>
-            </div>
-            -->
     </div>
 </template>
 

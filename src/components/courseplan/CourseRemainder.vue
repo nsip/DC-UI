@@ -1,23 +1,25 @@
 <template>
     <div>
         <div class="reminder">
-            <q-card>
-            <q-card-title style="max-height:63px; overflow: scroll">
+            <q-card class="reminder-list" text-color="dark">
+            <q-card-title class="reminder-title">
                 <b>The content must be included</b>
             </q-card-title>
             <q-card-separator inset/>
-            <q-list>
-                <q-list-header style="max-height:46px; overflow: scroll">
-                    Course Name: {{course}}
+            <q-list style="max-height:703">
+                <q-list-header class="reminder-header">
+                    <i class="fas fa-chalkboard" />
+                    {{coursename}}
                 </q-list-header>
                 <div class="fix-hight">
-                    <q-item v-for="detail in course.content_areas" :key="detail">
+                    <q-item v-for="detail in coursecontent" :key="detail">
                         <q-item-main>{{detail.name}}</q-item-main>
                     </q-item>
                 </div>
                 <q-item-separator />
-                <q-list-header>
-                    The Tools
+                <q-list-header class="reminder-header">
+                    <i class="far fa-file-alt" />
+                    The Concepts
                 </q-list-header>
                 <div class="fix-hight">
                 <q-item v-for="concept in Overview.concepts" :key="concept.name">
@@ -25,7 +27,8 @@
                 </q-item>
                 </div>
                 <q-item-separator />
-                <q-list-header>
+                <q-list-header class="reminder-header">
+                    <i class="fas fa-atom" />
                     The Skills
                 </q-list-header>
                 <div class="fix-hight">
@@ -34,8 +37,9 @@
                     </q-item>
                 </div>
                 <q-item-separator />
-               <q-list-header>
-                  The Concepts
+               <q-list-header class="reminder-header">
+                   <i class="fas fa-hammer" />
+                  The Tools
                 </q-list-header>
                 <div class="fix-hight">
                     <q-item v-for="tool in Overview.tools" :key="tool.name">
@@ -49,10 +53,12 @@
 </template>
 <script>
 export default {
-  props: ['course', 'selectedarea', 'selectedcourse', 'selectedstage'],
+  props: ['course', 'coursename', 'selectedarea', 'selectedcourse', 'selectedstage'],
   data: () => {
     return {
-      Overview: []
+      Overview: [],
+      Content: [],
+      coursecontent: []
     }
   },
   mounted () {
@@ -73,6 +79,14 @@ export default {
                         name
                     }
                 }
+                content(state: $state, learning_area: $learning_area, subject: $subject, stage: $stage){
+                    courses {
+                        name
+                        content_areas {
+                            name
+                        }
+                    }
+                }
             }`,
         variables: {
           state: 'nsw',
@@ -83,22 +97,50 @@ export default {
       }
     }).then((result) => {
       this.Overview = result.data.data.overview
+      this.Content = result.data.data.content.courses
+      // console.log(this.Content)
+      var i
+      for (i = 0; i < this.Content.length; i++) {
+        if (this.coursename === this.Content[i].name) {
+          this.coursecontent = this.Content[i].content_areas
+        }
+      }
     })
   }
 }
 </script>
 <style scoped>
 b {
-    color: gray;
+    color:#311b92;
 }
 .reminder {
     margin-top:0px
+}
+.reminder-list {
+    box-shadow: none;
+    border: 1px solid #e0e0e0;
+    transition: box-shadow 1.5s;
+}
+.reminder-list:hover {
+    box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12)
 }
 .reminder p{
     color: gray
 }
 .fix-hight {
-    max-height: 146px;
+    max-height: 117px;
+    overflow: scroll
+}
+.reminder-header i {
+    margin-right: 5px;
+    color: #ffc107;
+}
+.reminder-header {
+    max-height: 48px;
+    overflow: scroll
+}
+.reminder-title {
+    max-height: 64px;
     overflow: scroll
 }
 </style>

@@ -27,7 +27,7 @@ h6 {
     color: rgb(117, 117, 117)
 }
 ul{
-    list-style:square;
+    list-style: disc;
     text-align: justify;
 }
 li {
@@ -36,6 +36,7 @@ li {
 .q-card {
     width: 100%;
     transition: background-color 1.5s, color 1.5s;
+    color: #424242;
     cursor: default
 }
 .q-card:hover {

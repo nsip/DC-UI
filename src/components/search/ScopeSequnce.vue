@@ -38,7 +38,7 @@
     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 input">
           <q-select
             class="select"
-            stack-label="Choses the stage"
+            stack-label="Choose the stage"
             inverted-light
             color="white"
             separator
@@ -50,7 +50,7 @@
     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 input">
             <q-select
             class="select"
-            stack-label="Choses the year"
+            stack-label="Choose the year"
             inverted-light
             color="white"
             separator
@@ -72,7 +72,7 @@
     </div>
   </div>
   </div>
-    <hr style="margin-top: 50px">
+    <hr class="line">
     <div class="row list">
       <!-- <q-input v-model="selectedstage" /> -->
       <!-- {{resultData}} -->
@@ -81,7 +81,7 @@
           enter-active-class="animated fadeInUp"
           class="group">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 one-card" v-for="course in resultCotent.courses" :key="course.name">
-        <q-card inline square color="white" text-color="black" class="q-ma-sm course-card">
+        <q-card inline square color="white" text-color="dark" class="q-ma-sm course-card">
           <q-card-title class="text-deep-purple-4">
             {{course.name}}
             <span slot="subtitle">Stage: {{ selectedstage }} - Year: {{ selectedyear }}</span>
@@ -142,6 +142,9 @@ export default {
     selectedyear: { required }
   },
   methods: {
+    clearData () {
+      this.selectedarea = this.selectedcourse = this.selectedstage = this.selectedyear = ''
+    },
     getReslut () {
       const axios = require('axios')
       this.loading = true
@@ -187,23 +190,23 @@ export default {
             }
           }
         }).then((result) => {
-          this.resultAll = result.data.data
-          this.resultCotent = result.data.data.content
-          this.resultOverview = result.data.data.overview
-          // console.log(result.data.data)
-          // console.log(result.data.data.content)
+          if (result.data.data.content === null) {
+            this.$q.notify({
+              color: 'amber',
+              textColor: 'white',
+              icon: 'fas fa-info',
+              message: 'The results do not exist, please click here to choose others',
+              position: 'bottom',
+              actions: [ { label: 'OK', handler: () => this.clearData() } ]
+            })
+          } else {
+            this.resultAll = result.data.data
+            this.resultCotent = result.data.data.content
+            this.resultOverview = result.data.data.overview
+          }
         })
       }, 2000)
     }
-    // simulateProgress (number) {
-    //   // we set loading state
-    //   this[`loading${number}`] = true
-    //   // simulate a delay
-    //   setTimeout(() => {
-    //     // we're done, we reset loading state
-    //     this[`loading${number}`] = false
-    //   }, 3000)
-    // }
   },
   computed: {
     yearsList () {
@@ -282,7 +285,7 @@ export default {
 </script>
 <style scoped>
 .search {
-  margin: 150px 200px 0px 200px
+  margin: 50px 200px 0px 200px
 }
 .search-btn {
   height: 56px;
@@ -296,6 +299,9 @@ export default {
 }
 .searchbox {
   margin-top: 50px
+}
+.line {
+  margin: 50px 0 0 0
 }
 .list {
   margin: 50px 200px 0 200px

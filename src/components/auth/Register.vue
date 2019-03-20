@@ -1,7 +1,8 @@
 <template>
 <q-page class="card-postion">
-    <div class="row card" style="margin:100px auto; height:600px; width:1000px">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 background">
+    <q-card class="row card">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+          <img src="../../assets/register.png" alt="">
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 sign-up">
             <div>
@@ -75,7 +76,7 @@
                 <q-btn @click="register" icon="fas fa-user-plus" label="SIGN UP" style="width: 50%" color="deep-purple-9" />
             </div>
             </div>
-    </div>
+    </q-card>
 </q-page>
 </template>
 <script>
@@ -147,18 +148,19 @@ export default {
 </script>
 <style scoped>
 .background{
-    border-radius: 9px 0 0 9px;
-    background-image: url("../../assets/register.png");
+    /* border-radius: 9px 0 0 9px;
+    background-image: url("../../assets/register.png"); */
     -webkit-filter: brightness(0.90);
     filter: brightness(0.90);
-    background-repeat: no-repeat;
-    padding: 20px;
+    /* background-repeat: no-repeat;
+    padding: 20px; */
 }
 .card {
     background-color: white;
-    border:1px solid rgb(185, 172, 202);
-    border-radius:10px;
-    box-shadow: 2px 2px 2px #888888;
+    margin:100px auto;
+    height:600px;
+    width:1000px;
+    overflow: hidden;
 }
 .sign-up {
      padding: 50px 50px 50px 10px;
