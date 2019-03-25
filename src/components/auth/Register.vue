@@ -103,36 +103,38 @@ export default {
     }
   },
   methods: {
-    //  Register
+    // Register
     // provide data to local storage
     register () {
-      // check picture
-      // if (this.captcha.toUpperCase() !== this.localCaptcha) {
-      //   this.getCaptcha()
-      // } else {
-      // check user
-      const user = {
-        name: this.username,
-        email: this.email,
-        password: this.password
-        // avatar: `https://api.adorable.io/avatars/200/${this.username}.png`
-      }
-      const localUser = this.$store.state.user.user
-      if (localUser) {
-        if (localUser.name === user.name) {
-          this.$q.notify({
-            message: `User is already exsiting`,
-            color: 'pink-5',
-            icon: 'fas fa-info-circle',
-            position: 'top'
-          })
+      if (this.username === '' || this.email === '' || this.password === '') {
+        this.$q.notify({
+          message: `Please fill all the empty box`,
+          color: 'pink-5',
+          icon: 'fas fa-info-circle',
+          position: 'top'
+        })
+      } else {
+        const user = {
+          name: this.username,
+          email: this.email,
+          password: this.password
+        }
+        const localUser = this.$store.state.user.user
+        if (localUser) {
+          if (localUser.name === user.name) {
+            this.$q.notify({
+              message: `User is already exsiting`,
+              color: 'pink-5',
+              icon: 'fas fa-info-circle',
+              position: 'top'
+            })
+          } else {
+            this.login(user)
+          }
         } else {
           this.login(user)
         }
-      } else {
-        this.login(user)
       }
-      // }
     },
     login (user) {
       this.$store.dispatch('user/login', user)

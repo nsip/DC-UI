@@ -86,6 +86,8 @@ module.exports = function (ctx) {
         'QParallax',
         'QSpinner',
         'QSpinnerAudio',
+        'QFab',
+        'QFabAction'
       ],
       directives: [
         'Ripple',

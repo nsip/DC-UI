@@ -220,7 +220,7 @@
                           color="deep-purple-5"
                           @click="deletelink(index)"/>
                       </q-item-side>
-                      <a :href="link" target="_blank" class="urllink">{{link.Name}}</a>
+                      <a :href="link.URL" target="_blank" class="urllink">{{link.Name}}</a>
                     </q-item>
                 </q-card-main>
             </q-card >

@@ -26,10 +26,10 @@
           <app-entry></app-entry>
       </q-toolbar>
     </q-layout-header>
-
     <q-layout-drawer
       v-model="leftDrawerOpen"
       :content-class="['bg-whitesmoke', 'q-pa-sm']"
+      class="leftdrawer"
     >
       <q-list
         no-border
@@ -112,3 +112,5 @@ export default {
   // }
 }
 </script>
+<style scoped>
+</style>

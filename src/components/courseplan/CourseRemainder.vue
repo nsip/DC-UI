@@ -128,6 +128,7 @@ b {
     color: gray
 }
 .fix-hight {
+    height: 117px;
     max-height: 117px;
     overflow: scroll
 }

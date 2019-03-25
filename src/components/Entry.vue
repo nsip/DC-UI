@@ -7,8 +7,7 @@
                 flat
                 color="withe"
                 size="md"
-                :label="user.name"
-            >
+                :label="user.name">
                 <q-list link>
                     <q-item>
                         <q-item-main>
@@ -67,7 +66,7 @@ export default {
 </script>
 
 <style scoped>
-    .q-btn {
-        margin-right: 5px;
-    }
+.q-btn {
+  margin-right: 5px;
+}
 </style>
