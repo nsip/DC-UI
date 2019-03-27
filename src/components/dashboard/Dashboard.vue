@@ -1,5 +1,5 @@
 <template>
-    <q-page>
+    <q-page id="dash">
         <h4 style="margin-left:50px; margin-top: 100px; color:gray">
             <b>My Dashboard</b>
             <i class="fas fa-tachometer-alt q-ma-md"></i>
@@ -48,17 +48,21 @@
                 </div>
             </div>
         </div>
+        <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 299}" :el="'#dash'"></vue-canvas-nest>
     </q-page>
 </template>
 
 <script>
 import CourseList from './CourseList.vue'
 import Setting from './Setting.vue'
+import vueCanvasNest from 'vue-canvas-nest'
+
 export default {
   props: ['email'],
   components: {
     appCourseList: CourseList,
-    appSetting: Setting
+    appSetting: Setting,
+    vueCanvasNest
   },
   data () {
     return {

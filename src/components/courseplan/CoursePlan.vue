@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="courseplan">
         <div style="margin:100px 0 0 100px; color:gray">
             <h4><b>Lesson Plan
               <i class="fas fa-scroll q-ma-sm"></i>
@@ -235,6 +235,7 @@ import CouserRemainder from './CourseRemainder.vue'
 // import CouserEditor from './CourseEditor.vue'
 // import CouserSearch from './CourseSearch.vue'
 import draggable from 'vuedraggable'
+import { QSpinnerPie } from 'quasar'
 
 export default {
   props: ['course', 'selectedarea', 'selectedcourse', 'selectedstage'],
@@ -328,9 +329,16 @@ export default {
       const course = this.course.name
       const subject = this.selectedcourse
       const stage = this.selectedstage
-      // console.log(submitLessons)
-      // console.log({submitLessons})
-      this.$store.dispatch('user/post', {submitLessons, area, course, subject, stage, description})
+      this.$q.loading.show({
+        spinner: QSpinnerPie,
+        spinnerColor: 'amber',
+        spinnerSize: 100,
+        message: 'Updating the content...'
+      })
+      setTimeout(() => {
+        this.$q.loading.hide()
+        this.$store.dispatch('user/post', {submitLessons, area, course, subject, stage, description})
+      }, 3000)
     },
     // delete lesson
     removeLesson (index) {

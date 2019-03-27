@@ -1,6 +1,6 @@
 <template>
     <div>
-            <q-layout-header style="box-shadow:none">
+    <q-layout-header style="box-shadow:none">
       <q-toolbar
         color="deep-purple-9"
         :inverted="$q.theme === 'mat' & 'ios'"
@@ -92,6 +92,7 @@ export default {
   data () {
     return {
       leftDrawerOpen: false,
+      miniState: false,
       transitionName: 'slide-left'
     }
   },

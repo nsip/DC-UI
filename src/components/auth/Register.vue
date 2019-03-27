@@ -1,5 +1,5 @@
 <template>
-<q-page class="card-postion">
+<q-page class="card-postion" id="signup">
     <q-card class="row card">
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
           <img src="../../assets/register.png" alt="">
@@ -59,24 +59,18 @@
                     float-label="Confirm your password"
                     @blur="$v.cpassword.$touch" />
                 </q-field>
-                <!--
-                <q-input
-                    color="deep-purple-9"
-                    v-model.trim="captcha"
-                    v-validator.required="{ title: 'Picture' }"
-                    type="text"
-                    :before="[{icon: 'fas fa-image'}]"
-                    float-label="Enter the picture Number" />
-                <div title="Press and get new picture" @click="getCaptcha">
-                    <div class="captcha" v-html="captchaTpl"></div>
-                </div>
-                -->
             </div>
             <div style="text-align: center; margin-top:20px">
-                <q-btn @click="register" icon="fas fa-user-plus" label="SIGN UP" style="width: 50%" color="deep-purple-9" />
+                <q-btn @click="register" :loading="loading" :percentage="percentage" icon="fas fa-user-plus" label="SIGN UP" style="width: 50%" color="deep-purple-9">
+                  <span slot="loading">
+                    <q-spinner class="on-left" />
+                    SIGN UP
+                  </span>
+                </q-btn>
             </div>
             </div>
     </q-card>
+    <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 299}" :el="'#signup'"></vue-canvas-nest>
 </q-page>
 </template>
 <script>
@@ -84,14 +78,18 @@
 // import ls from '../../utils/localStorage'
 
 import { required, sameAs, email, alphaNum } from 'vuelidate/lib/validators'
+import vueCanvasNest from 'vue-canvas-nest'
 
 export default {
+  components: { vueCanvasNest },
   data () {
     return {
       username: '',
       email: '',
       password: '',
-      cpassword: ''
+      cpassword: '',
+      loading: false,
+      percentage: 0
     }
   },
   validations: {
@@ -120,20 +118,29 @@ export default {
           password: this.password
         }
         const localUser = this.$store.state.user.user
-        if (localUser) {
-          if (localUser.name === user.name) {
-            this.$q.notify({
-              message: `User is already exsiting`,
-              color: 'pink-5',
-              icon: 'fas fa-info-circle',
-              position: 'top'
-            })
-          } else {
-            this.login(user)
+        this.loading = true
+        this.percentage = 0
+        const interval = setInterval(() => {
+          this.percentage += Math.floor(Math.random() * 8 + 10)
+          if (this.percentage >= 100) {
+            if (localUser) {
+              if (localUser.name === user.name) {
+                this.$q.notify({
+                  message: `User is already exsiting`,
+                  color: 'pink-5',
+                  icon: 'fas fa-info-circle',
+                  position: 'top'
+                })
+              } else {
+                this.login(user)
+              }
+            } else {
+              this.login(user)
+            }
+            clearInterval(interval)
+            this.loading = false
           }
-        } else {
-          this.login(user)
-        }
+        }, 700)
       }
     },
     login (user) {

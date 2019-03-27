@@ -87,7 +87,11 @@ module.exports = function (ctx) {
         'QSpinner',
         'QSpinnerAudio',
         'QFab',
-        'QFabAction'
+        'QFabAction',
+        'QInnerLoading',
+        'QSpinnerGears',
+        'QBreadcrumbs',
+        'QBreadcrumbsEl'
       ],
       directives: [
         'Ripple',
@@ -96,7 +100,8 @@ module.exports = function (ctx) {
       // Quasar plugins
       plugins: [
         'Notify',
-        'Dialog'
+        'Dialog',
+        'Loading'
       ],
       iconSet: 'fontawesome'
       // i18n: 'de' // Quasar language

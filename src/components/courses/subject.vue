@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div id="mainpage">
         <div class="coursedetail">
             <div class="right-btn">
                 <q-btn push icon="lightbulb_outline" align="between" label="lesson plan" color="deep-purple-9" :to="{name:'courseplaner',params: {course, selectedarea, selectedcourse, selectedstage}}">
@@ -67,6 +67,7 @@
             </transition>
             </div>
         </div>
+        <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 299}" :el="'#mainpage'"></vue-canvas-nest>
     </div>
 </template>
 
@@ -76,6 +77,7 @@ import Concept from './Concept.vue'
 import Outcomes from './Outcomes.vue'
 import Skills from './Skills.vue'
 import Tools from './Tools.vue'
+import vueCanvasNest from 'vue-canvas-nest'
 // import axios from 'axios'
 
 export default {
@@ -85,7 +87,8 @@ export default {
     appConcept: Concept,
     appOutcomes: Outcomes,
     appSkills: Skills,
-    appTools: Tools
+    appTools: Tools,
+    vueCanvasNest
   },
   data: () => {
     return {

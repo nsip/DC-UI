@@ -1,5 +1,6 @@
 <template>
 <q-page>
+  <div id="search">
   <div class="search">
     <div class="row">
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -73,6 +74,8 @@
   </div>
   </div>
     <hr class="line">
+    <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 199}" :el="'#search'"></vue-canvas-nest>
+  </div>
     <div class="row list">
       <!-- <q-input v-model="selectedstage" /> -->
       <!-- {{resultData}} -->
@@ -80,7 +83,7 @@
           appear
           enter-active-class="animated fadeInUp"
           class="group">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 one-card" v-for="course in resultCotent.courses" :key="course.name">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 one-card" v-for="course in resultCotent.courses" :key="course.name" v-show="isshow">
         <q-card inline square color="white" text-color="dark" class="q-ma-sm course-card">
           <q-card-title class="text-deep-purple-4">
             {{course.name}}
@@ -115,9 +118,12 @@
 <script>
 import { required } from 'vuelidate/lib/validators'
 import {areas, courses, stages, years} from '../../data'
+import { QSpinnerFacebook } from 'quasar'
+import vueCanvasNest from 'vue-canvas-nest'
 // import axios from 'axios'
 
 export default {
+  components: { vueCanvasNest },
   data: () => {
     return {
       selectedarea: '',
@@ -132,7 +138,8 @@ export default {
       isdisable: true,
       resultCotent: [],
       resultOverview: [],
-      resultAll: []
+      resultAll: [],
+      isshow: false
     }
   },
   validations: {
@@ -148,8 +155,17 @@ export default {
     getReslut () {
       const axios = require('axios')
       this.loading = true
+      this.isshow = false
+      this.$q.loading.show({
+        spinner: QSpinnerFacebook,
+        spinnerColor: 'amber',
+        spinnerSize: 100,
+        message: 'Searching...'
+      })
       setTimeout(() => {
         this.loading = false
+        this.isshow = true
+        this.$q.loading.hide()
         axios({
           url: 'http://localhost:1330/graphql',
           method: 'post',
@@ -205,7 +221,7 @@ export default {
             this.resultOverview = result.data.data.overview
           }
         })
-      }, 2000)
+      }, 3000)
     }
   },
   computed: {

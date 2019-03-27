@@ -1,5 +1,6 @@
 <template>
     <q-page>
+      <div id="summary">
         <div class="summary">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -61,12 +62,14 @@
                 </div>
         </div>
         <hr class="line">
+        <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 199}" :el="'#summary'"></vue-canvas-nest>
+      </div>
         <div class="summary row list">
         <transition-group
           appear
           enter-active-class="animated fadeInRight"
           class="group">
-            <q-card inline class="q-ma-sm course-card" color="white" text-color="dark" v-for="course in resultCotent.courses" :key="course.name">
+            <q-card inline class="q-ma-sm course-card" color="white" text-color="dark" v-for="course in resultCotent.courses" :key="course.name" v-show="isshow">
                 <q-card-title class="relative-position text-deep-purple-6">
                     <p><b>{{course.name}}</b></p>
                     <span slot="subtitle">10 weeks - 25 hours</span>
@@ -113,15 +116,22 @@
             </q-card>
         </transition-group>
         </div>
+        <!-- <q-inner-loading :visible="visible">
+            <q-spinner-hourglass size="50px" color="primary" />
+        </q-inner-loading> -->
+        <!-- <vueCanvasNest :config="{color:'0,0,255', count: 199, opacity: 1, zIndex: -10}" :el="'#list'"></vueCanvasNest> -->
     </q-page>
 </template>
 
 <script>
 import {areas, courses, stages} from '../../data'
 import { required } from 'vuelidate/lib/validators'
+import vueCanvasNest from 'vue-canvas-nest'
+import { QSpinnerFacebook } from 'quasar'
 // import axios from 'axios'
 
 export default {
+  components: { vueCanvasNest },
   data: () => {
     return {
       selectedarea: '',
@@ -134,7 +144,9 @@ export default {
       isdisable: true,
       resultCotent: [],
       resultOverview: [],
-      resultAll: []
+      resultAll: [],
+      isshow: false
+      // visible: false
     }
   },
   validations: {
@@ -149,8 +161,19 @@ export default {
     getReslut () {
       const axios = require('axios')
       this.loading = true
+      this.isshow = false
+      this.$q.loading.show({
+        spinner: QSpinnerFacebook,
+        spinnerColor: 'amber',
+        spinnerSize: 100,
+        message: 'Searching...'
+      })
+      // this.visible = true
       setTimeout(() => {
         this.loading = false
+        this.$q.loading.hide()
+        // this.visible = false
+        this.isshow = true
         axios({
           url: 'http://localhost:1330/graphql',
           method: 'post',
@@ -204,7 +227,7 @@ export default {
             this.resultOverview = result.data.data.overview
           }
         })
-      }, 2000)
+      }, 3000)
     }
   }
 }

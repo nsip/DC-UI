@@ -3,20 +3,20 @@
     <!--Without Login-->
     <div class>
         <div v-if="auth">
-            <q-btn-dropdown
+            <q-btn
                 flat
                 color="withe"
                 size="md"
-                :label="user.name">
-                <q-list link>
-                    <q-item>
-                        <q-item-main>
-                            <q-item-tile><router-link to="/dashboard" style="text-decoration: none; color:#9575cd">My Dashboard</router-link></q-item-tile>
-                        </q-item-main>
-                    </q-item>
-                </q-list>
+                icon="fas fa-user"
+                :label="user.name" />
+                <q-btn
+                  flat
+                  color="withe"
+                  size="md"
+                  label="My Dashboard"
+                  icon="fas fa-crown"
+                  to="/dashboard"/>
                 <!-- <span v-if="user.name">{{ user.name }}</span> -->
-            </q-btn-dropdown>
             <q-btn
                 flat
                 color="white"
@@ -69,4 +69,10 @@ export default {
 .q-btn {
   margin-right: 5px;
 }
+/* .userlist {
+  background-color: #4527a0;
+  padding-top:10px;
+  box-shadow: none;
+  border-radius: 0px;
+} */
 </style>

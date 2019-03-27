@@ -12,7 +12,7 @@
             <router-view v-if="!$route.meta.keepAlive" class="child-view"></router-view>
         </transition>
     </q-page-container>
-    <vue-particles
+    <!-- <vue-particles
         color="#dedede"
         :particleOpacity="1"
         :particlesNumber="100"
@@ -28,7 +28,7 @@
         hoverMode="grab"
         :clickEffect="true"
         clickMode="push">
-    </vue-particles>
+    </vue-particles> -->
     </q-layout>
   </div>
 </template>

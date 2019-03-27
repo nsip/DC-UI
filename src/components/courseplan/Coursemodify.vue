@@ -234,6 +234,7 @@ import CouserRemainder from './CourseRemainder.vue'
 // // import CouserEditor from './CourseEditor.vue'
 // // import CouserSearch from './CourseSearch.vue'
 import draggable from 'vuedraggable'
+import { QSpinnerPie } from 'quasar'
 export default {
   props: {
     lesson: {
@@ -316,9 +317,16 @@ export default {
       const course = this.lesson.thecourse
       const subject = this.lesson.thesubject
       const stage = this.lesson.thestage
-      // console.log(submitLessons)
-      // console.log({submitLessons})
-      this.$store.dispatch('user/post', {submitLessons, area, course, subject, stage, description, lessonId})
+      this.$q.loading.show({
+        spinner: QSpinnerPie,
+        spinnerColor: 'amber',
+        spinnerSize: 100,
+        message: 'Updating the content...'
+      })
+      setTimeout(() => {
+        this.$q.loading.hide()
+        this.$store.dispatch('user/post', {submitLessons, area, course, subject, stage, description, lessonId})
+      }, 3000)
     },
     removeLesson (index) {
       if (!this.blockRemoval) {
