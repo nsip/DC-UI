@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div style="text-align: center; margin-top:80px">
-                <q-btn icon="fas fa-sign-in-alt" :loading="loading" :percentage="percentage" label="Log in" style="width: 50%" color="deep-purple-9" @click="submit">
+                <q-btn icon="fas fa-sign-in-alt" :loading="loading" label="Log in" style="width: 50%" color="deep-purple-9" @click="submit">
                   <span slot="loading">
                     <q-spinner class="on-left" />
                     Log in
@@ -48,8 +48,8 @@ export default {
     return {
       username: '',
       password: '',
-      loading: false,
-      percentage: 0
+      loading: false
+      // percentage: 0
     }
   },
   methods: {
@@ -60,39 +60,39 @@ export default {
       }
       const localUser = this.$store.state.user.user
       this.loading = true
-      this.percentage = 0
-      const interval = setInterval(() => {
-        this.percentage += Math.floor(Math.random() * 8 + 10)
-        if (this.percentage >= 100) {
-          if (localUser) {
-            if (localUser.name !== user.name || localUser.password !== user.password) {
-              this.$q.notify({
-                message: `Username or password isn't correct.`,
-                color: 'red-8',
-                icon: 'fas fa-exclamation-circle',
-                position: 'top'
-              })
-            } else {
-              this.$store.dispatch('user/login', user)
-              this.$q.notify({
-                message: `Welecome back!!!`,
-                color: 'amber-5',
-                icon: 'far fa-laugh-wink',
-                position: 'top'
-              })
-            }
-          } else {
+      // this.percentage = 0
+      setTimeout(() => {
+        // this.percentage += Math.floor(Math.random() * 8 + 10)
+        // if (this.percentage >= 100) {
+        if (localUser) {
+          if (localUser.name !== user.name || localUser.password !== user.password) {
             this.$q.notify({
-              message: `User doesn't exsit.`,
-              color: 'pink-5',
-              icon: 'fas fa-info-circle',
+              message: `Username or password isn't correct.`,
+              color: 'red-8',
+              icon: 'fas fa-exclamation-circle',
+              position: 'top'
+            })
+          } else {
+            this.$store.dispatch('user/login', user)
+            this.$q.notify({
+              message: `Welecome back!!!`,
+              color: 'amber-5',
+              icon: 'far fa-laugh-wink',
               position: 'top'
             })
           }
-          clearInterval(interval)
-          this.loading = false
+        } else {
+          this.$q.notify({
+            message: `User doesn't exsit.`,
+            color: 'pink-5',
+            icon: 'fas fa-info-circle',
+            position: 'top'
+          })
         }
-      }, 700)
+        // clearInterval(interval)
+        this.loading = false
+        // }
+      }, 1000)
     }
   }
 }

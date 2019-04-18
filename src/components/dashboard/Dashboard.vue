@@ -26,8 +26,21 @@
                         <q-card-title class="text-deep-purple-6">
                             <b>{{lesson.thecourse}}</b>
                             <span slot="subtitle">Learning Area: {{lesson.thearea}} | Subject: {{lesson.thesubject}} | Stage: {{lesson.thestage}}</span>
-                            <q-btn round flat icon="fas fa-edit" slot="right" color="deep-purple-6" :to="{name: 'modify', params:{ lessonId: lesson.lessonId, lesson }}"/>
-                            <q-btn round flat icon="fas fa-trash-alt" slot="right" color="deep-purple-6" @click="deleteLesson(lesson.lessonId)" />
+                            <q-btn round flat icon="fas fa-edit" slot="right" color="deep-purple-6" :to="{name: 'modify', params:{ lessonId: lesson.lessonId, lesson }}">
+                              <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                                Modify
+                              </q-tooltip>
+                            </q-btn>
+                            <q-btn round flat icon="fas fa-calendar-alt" slot="right" color="deep-purple-6" :to="{name: 'schedule', params:{ lessonId: lesson.lessonId, lesson }}">
+                              <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                                Schedule
+                              </q-tooltip>
+                            </q-btn>
+                            <q-btn round flat icon="fas fa-trash-alt" slot="right" color="deep-purple-6" @click="deleteLesson(lesson.lessonId)">
+                              <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                                Delete
+                              </q-tooltip>
+                            </q-btn>
                         </q-card-title>
                         <q-card-separator />
                           <q-card-main>
@@ -46,34 +59,65 @@
                         </q-card-main>
                     </q-card>
                 </div>
+                  <calendar-month
+                  :event-array="coursetime"
+                  :sunday-first-day-of-week="false"
+                  NOcalendar-locale="fr"
+                  NOcalendar-timezone="Australia/Melbourne"
+                  :allow-editing="false"
+                  :NOstart-date="new Date(2019, 1, 4)"
+                  style="background-color:white; width:100%"
+                />
             </div>
         </div>
-        <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 299}" :el="'#dash'"></vue-canvas-nest>
+        <!-- <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 299}" :el="'#dash'"></vue-canvas-nest> -->
     </q-page>
 </template>
 
 <script>
 import CourseList from './CourseList.vue'
 import Setting from './Setting.vue'
-import vueCanvasNest from 'vue-canvas-nest'
+// import vueCanvasNest from 'vue-canvas-nest'
+import { CalendarMonth } from 'quasar-calendar'
 
 export default {
   props: ['email'],
   components: {
     appCourseList: CourseList,
     appSetting: Setting,
-    vueCanvasNest
+    // vueCanvasNest,
+    CalendarMonth
   },
   data () {
     return {
       selectedComponent: 'appCourseList',
-      lessons: []
+      lessons: [],
+      coursetime: []
     }
   },
   created () {
-    console.log(this.$store.state.user.lessons)
+    let lessonschdule = []
+    // console.log(this.$store.state.user.lessons)
     // this.lessons = this.$store.state.user.lessons[24]
     this.lessons = this.$store.state.user.lessons
+    lessonschdule = this.$store.state.user.lessonschdule
+    console.log(lessonschdule)
+    for (let a of lessonschdule) {
+      for (let i = 0; i < a.lessontimesheet.length; i++) {
+        a.lessontimesheet[i].id = i
+        this.coursetime.push(a.lessontimesheet[i])
+      }
+    }
+    console.log(this.coursetime)
+    // for (var i = 5; i < this.schduledlesson.length; i++) {
+    //   this.j.push(this.schduledlesson[i].lessontimesheet)
+    // }
+    // console.log(this.j)
+    // console.log(this.j)
+    // for (var i = 5; i < this.schduledlesson.length; i++) {
+    //   this.j = Object.assign(this.j, this.schduledlesson[i].lessontimesheet)
+    // }
+    // console.log(this.j)
     // const lessonId = this.$route.params.lessonId
     // console.log(this.$route.params.lessonId)
     // console.log(this.$store.getters.user.getLessonById(2))
@@ -91,6 +135,9 @@ export default {
       }).catch(() => {
       })
     }
+    // deletethis (index) {
+    //   this.$store.dispatch('user/deleteschdule', index)
+    // }
   }
 }
 </script>

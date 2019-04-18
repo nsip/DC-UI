@@ -91,7 +91,15 @@ module.exports = function (ctx) {
         'QInnerLoading',
         'QSpinnerGears',
         'QBreadcrumbs',
-        'QBreadcrumbsEl'
+        'QBreadcrumbsEl',
+        'QDatetimePicker',
+        'QDatetime',
+        'QPagination',
+        'QTable',
+        'QTh',
+        'QTr',
+        'QTd',
+        'QTableColumns'
       ],
       directives: [
         'Ripple',

@@ -25,6 +25,7 @@ const routes = [
   { path: '/coursesummary', component: () => import('components/summary/CourseSummary.vue') },
   { path: '/scopeandsequnce', component: () => import('components/search/ScopeSequnce.vue') },
   { path: '/courseplaner', name: 'courseplaner', component: () => import('components/courseplan/CoursePlan.vue'), props: true },
+  { path: ':lessonId/schedule', name: 'schedule', component: () => import('components/schedule/Schedule.vue'), props: true },
   // Undefine router
   {
     path: '*',

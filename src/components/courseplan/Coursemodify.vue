@@ -71,7 +71,7 @@
                 <q-list class="bottom-tips">
                   <q-item>
                     <q-item-side>
-                      <p>Title: {{ lesson.title }}</p>
+                      <p>Title: {{ lesson.summary }}</p>
                     </q-item-side>
                     <q-item-main style="text-align:center" text-color="dark">
                       <p style="font-size:14px;"><i class="far fa-smile" style="margin-right:10px;"/>Please remeber click save button, when you make any changes.</p>
@@ -180,7 +180,7 @@
                                                 class="q-ma-sm"
                                                 color="deep-purple-5"
                                                 placeholder="Lesson title"
-                                                v-model="lesson.title"/>
+                                                v-model="lesson.summary"/>
                                         </div>
                                     </q-item>
                                 </q-list>
@@ -253,8 +253,8 @@ export default {
       lessonId: undefined,
       lessons: [
         {
-          id: 0,
-          title: 'A',
+          courseid: 0,
+          summary: 'A',
           editcontent: '',
           isDisplay: true,
           url: ''
@@ -295,7 +295,7 @@ export default {
         this.lessons[i].isDisplay = false
       }
       this.seletedurl = []
-      this.lessons.push({id: index++, editcontent: '', title: '', isDisplay: true, url: ''})
+      this.lessons.push({courseid: index++, editcontent: '', summary: '', isDisplay: true, url: '', start: {dateTime: ''}, end: {dateTime: ''}})
     },
     selectedLesson (selectedId) {
       var i

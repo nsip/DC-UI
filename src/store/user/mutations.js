@@ -23,3 +23,15 @@ export function DELETE_LESSONS (state, i) {
   // console.log(index)
   state.lessons.splice(index, 1)
 }
+export function UPDATE_LESSON_SCHDULE (state, newlessonschdule) {
+  state.lessonschdule = newlessonschdule
+  ls.setItem('lessonschdule', newlessonschdule)
+}
+export function DELETE_LESSONS_SECHDULE (state, i) {
+  var index = state.lessonschdule.findIndex(lesson => lesson.lessonId === i)
+  state.lessons.splice(index, 1)
+}
+export function UPDATE_LESSONS_SECHDULE (state, newlessonschdule) {
+  state.lessonschdule = newlessonschdule
+  ls.setItem('lessonschdule', newlessonschdule)
+}

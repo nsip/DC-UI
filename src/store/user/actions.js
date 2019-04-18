@@ -69,3 +69,36 @@ export function deleteLesson ({commit, state}, payload) {
   commit('UPDATE_LESSONS', lessons)
   // context.commit('UPDATE_LESSONS', payload)
 }
+export function postschedule ({commit, state}, {submmitschdule, lessonId, schduleId}) {
+  let lessonschdule = state.lessonschdule
+  console.log(lessonschdule)
+  // console.log(lessonId)
+  if (!Array.isArray(lessonschdule)) lessonschdule = []
+  if (lessonschdule) {
+    const lessontimesheet = submmitschdule
+    const thelessonId = lessonId
+    schduleId = lessonschdule.length + 1
+    //   if (schduleId === undefined) {
+    //     const lastlessonschdule = lessonschdule[lessonschdule.length + 1]
+    //     if (lastlessonschdule) {
+    //       schduleId = parseInt(lastlessonschdule.schduleId) + 1
+    //     } else {
+    //       schduleId = lessonschdule.length + 1
+    //     }
+    //   }
+    //   // console.log(lessontimesheet)
+    //   // console.log(schduleId)
+    lessonschdule.push({
+      schduleId,
+      thelessonId,
+      lessontimesheet
+    })
+    commit('UPDATE_LESSON_SCHDULE', lessonschdule)
+    console.log(lessonschdule)
+  }
+}
+export function deleteschdule ({commit, state}, payload) {
+  commit('DELETE_LESSONS_SECHDULE', payload)
+  let lessonschdule = state.lessonschdule
+  commit('UPDATE_LESSONS_SECHDULE', lessonschdule)
+}

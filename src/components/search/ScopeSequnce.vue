@@ -2,13 +2,12 @@
 <q-page>
   <div id="search">
   <div class="search">
-    <div class="row">
-      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+    <div class="row" style="height:350px">
+      <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
         <h5 class="q-ma-lg" style="margin-top:150px; color:gray"><b>Choose Learning area, Subject, Stage and Year to get the courses information</b></h5>
       </div>
-      <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div>
-      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="text-align:center">
-          <img src="../../assets/searchlogo.png" style="width:350px; height:350px">
+      <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12" style="text-align:right">
+          <img src="../../assets/searchlogo.png" style="max-height:350px">
       </div>
     </div>
   <div class="row searchbox">
