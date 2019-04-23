@@ -1,6 +1,6 @@
 <template>
   <div id="q-app">
-    <q-layout view="hHh Lpr lFf">
+    <q-layout view="lhr Lpr fFf">
     <app-header></app-header>
     <q-page-container>
       <transition :name="transitionName" mode="out-in">

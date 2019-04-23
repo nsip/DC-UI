@@ -1,14 +1,15 @@
 <template>
     <div>
-    <q-layout-header style="box-shadow:none">
+    <q-layout-header reveal>
       <q-toolbar
-        color="deep-purple-9"
+        color="grey-11"
         :inverted="$q.theme === 'mat' & 'ios'"
       >
         <q-btn
           flat
           dense
           round
+          color="deep-purple-7"
           @click="leftDrawerOpen = !leftDrawerOpen"
           aria-label="Menu"
         >
@@ -16,19 +17,29 @@
         </q-btn>
         <q-toolbar-title>
           <a href="/" style="color:white; text-decoration-line: none">
-          <h4 style="margin: 5px 0">
+          <!-- <h4 style="margin: 5px 0">
             <i class="fab fa-drupal" style="font-size:40px; margin: 0 5px 0 0"></i>
             <b>Hello</b>
-          </h4>
+          </h4> -->
+           <img src="../assets/digital-classroom-copy.png">
           </a>
           <div slot="subtitle"></div>
         </q-toolbar-title>
           <app-entry></app-entry>
+        <!-- <q-btn
+          flat
+          dense
+          round
+          @click="leftDrawerOpen = !leftDrawerOpen"
+          aria-label="Menu"
+        >
+          <q-icon name="menu" />
+        </q-btn> -->
       </q-toolbar>
     </q-layout-header>
     <q-layout-drawer
       v-model="leftDrawerOpen"
-      :content-class="['bg-whitesmoke', 'q-pa-sm']"
+      :content-class="['bg-grey-11', 'q-pa-sm']"
       class="leftdrawer"
     >
       <q-list

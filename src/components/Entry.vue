@@ -5,43 +5,44 @@
         <div v-if="auth">
             <q-btn
                 flat
-                color="withe"
+                color="deep-purple-7"
                 size="md"
                 icon="fas fa-user"
                 :label="user.name" />
                 <q-btn
                   flat
-                  color="withe"
+                  color="deep-purple-7"
                   size="md"
                   label="My Dashboard"
                   icon="fas fa-crown"
                   to="/dashboard"/>
                 <!-- <span v-if="user.name">{{ user.name }}</span> -->
             <q-btn
-                flat
-                color="white"
+                outline
+                color="deep-purple-7"
                 size="md"
                 label="Logout"
                 icon="fas fa-sign-in-alt"
                 @click="logout" />
         </div>
         <div v-else>
-        <q-btn
+          <q-btn
+            class="q-ma-sm"
             flat
-            color="withe"
+            color="deep-purple-7"
+            label="Registe"
+            icon="fas fa-user-plus"
+            @click="$router.push('/auth/register')"
+          />
+        <q-btn
+            class="q-ma-sm"
+            outline
+            color="deep-purple-7"
             label="Login"
-            size="md"
             icon="fas fa-sign-in-alt"
             @click="$router.push('/auth/login')"
             >
         </q-btn>
-        <q-btn
-            flat
-            color="withe"
-            label="Registe"
-            icon="fas fa-user-plus"
-            @click="$router.push('/auth/register')"
-            />
         </div>
     </div>
 </template>

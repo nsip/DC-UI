@@ -28,7 +28,7 @@ export function UPDATE_LESSON_SCHDULE (state, newlessonschdule) {
   ls.setItem('lessonschdule', newlessonschdule)
 }
 export function DELETE_LESSONS_SECHDULE (state, i) {
-  var index = state.lessonschdule.findIndex(lesson => lesson.lessonId === i)
+  var index = state.lessonschdule.findIndex(lessonschdule => lessonschdule.schduleId === i)
   state.lessons.splice(index, 1)
 }
 export function UPDATE_LESSONS_SECHDULE (state, newlessonschdule) {

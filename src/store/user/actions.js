@@ -95,6 +95,7 @@ export function postschedule ({commit, state}, {submmitschdule, lessonId, schdul
     })
     commit('UPDATE_LESSON_SCHDULE', lessonschdule)
     console.log(lessonschdule)
+    // this.$router.push({ name: 'dashboard' })
   }
 }
 export function deleteschdule ({commit, state}, payload) {

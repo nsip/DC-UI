@@ -69,6 +69,12 @@
                   style="background-color:white; width:100%"
                 />
             </div>
+            <div v-for="(time, index) in lessonschdule" :key="index">
+              {{time}}
+              <!-- <q-btn @click="remove(index)">
+                Remove
+              </q-btn> -->
+            </div>
         </div>
         <!-- <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 299}" :el="'#dash'"></vue-canvas-nest> -->
     </q-page>
@@ -92,23 +98,27 @@ export default {
     return {
       selectedComponent: 'appCourseList',
       lessons: [],
-      coursetime: []
+      coursetime: [],
+      lessonschdule: []
     }
   },
   created () {
-    let lessonschdule = []
-    // console.log(this.$store.state.user.lessons)
-    // this.lessons = this.$store.state.user.lessons[24]
+    this.lessonschdule = []
+    this.coursetime = []
     this.lessons = this.$store.state.user.lessons
-    lessonschdule = this.$store.state.user.lessonschdule
-    console.log(lessonschdule)
-    for (let a of lessonschdule) {
-      for (let i = 0; i < a.lessontimesheet.length; i++) {
-        a.lessontimesheet[i].id = i
-        this.coursetime.push(a.lessontimesheet[i])
-      }
-    }
-    console.log(this.coursetime)
+    this.lessonschdule = JSON.parse(localStorage.lessonschdule)
+    console.log(this.lessonschdule)
+    // for (let a of lessonschdule) {
+    //   for (let b of a.lessontimesheet) {
+    //     this.coursetime.push(b)
+    //   }
+    //   console.log(this.coursetime)
+    //   // for (let i = 0; i < a.lessontimesheet.length; i++) {
+    //   //   a.lessontimesheet[i].id = i
+    //   //   this.coursetime.push(a.lessontimesheet[i])
+    //   // }
+    // }
+    // console.log(this.coursetime)
     // for (var i = 5; i < this.schduledlesson.length; i++) {
     //   this.j.push(this.schduledlesson[i].lessontimesheet)
     // }
@@ -135,6 +145,9 @@ export default {
       }).catch(() => {
       })
     }
+    // remove (index) {
+    //   this.$store.dispatch('user/deleteschdule', index)
+    // }
     // deletethis (index) {
     //   this.$store.dispatch('user/deleteschdule', index)
     // }
