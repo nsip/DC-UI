@@ -15,7 +15,7 @@
                   size="md"
                   label="My Dashboard"
                   icon="fas fa-crown"
-                  to="/dashboard"/>
+                  @click="$router.push({ name: 'dashboard', params: { username: user.name } })"/>
                 <!-- <span v-if="user.name">{{ user.name }}</span> -->
             <q-btn
                 outline
@@ -50,6 +50,7 @@
 
 export default {
   name: 'Entry',
+  props: [ 'username' ],
   computed: {
     auth () {
       return this.$store.state.user.auth

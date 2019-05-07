@@ -20,14 +20,5 @@ export default function (/* { store, ssrContext } */) {
     mode: process.env.VUE_ROUTER_MODE,
     base: process.env.VUE_ROUTER_BASE
   })
-
-  Router.beforeEach((to, from, next) => {
-    const auth = Router.app.$options.store.state.auth
-    if (auth && to.path.indexOf('/auth/') !== -1) {
-      next('/')
-    } else {
-      next()
-    }
-  })
   return Router
 }

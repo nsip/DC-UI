@@ -238,7 +238,7 @@ import draggable from 'vuedraggable'
 import { QSpinnerPie } from 'quasar'
 
 export default {
-  props: ['course', 'selectedarea', 'selectedcourse', 'selectedstage'],
+  props: ['course', 'selectedarea', 'selectedcourse', 'selectedstage', 'username'],
   components: {
     appCouserReminder: CouserRemainder,
     // appCouserEditor: CouserEditor,
@@ -266,14 +266,8 @@ export default {
       keywords: [],
       searchResult: [],
       seletedurl: []
-      // lessonurl: []
     }
   },
-  // beforeRouteEnter (to, from, next) {
-  //   next(vm => {
-  //     vm.setLessonId(vm.$route.params.lessonId)
-  //   })
-  // },
   created () {
     this.coursename = this.course.name
   },
@@ -281,10 +275,6 @@ export default {
     lessons () {
       this.blockRemoval = this.lessons.length <= 1
     },
-    // save (index) {
-    //   this.lessons[index].url = this.seletedurl
-    //   // console.log(this.lessons[index].url)
-    // },
     coursename: function () {
       console.log(this.coursename)
       console.log(this.selectedarea)
@@ -296,8 +286,6 @@ export default {
   methods: {
     // save every single lesson
     save (index) {
-      this.lessons[index].url = this.seletedurl
-      // console.log(this.lessons[index].url)
     },
     // create new lesson
     add () {
@@ -331,6 +319,7 @@ export default {
       const course = this.course.name
       const subject = this.selectedcourse
       const stage = this.selectedstage
+      const userid = this.username
       this.$q.loading.show({
         spinner: QSpinnerPie,
         spinnerColor: 'amber',
@@ -339,7 +328,7 @@ export default {
       })
       setTimeout(() => {
         this.$q.loading.hide()
-        this.$store.dispatch('user/post', {submitLessons, area, course, subject, stage, description})
+        this.$store.dispatch('user/post', {submitLessons, area, course, subject, stage, description, userid})
       }, 3000)
     },
     // delete lesson

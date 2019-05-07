@@ -12,6 +12,17 @@
             <router-view v-if="!$route.meta.keepAlive" class="child-view"></router-view>
         </transition>
     </q-page-container>
+      <q-page-sticky position="right" :offset="[18, 18]">
+        <q-btn
+          color="deep-purple-6"
+          size="md"
+          round
+          v-back-to-top.animate="{offset: 500, duration: 200}"
+          class="animate-pop"
+        >
+          <q-icon name="keyboard_arrow_up" />
+        </q-btn>
+      </q-page-sticky>
     <!-- <vue-particles
         color="#dedede"
         :particleOpacity="1"
@@ -37,6 +48,7 @@
 import Header from './layouts/Header.vue'
 export default {
   name: 'App',
+  props: ['username'],
   components: {
     appHeader: Header
   },
@@ -45,6 +57,9 @@ export default {
       leftDrawerOpen: false,
       transitionName: 'slide-left'
     }
+  },
+  created () {
+    console.log(this.username)
   },
   beforeRouteUpdate (to, from, next) {
   // if isBack = true，user click back，slide-right transition

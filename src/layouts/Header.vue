@@ -17,24 +17,52 @@
         </q-btn>
         <q-toolbar-title>
           <a href="/" style="color:white; text-decoration-line: none">
-          <!-- <h4 style="margin: 5px 0">
-            <i class="fab fa-drupal" style="font-size:40px; margin: 0 5px 0 0"></i>
-            <b>Hello</b>
-          </h4> -->
            <img src="../assets/digital-classroom-copy.png">
           </a>
           <div slot="subtitle"></div>
         </q-toolbar-title>
-          <app-entry></app-entry>
-        <!-- <q-btn
-          flat
-          dense
-          round
-          @click="leftDrawerOpen = !leftDrawerOpen"
-          aria-label="Menu"
-        >
-          <q-icon name="menu" />
-        </q-btn> -->
+        <div v-if="auth">
+            <q-btn
+                flat
+                color="deep-purple-7"
+                size="md"
+                icon="fas fa-user"
+                :label="user.name" />
+                <q-btn
+                  flat
+                  color="deep-purple-7"
+                  size="md"
+                  label="My Dashboard"
+                  icon="fas fa-crown"
+                  @click="$router.push({ name: 'dashboard', params: { username: user.name } })"/>
+                <!-- <span v-if="user.name">{{ user.name }}</span> -->
+            <q-btn
+                outline
+                color="deep-purple-7"
+                size="md"
+                label="Logout"
+                icon="fas fa-sign-in-alt"
+                @click="logout" />
+        </div>
+        <div v-else>
+          <q-btn
+            class="q-ma-sm"
+            flat
+            color="deep-purple-7"
+            label="Registe"
+            icon="fas fa-user-plus"
+            @click="$router.push('/auth/register')"
+          />
+        <q-btn
+            class="q-ma-sm"
+            outline
+            color="deep-purple-7"
+            label="Login"
+            icon="fas fa-sign-in-alt"
+            @click="$router.push('/auth/login')"
+            >
+        </q-btn>
+        </div>
       </q-toolbar>
     </q-layout-header>
     <q-layout-drawer
@@ -58,22 +86,22 @@
           <q-item-side icon="fas fa-graduation-cap" />
           <q-item-main label="Scope & Sequence" />
         </q-item> -->
-        <q-item @click.native="$router.push('/scopeandsequnce')">
+        <q-item @click.native="$router.push({ name: 'scopeandsequnce', params: { username: user.name } })">
           <q-item-side icon="fas fa-republican" />
           <q-item-main label="Scope & Sequence" />
         </q-item>
-        <q-item @click.native="$router.push('/coursesummary')">
+        <q-item @click.native="$router.push({ name: 'coursesummary', params: { username: user.name } })">
           <q-item-side icon="fas fa-republican" />
           <q-item-main label="Course Summary" />
         </q-item>
-        <q-item @click.native="$router.push('/dashboard')">
+        <q-item @click.native="$router.push({ name: 'dashboard', params: { username: user.name } })">
           <q-item-side icon="fas fa-republican" />
           <q-item-main label="My Dashborad" />
         </q-item>
-        <q-item @click.native="$router.push('/account-setting')">
+        <!-- <q-item @click.native="$router.push('/account-setting')">
           <q-item-side icon="fas fa-republican" />
           <q-item-main label="Account Setting" />
-        </q-item>
+        </q-item> -->
         <!--
         <q-item @click.native="openURL('https://discord.gg/5TDhbDg')">
           <q-item-side icon="chat" />
@@ -94,17 +122,37 @@
 </template>
 
 <script>
-import Entry from '../components/Entry.vue'
+// import Entry from '../components/Entry.vue'
 export default {
   name: 'MyLayout',
-  components: {
-    appEntry: Entry
-  },
+  props: ['username'],
+  // components: {
+  //   appEntry: Entry
+  // },
   data () {
     return {
       leftDrawerOpen: false,
       miniState: false,
       transitionName: 'slide-left'
+      // localuser: undefined
+    }
+  },
+  // created () {
+  //   this.localuser = this.$store.state.user.user
+  //   console.log(this.localuser)
+  //   console.log(this.username)
+  // },
+  computed: {
+    auth () {
+      return this.$store.state.user.auth
+    },
+    user () {
+      return this.$store.state.user.user
+    }
+  },
+  methods: {
+    logout () {
+      this.$store.dispatch('user/logout')
     }
   },
   beforeRouteUpdate (to, from, next) {
@@ -125,4 +173,7 @@ export default {
 }
 </script>
 <style scoped>
+.q-btn {
+  margin-right: 5px;
+}
 </style>

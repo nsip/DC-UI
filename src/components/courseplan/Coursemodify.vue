@@ -251,6 +251,7 @@ export default {
   data () {
     return {
       lessonId: undefined,
+      username: undefined,
       lessons: [
         {
           courseid: 0,
@@ -274,6 +275,7 @@ export default {
     }
   },
   created () {
+    this.username = this.lesson.userId
     this.lessonId = this.lesson.lessonId
     this.lessons = this.lesson.lesson
     this.j = this.lessons.length
@@ -311,6 +313,7 @@ export default {
     },
     submit () {
       const lessonId = this.lessonId
+      const userid = this.username
       const description = this.lesson.thedescription
       const submitLessons = this.lessons
       const area = this.lesson.thearea
@@ -325,7 +328,7 @@ export default {
       })
       setTimeout(() => {
         this.$q.loading.hide()
-        this.$store.dispatch('user/post', {submitLessons, area, course, subject, stage, description, lessonId})
+        this.$store.dispatch('user/post', {submitLessons, area, course, subject, stage, description, userid, lessonId})
       }, 3000)
     },
     removeLesson (index) {

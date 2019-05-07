@@ -15,66 +15,25 @@
             </q-card>
             <div class="q-ma-sm">
             <h5 class="course-list-title" style="margin-bottom: 20px">
-                <b>My Course List</b>
+                <b>My Course</b>
                 <i class="fas fa-chalkboard-teacher q-ma-sm"></i>
+                <q-btn-group outline class="course-list-title-btn">
+                <q-btn outline icon="fas fa-list-ul" color="deep-purple-6" class="course-list-title-q-btn" @click='selectedComponent = "appCourseList"' label="Course List" />
+                <q-btn outline icon="fas fa-calendar-alt" color="deep-purple-6" class="course-list-title-q-btn" @click='selectedComponent = "appCourseCalender"' label="Course Calender" />
+                </q-btn-group>
             </h5>
             <hr>
             </div>
-            <div class="row q-ma-sm">
-                <div v-for="lesson in lessons" :key="lesson.lessonId" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <q-card inline class="course-card" text-color="dark">
-                        <q-card-title class="text-deep-purple-6">
-                            <b>{{lesson.thecourse}}</b>
-                            <span slot="subtitle">Learning Area: {{lesson.thearea}} | Subject: {{lesson.thesubject}} | Stage: {{lesson.thestage}}</span>
-                            <q-btn round flat icon="fas fa-edit" slot="right" color="deep-purple-6" :to="{name: 'modify', params:{ lessonId: lesson.lessonId, lesson }}">
-                              <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
-                                Modify
-                              </q-tooltip>
-                            </q-btn>
-                            <q-btn round flat icon="fas fa-calendar-alt" slot="right" color="deep-purple-6" :to="{name: 'schedule', params:{ lessonId: lesson.lessonId, lesson }}">
-                              <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
-                                Schedule
-                              </q-tooltip>
-                            </q-btn>
-                            <q-btn round flat icon="fas fa-trash-alt" slot="right" color="deep-purple-6" @click="deleteLesson(lesson.lessonId)">
-                              <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
-                                Delete
-                              </q-tooltip>
-                            </q-btn>
-                        </q-card-title>
-                        <q-card-separator />
-                          <q-card-main>
-                            <q-list>
-                                <q-item>
-                                    <q-item-side>
-                                        <q-item-tile>
-                                            Lesson Description
-                                        </q-item-tile>
-                                    </q-item-side>
-                                    <q-item-main>
-                                        <q-item-tile label>{{lesson.thedescription}}</q-item-tile>
-                                    </q-item-main>
-                                </q-item>
-                            </q-list>
-                        </q-card-main>
-                    </q-card>
-                </div>
-                  <calendar-month
-                  :event-array="coursetime"
-                  :sunday-first-day-of-week="false"
-                  NOcalendar-locale="fr"
-                  NOcalendar-timezone="Australia/Melbourne"
-                  :allow-editing="false"
-                  :NOstart-date="new Date(2019, 1, 4)"
-                  style="background-color:white; width:100%"
-                />
-            </div>
-            <div v-for="(time, index) in lessonschdule" :key="index">
-              {{time}}
-              <!-- <q-btn @click="remove(index)">
-                Remove
-              </q-btn> -->
-            </div>
+            <transition name="component-fade" mode="out-in">
+                <component
+                    :is="selectedComponent"
+                    :username = "username"
+                    :coursetime = "coursetime"
+                    :lessons = "lessons"
+                    :lessonschdule = "lessonschdule"
+                    >
+                </component>
+            </transition>
         </div>
         <!-- <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 299}" :el="'#dash'"></vue-canvas-nest> -->
     </q-page>
@@ -83,54 +42,55 @@
 <script>
 import CourseList from './CourseList.vue'
 import Setting from './Setting.vue'
+import CourseCalender from './CourseCalender.vue'
 // import vueCanvasNest from 'vue-canvas-nest'
-import { CalendarMonth } from 'quasar-calendar'
+// import { CalendarMonth } from 'quasar-calendar'
 
 export default {
-  props: ['email'],
+  props: ['username'],
   components: {
     appCourseList: CourseList,
-    appSetting: Setting,
+    appCourseCalender: CourseCalender,
+    appSetting: Setting
     // vueCanvasNest,
-    CalendarMonth
+    // CalendarMonth
   },
   data () {
     return {
       selectedComponent: 'appCourseList',
+      wholelessons: [],
+      wholeschdule: [],
       lessons: [],
       coursetime: [],
       lessonschdule: []
     }
   },
+  // mounted () {
+  //   this.$store.commit('user/setid', this.userid)
+  // },
   created () {
-    this.lessonschdule = []
     this.coursetime = []
-    this.lessons = this.$store.state.user.lessons
-    this.lessonschdule = JSON.parse(localStorage.lessonschdule)
-    console.log(this.lessonschdule)
-    // for (let a of lessonschdule) {
-    //   for (let b of a.lessontimesheet) {
-    //     this.coursetime.push(b)
-    //   }
-    //   console.log(this.coursetime)
-    //   // for (let i = 0; i < a.lessontimesheet.length; i++) {
-    //   //   a.lessontimesheet[i].id = i
-    //   //   this.coursetime.push(a.lessontimesheet[i])
-    //   // }
-    // }
-    // console.log(this.coursetime)
-    // for (var i = 5; i < this.schduledlesson.length; i++) {
-    //   this.j.push(this.schduledlesson[i].lessontimesheet)
-    // }
-    // console.log(this.j)
-    // console.log(this.j)
-    // for (var i = 5; i < this.schduledlesson.length; i++) {
-    //   this.j = Object.assign(this.j, this.schduledlesson[i].lessontimesheet)
-    // }
-    // console.log(this.j)
-    // const lessonId = this.$route.params.lessonId
-    // console.log(this.$route.params.lessonId)
-    // console.log(this.$store.getters.user.getLessonById(2))
+    this.wholelessons = JSON.parse(localStorage.lessons)
+    for (let i of this.wholelessons) {
+      if (i.userId === this.username) {
+        this.lessons.push(i)
+      }
+    }
+    this.wholeschdule = JSON.parse(localStorage.lessonschdule)
+    for (let a of this.wholeschdule) {
+      if (a.userId === this.username) {
+        this.lessonschdule.push(a)
+      }
+    }
+    for (let j of this.lessonschdule) {
+      for (let b = 0; b < j.lessontimesheet.length; b++) {
+        this.coursetime.push(j.lessontimesheet[b])
+      }
+    }
+    for (let c = 0; c < this.coursetime.length; c++) {
+      this.coursetime[c].id = c
+    }
+    console.log(this.coursetime)
   },
   methods: {
     deleteLesson (index) {
@@ -145,12 +105,6 @@ export default {
       }).catch(() => {
       })
     }
-    // remove (index) {
-    //   this.$store.dispatch('user/deleteschdule', index)
-    // }
-    // deletethis (index) {
-    //   this.$store.dispatch('user/deleteschdule', index)
-    // }
   }
 }
 </script>
@@ -184,6 +138,15 @@ export default {
 .course-card:hover {
   box-shadow: 0 5px 5px rgba(0,0,0,0.2), 0 5px 5px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
   border: whitesmoke 1px solid
+}
+.component-fade-enter-active, .component-fade-leave-active {
+  transition: opacity 1s ease;
+}
+.component-fade-enter, .component-fade-leave-to {
+  opacity: 0;
+}
+.course-list-title-btn {
+  float: right
 }
 /* .course-list:hover {
     background-color: #d1c4e9;

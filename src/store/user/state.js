@@ -5,5 +5,6 @@ export default {
   auth: ls.getItem('auth'),
   lessons: ls.getItem('lessons'),
   lessonschdule: ls.getItem('lessonschdule'),
-  Selectresult: []
+  Selectresult: [],
+  activeuserid: undefined
 }

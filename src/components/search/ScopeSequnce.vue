@@ -73,7 +73,7 @@
   </div>
   </div>
     <hr class="line">
-    <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 199}" :el="'#search'"></vue-canvas-nest>
+    <!-- <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 199}" :el="'#search'"></vue-canvas-nest> -->
   </div>
     <div class="row list">
       <!-- <q-input v-model="selectedstage" /> -->
@@ -104,7 +104,7 @@
           <q-card-separator />
           <q-card-actions>
             <q-btn flat color='deep-purple-4'>
-              <router-link style="text-decoration: none; color:#9575cd" :to="{name: 'subject', params: {course, selectedarea, selectedcourse, selectedstage}}">Get more information</router-link>
+              <router-link style="text-decoration: none; color:#9575cd" :to="{name: 'subject', params: {course, selectedarea, selectedcourse, selectedstage, username: username}}">Get more information</router-link>
             </q-btn>
         </q-card-actions>
         </q-card>
@@ -118,11 +118,12 @@
 import { required } from 'vuelidate/lib/validators'
 import {areas, courses, stages, years} from '../../data'
 import { QSpinnerFacebook } from 'quasar'
-import vueCanvasNest from 'vue-canvas-nest'
+// import vueCanvasNest from 'vue-canvas-nest'
 // import axios from 'axios'
 
 export default {
-  components: { vueCanvasNest },
+  // components: { vueCanvasNest },
+  props: ['username'],
   data: () => {
     return {
       selectedarea: '',

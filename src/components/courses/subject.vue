@@ -2,7 +2,7 @@
     <div id="mainpage">
         <div class="coursedetail">
             <div class="right-btn">
-                <q-btn push icon="lightbulb_outline" align="between" label="lesson plan" color="deep-purple-9" :to="{name:'courseplaner',params: {course, selectedarea, selectedcourse, selectedstage}}">
+                <q-btn push icon="lightbulb_outline" align="between" label="lesson plan" color="deep-purple-9" :to="{name:'courseplaner',params: {course, selectedarea, selectedcourse, selectedstage, username: username}}">
             </q-btn>
             </div>
         <div class="row">
@@ -67,7 +67,7 @@
             </transition>
             </div>
         </div>
-        <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 299}" :el="'#mainpage'"></vue-canvas-nest>
+        <!-- <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 299}" :el="'#mainpage'"></vue-canvas-nest> -->
     </div>
 </template>
 
@@ -77,18 +77,18 @@ import Concept from './Concept.vue'
 import Outcomes from './Outcomes.vue'
 import Skills from './Skills.vue'
 import Tools from './Tools.vue'
-import vueCanvasNest from 'vue-canvas-nest'
+// import vueCanvasNest from 'vue-canvas-nest'
 // import axios from 'axios'
 
 export default {
-  props: ['course', 'selectedarea', 'selectedcourse', 'selectedstage'],
+  props: ['course', 'selectedarea', 'selectedcourse', 'selectedstage', 'username'],
   components: {
     appCourse: Course,
     appConcept: Concept,
     appOutcomes: Outcomes,
     appSkills: Skills,
-    appTools: Tools,
-    vueCanvasNest
+    appTools: Tools
+    // vueCanvasNest
   },
   data: () => {
     return {

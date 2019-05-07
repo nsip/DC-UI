@@ -10,6 +10,7 @@ module.exports = function (ctx) {
       'vuelidate',
       'grid',
       'before-each',
+      'authentication'
     ],
     css: [
       'app.styl'
@@ -99,11 +100,14 @@ module.exports = function (ctx) {
         'QTh',
         'QTr',
         'QTd',
-        'QTableColumns'
+        'QTableColumns',
+        'QBtnGroup',
+        'QPageSticky'
       ],
       directives: [
         'Ripple',
-        'CloseOverlay'
+        'CloseOverlay',
+        'BackToTop'
       ],
       // Quasar plugins
       plugins: [

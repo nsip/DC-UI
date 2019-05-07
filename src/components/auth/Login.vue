@@ -36,14 +36,14 @@
             </div>
             </div>
     </q-card>
-    <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 299}" :el="'#login'"></vue-canvas-nest>
+    <!-- <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 299}" :el="'#login'"></vue-canvas-nest> -->
 </q-page>
 </template>
 <script>
 // import createCaptcha from '../../utils/createCaptcha'
-import vueCanvasNest from 'vue-canvas-nest'
+// import vueCanvasNest from 'vue-canvas-nest'
 export default {
-  components: { vueCanvasNest },
+  // components: { vueCanvasNest },
   data () {
     return {
       username: '',

@@ -62,7 +62,7 @@
                 </div>
         </div>
         <hr class="line">
-        <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 199}" :el="'#summary'"></vue-canvas-nest>
+        <!-- <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 199}" :el="'#summary'"></vue-canvas-nest> -->
       </div>
         <div class="summary row list">
         <transition-group
@@ -78,7 +78,7 @@
                             <q-list link class="no-border">
                             <q-item v-close-overlay>
                                 <q-item-main>
-                                    <router-link :to="{name:'courseplaner', params:{course, selectedarea, selectedcourse, selectedstage}}" class="link">Go to Lesson Plan</router-link>
+                                    <router-link :to="{name:'courseplaner', params:{course, selectedarea, selectedcourse, selectedstage, username: username}}" class="link">Go to Lesson Plan</router-link>
                                 </q-item-main>
                             </q-item>
                             <q-item v-close-overlay>
@@ -126,12 +126,13 @@
 <script>
 import {areas, courses, stages} from '../../data'
 import { required } from 'vuelidate/lib/validators'
-import vueCanvasNest from 'vue-canvas-nest'
+// import vueCanvasNest from 'vue-canvas-nest'
 import { QSpinnerFacebook } from 'quasar'
 // import axios from 'axios'
 
 export default {
-  components: { vueCanvasNest },
+  // components: { vueCanvasNest },
+  props: ['username'],
   data: () => {
     return {
       selectedarea: '',

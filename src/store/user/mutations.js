@@ -26,12 +26,17 @@ export function DELETE_LESSONS (state, i) {
 export function UPDATE_LESSON_SCHDULE (state, newlessonschdule) {
   state.lessonschdule = newlessonschdule
   ls.setItem('lessonschdule', newlessonschdule)
+  console.log(state.lessonschdule)
 }
 export function DELETE_LESSONS_SECHDULE (state, i) {
+  console.log(i)
   var index = state.lessonschdule.findIndex(lessonschdule => lessonschdule.schduleId === i)
-  state.lessons.splice(index, 1)
+  state.lessonschdule.splice(index, 1)
 }
-export function UPDATE_LESSONS_SECHDULE (state, newlessonschdule) {
-  state.lessonschdule = newlessonschdule
-  ls.setItem('lessonschdule', newlessonschdule)
+export function setid (state, payload) {
+  state.activeuserid = payload
 }
+// export function UPDATE_LESSONS_SECHDULE (state, newlessonschdule) {
+//   state.lessonschdule = newlessonschdule
+//   ls.setItem('lessonschdule', newlessonschdule)
+// }
