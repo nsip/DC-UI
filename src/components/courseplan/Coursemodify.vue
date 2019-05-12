@@ -138,7 +138,7 @@
                       <q-field
                         :label-width="2"
                         icon="far fa-file-alt"
-                        label="Lesson Description"
+                        label="Lesson Sequence"
                       >
                         <q-input
                           v-model="lesson.thedescription"

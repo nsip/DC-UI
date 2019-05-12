@@ -88,6 +88,7 @@ export function post ({commit, state}, {submitLessons, area, course, subject, st
 }
 export function deleteLesson ({commit, state}, payload) {
   commit('DELETE_LESSONS', payload)
+  console.log(payload)
   console.log(state.lessons)
   let lessons = state.lessons
   commit('UPDATE_LESSONS', lessons)

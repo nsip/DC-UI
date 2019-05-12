@@ -19,11 +19,21 @@
                 <i class="fas fa-chalkboard-teacher q-ma-sm"></i>
                 <q-btn-group outline class="course-list-title-btn">
                 <q-btn outline icon="fas fa-list-ul" color="deep-purple-6" class="course-list-title-q-btn" @click='selectedComponent = "appCourseList"' label="Course List" />
-                <q-btn outline icon="fas fa-calendar-alt" color="deep-purple-6" class="course-list-title-q-btn" @click='selectedComponent = "appCourseCalender"' label="Course Calender" />
+                <q-btn outline icon="fas fa-calendar-alt" color="deep-purple-6" class="course-list-title-q-btn" @click='selectedComponent = "appCourseCalender"' label="Course Calendar" />
                 </q-btn-group>
             </h5>
             <hr>
             </div>
+            <div v-if="isCourse">
+              <div class="nocourse">
+                <p>Add your first plan from
+                  <q-btn size="md" color="deep-purple-6" flat @click.native="$router.push({ name: 'scopeandsequnce', params: { username: username } })" label="Scope & Sequence"></q-btn>
+                  or
+                  <q-btn size="md" color="deep-purple-6" flat @click.native="$router.push({ name: 'coursesummary', params: { username: username } })" label="Course Summary"></q-btn>
+                </p>
+              </div>
+            </div>
+            <div v-else>
             <transition name="component-fade" mode="out-in">
                 <component
                     :is="selectedComponent"
@@ -34,6 +44,7 @@
                     >
                 </component>
             </transition>
+            </div>
         </div>
         <!-- <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 299}" :el="'#dash'"></vue-canvas-nest> -->
     </q-page>
@@ -60,7 +71,7 @@ export default {
       selectedComponent: 'appCourseList',
       wholelessons: [],
       wholeschdule: [],
-      lessons: [],
+      lessons: undefined,
       coursetime: [],
       lessonschdule: []
     }
@@ -68,14 +79,30 @@ export default {
   // mounted () {
   //   this.$store.commit('user/setid', this.userid)
   // },
-  created () {
-    this.coursetime = []
-    this.wholelessons = JSON.parse(localStorage.lessons)
-    for (let i of this.wholelessons) {
-      if (i.userId === this.username) {
-        this.lessons.push(i)
+  computed: {
+    isCourse () {
+      if (this.$store.state.user.lessons.length === 0) {
+        return true
       }
+      return false
     }
+  },
+  created () {
+    console.log(this.$store.state.user.lessons.length)
+    console.log(this.isCourse)
+    this.coursetime = []
+    // this.wholelessons = JSON.parse(localStorage.lessons)
+    // for (let i of this.wholelessons) {
+    //   if (i.userId === this.username) {
+    //     this.lessons.push(i)
+    //   }
+    // }
+    this.lessons = this.$store.state.user.lessons
+    // for (let i of this.wholelessons) {
+    //   if (i.userId === this.username) {
+    //     this.lessons.push(i)
+    //   }
+    // }
     this.wholeschdule = JSON.parse(localStorage.lessonschdule)
     for (let a of this.wholeschdule) {
       if (a.userId === this.username) {
@@ -152,4 +179,12 @@ export default {
     background-color: #d1c4e9;
     color:#673ab7;
 } */
+.nocourse {
+  text-align: center;
+  padding-top: 30px
+}
+.nocourse p {
+  font-size: 20px;
+  color: #777
+}
 </style>

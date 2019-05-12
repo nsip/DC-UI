@@ -49,7 +49,7 @@
             class="q-ma-sm"
             flat
             color="deep-purple-7"
-            label="Registe"
+            label="Register"
             icon="fas fa-user-plus"
             @click="$router.push('/auth/register')"
           />
@@ -96,7 +96,7 @@
         </q-item>
         <q-item @click.native="$router.push({ name: 'dashboard', params: { username: user.name } })">
           <q-item-side icon="fas fa-republican" />
-          <q-item-main label="My Dashborad" />
+          <q-item-main label="My Dashboard" />
         </q-item>
         <!-- <q-item @click.native="$router.push('/account-setting')">
           <q-item-side icon="fas fa-republican" />
