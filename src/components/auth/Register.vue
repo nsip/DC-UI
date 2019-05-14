@@ -1,6 +1,6 @@
 <template>
 <q-page class="card-postion" id="signup">
-    <q-card class="row card">
+    <q-card class="row card" style="height:650px">
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
           <img src="../../assets/register.png" alt="">
         </div>
@@ -173,23 +173,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-.background{
-    /* border-radius: 9px 0 0 9px;
-    background-image: url("../../assets/register.png"); */
-    -webkit-filter: brightness(0.90);
-    filter: brightness(0.90);
-    /* background-repeat: no-repeat;
-    padding: 20px; */
-}
-.card {
-    background-color: white;
-    margin:100px auto;
-    height:600px;
-    width:1000px;
-    overflow: hidden;
-}
-.sign-up {
-     padding: 50px 50px 50px 10px;
-}
-</style>

@@ -117,6 +117,9 @@ export default {
       this.schdule = []
       var a = this.lessonlist
       for (let i = 0; i < a.length; i++) {
+        console.log(a[i])
+        delete a[i].editcontent
+        delete a[i].url
         this.schdule.push(a[i])
       }
       console.log(this.schdule)
@@ -160,36 +163,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.schedule {
-    padding: 50px 200px;
-}
-.schedule h4{
-    color: gray
-}
-.datetimepicker {
-  background-color: white;
-}
-.lessonlist {
-  background-color: white;
-  border-radius: 55px;
-}
-.course-title {
-  font-size: 18px;
-  color: #9575cd
-}
-.lessonlist-title b{
-  color: rgb(103, 58, 183) !important;
-}
-.schedule-calendar {
-  background-color: white
-}
-.lessonlist b {
-  color: rgb(103, 58, 183);
-  font-size: x-large;
-}
-.course {
-  border: none
-}
-</style>

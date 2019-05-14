@@ -109,39 +109,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-b {
-    color:#311b92;
-}
-.reminder {
-    margin-top:0px
-}
-.reminder-list {
-    box-shadow: none;
-    border: 1px solid #e0e0e0;
-    transition: box-shadow 1.5s;
-}
-.reminder-list:hover {
-    box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12)
-}
-.reminder p{
-    color: gray
-}
-.fix-hight {
-    height: 117px;
-    max-height: 117px;
-    overflow: scroll
-}
-.reminder-header i {
-    margin-right: 5px;
-    color: #ffc107;
-}
-.reminder-header {
-    max-height: 48px;
-    overflow: scroll
-}
-.reminder-title {
-    max-height: 64px;
-    overflow: scroll
-}
-</style>

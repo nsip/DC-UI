@@ -18,7 +18,7 @@ export function UPDATE_LESSONS (state, newlessons) {
   ls.setItem('lessons', newlessons)
 }
 export function DELETE_LESSONS (state, i) {
-  console.log(state.lessons)
+  // console.log(state.lessons)
   var index = state.lessons.findIndex(lesson => lesson.lessonId === i)
   // console.log(index)
   state.lessons.splice(index, 1)
@@ -26,7 +26,7 @@ export function DELETE_LESSONS (state, i) {
 export function UPDATE_LESSON_SCHDULE (state, newlessonschdule) {
   state.lessonschdule = newlessonschdule
   ls.setItem('lessonschdule', newlessonschdule)
-  console.log(state.lessonschdule)
+  // console.log(state.lessonschdule)
 }
 export function DELETE_LESSONS_SECHDULE (state, i) {
   console.log(i)

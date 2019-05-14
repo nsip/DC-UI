@@ -1,7 +1,7 @@
 <template>
   <div id="courseplan">
         <div style="margin:100px 0 0 100px; color:gray">
-            <h4><b>Lesson Plan
+            <h4><b>{{coursename}} Lesson Planer
               <i class="fas fa-scroll q-ma-sm"></i>
             </b></h4>
             <p><i>Design the lesson in the editor, add the lesson by clicking the add button, and delete the lesson by clicking the delete button</i></p>
@@ -226,7 +226,7 @@
             </q-card >
         </div>
         <div class="left-btn">
-            <q-btn push icon="adb" align="between" label="Reminder" color="deep-purple-9" @click="isShow=!isShow"></q-btn>
+            <q-btn push icon="adb" align="between" label="Get lesson inforamtion" color="deep-purple-9" @click="isShow=!isShow"></q-btn>
         </div>
     </div>
 </template>
@@ -383,122 +383,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.left-btn {
-  position:fixed;
-  bottom: -4px;
-  left: 10px;
-  display:block
-}
-.courseplan {
-  margin: 50px 100px
-}
-.addLesson{
-  padding-top:0px;
-  margin-top:10px;
-  border: 1px solid #ccc;
-  transition: box-shadow 1.5s
-}
-.addLesson:hover{
-  box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12)
-}
-.singlerow{
-  margin-left:0%;
-}
-.q-card-container{
-  padding: 5px
-}
-.xs {
-  padding:0 5px
-}
-.slide-fade-enter-active {
-  transition: all .8s ease;
-}
-.slide-fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateX(10px);
-  opacity: 0;
-}
-h5{
-  margin-bottom: 20px
-}
-.my-handle {
-  cursor: move;
-  cursor: -webkit-grabbing
-}
-.lesson-list {
-  max-height: 500px;
-  overflow-y:scroll
-}
-.editor{
-  margin-bottom: 30px;
-  transition: box-shadow 1.5s
-}
-.editor:hover {
-  box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12)
-}
-.q-editor {
-  height: 711px;
-  max-height: 711px;
-  border: 1px solid #e0e0e0;
-  border-bottom: none;
-  overflow: scroll;
-  /* box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12) */
-}
-.searchResult {
-  height: 655px;
-  max-height: 655px;
-  border-bottom: none;
-  overflow: scroll
-}
-.search {
-  transition: box-shadow 1.5s;
-  overflow: scroll;
-}
-.search:hover {
-  box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12)
-}
-.tip {
-  width: 420px;
-}
-.urllink {
-  text-decoration: none;
-  color: gray;
-}
-.urllink:hover {
-  color: #4527a0;
-}
-.link-list {
-  overflow-x: scroll
-}
-.l {
-  box-shadow: none;
-  border: 1px lightgray solid;
-}
-.tips {
-  font-size:10px;
-  margin: 0px;
-  color: #737373
-}
-.bottom-tips p {
-  margin: 0px;
-  color: #737373;
-}
-.bottom-tips i {
-  color:#ffc107;
-  font-size: 16px;
-}
-.bottom-tips {
-  max-height: 58px;
-  overflow: scroll
-}
-.search-input {
-  height: 56px;
-  max-height: 56px;
-  overflow: scroll
-}
-</style>

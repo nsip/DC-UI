@@ -5,7 +5,7 @@
       <i class="fas fa-calendar-alt q-ma-md"></i>
   </h4>
   <hr style="color:gray">
-  <div class="modifyschedule">
+  <div class="schedule">
     <div class="row">
       <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
       <!-- <q-card inline class="q-ma-lg lessonlist">
@@ -132,39 +132,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.modifyschedule {
-    margin: 50px 200px;
-}
-.modifyschedule h4{
-    color: gray
-}
-.datetimepicker {
-  background-color: white;
-}
-.lessonlist {
-  border-radius: 55px;
-  background-color: white;
-}
-.lessonlist b {
-  color: rgb(103, 58, 183);
-  font-size: x-large;
-}
-.course-title {
-  font-size: 18px;
-  color: #9575cd
-}
-.time-sheet {
-  border: none;
-  /* border-radius: 80px;
-  transition: box-shadow 1.5s */
-}
-.save-delete-btn{
-  float: right
-}
-/* .time-sheet:hover {
-  border-radius: 80px;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12)
-} */
-</style>

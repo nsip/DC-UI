@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="tool">
         <h6><b>Tools</b></h6>
         <div class="row">
             <q-card inline class="q-ma-sm" v-for="tool in Overview.tools" :key="tool.name">
@@ -20,28 +20,3 @@ export default {
   props: ['Overview']
 }
 </script>
-
-<style scoped>
-h6 {
-    margin-bottom: 20px;
-    color: rgb(117, 117, 117)
-}
-ul{
-    list-style: disc;
-    text-align: justify;
-}
-li {
-    margin: 10px
-}
-.q-card {
-    width: 100%;
-    transition: background-color 1.5s, color 1.5s;
-    color: #424242;
-    cursor: default
-}
-.q-card:hover {
-    background-color: #d1c4e9;
-    color:#673ab7;
-    /* box-shadow: */
-}
-</style>

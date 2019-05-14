@@ -1,3 +1,4 @@
+<!--login page-->
 <template>
 <q-page class="card-postion" id="login">
     <q-card class="row card">
@@ -97,25 +98,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-.background{
-    /* border-radius: 9px 0 0 9px; */
-    /* background-image: url("../../assets/register.png"); */
-    -webkit-filter: brightness(0.90);
-    filter: brightness(0.90);
-    /* padding: 20px; */
-}
-a {
-    font-size: 11px
-}
-.card {
-    background-color: white;
-    margin:100px auto;
-    height:600px;
-    width:1000px;
-    overflow: hidden;
-}
-.sign-up {
-     padding: 100px 50px 100px 10px;
-}
-</style>

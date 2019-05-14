@@ -1,10 +1,10 @@
 <template>
     <div id="mainpage">
         <div class="coursedetail">
-            <div class="right-btn">
-                <q-btn push icon="lightbulb_outline" align="between" label="lesson plan" color="deep-purple-9" :to="{name:'courseplaner',params: {course, selectedarea, selectedcourse, selectedstage, username: username}}">
+            <q-page-sticky class="right-btn">
+                <q-btn push icon="lightbulb_outline" align="between" label="Go lesson plan" color="deep-purple-9" :to="{name:'courseplaner',params: {course, selectedarea, selectedcourse, selectedstage, username: username}}">
             </q-btn>
-            </div>
+            </q-page-sticky>
         <div class="row">
             <div class="col-xs-12 col-zdlg-2-5">
                 <q-btn
@@ -138,33 +138,10 @@ export default {
 </script>
 
 <style scoped>
-.q-btn {
- border-radius: 0
-}
-.coursedetail {
-    margin: 100px 200px
-}
-h5 {
-    color: #4527a0
-}
 @media (min-width: 1200px) {
     .col-zdlg-2-5 {
         float:left;
         width:20%;
     }
-}
-.component-fade-enter-active, .component-fade-leave-active {
-  transition: opacity 1s ease;
-}
-.component-fade-enter, .component-fade-leave-to {
-  opacity: 0;
-}
-.courseinfo {
-    text-align: justify
-}
-.right-btn{
-    position:fixed;
-    bottom: -4px;
-    right: 10px
 }
 </style>

@@ -4,6 +4,7 @@ export function someAction (context) {
 */
 // import router from '../../router'
 
+// register & login
 export function login ({commit}, user) {
   // let user = state.user
   // if (!Array.isArray(user)) user = []
@@ -33,13 +34,16 @@ export function login ({commit}, user) {
   commit('UPDATE_AUTH', true)
   this.$router.push('/dashboard/' + user.name)
 }
+// logout
 export function logout ({commit}) {
   commit('UPDATE_AUTH', false)
   this.$router.push({name: 'home', params: { logout: true }})
 }
+
+// create lesson plan
 export function post ({commit, state}, {submitLessons, area, course, subject, stage, description, userid, lessonId}) {
   let lessons = state.lessons
-  console.log(submitLessons)
+  // console.log(submitLessons)
   if (!Array.isArray(lessons)) lessons = []
   if (lessons) {
     const lesson = submitLessons
@@ -67,6 +71,7 @@ export function post ({commit, state}, {submitLessons, area, course, subject, st
         thestage,
         thedescription
       })
+    // Edit exist lesson plan
     } else {
       for (let i of lessons) {
         if (parseInt(i.lessonId) === parseInt(lessonId)) {
@@ -82,21 +87,23 @@ export function post ({commit, state}, {submitLessons, area, course, subject, st
       }
     }
     commit('UPDATE_LESSONS', lessons)
-    console.log(lessons)
+    // console.log(lessons)
     this.$router.push({ name: 'dashboard', params: {username: userId} })
   }
 }
+// deletelessonplan
 export function deleteLesson ({commit, state}, payload) {
   commit('DELETE_LESSONS', payload)
-  console.log(payload)
-  console.log(state.lessons)
+  // console.log(payload)
+  // console.log(state.lessons)
   let lessons = state.lessons
   commit('UPDATE_LESSONS', lessons)
   // context.commit('UPDATE_LESSONS', payload)
 }
+// schedule lessson
 export function postschedule ({commit, state}, {submmitschdule, lessonId, color, course, userid, schduleId}) {
   let lessonschdule = state.lessonschdule
-  console.log(lessonschdule)
+  // console.log(lessonschdule)
   // console.log(lessonId)
   if (!Array.isArray(lessonschdule)) lessonschdule = []
   if (lessonschdule) {
@@ -136,6 +143,7 @@ export function postschedule ({commit, state}, {submmitschdule, lessonId, color,
     this.$router.push({ name: 'dashboard' })
   }
 }
+// delete schedule
 export function deleteschdule ({commit, state}, payload) {
   console.log(payload)
   commit('DELETE_LESSONS_SECHDULE', payload)

@@ -46,12 +46,11 @@ export default {
 }
 </script>
 <style scoped>
-.top {
+/* .top {
   margin: 100px 200px 0 200px;
   box-shadow: none
 }
-.img-position{
+.img-position {
   text-align: -webkit-center;
-  /* text-align: center */
-}
+} */
 </style>

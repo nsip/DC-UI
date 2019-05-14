@@ -44,6 +44,11 @@
 <script>
 export default {
   props: ['lessons', 'username'],
+  data () {
+    return {
+      blockRemoval: false
+    }
+  },
   methods: {
     deleteLesson (index) {
       this.$q.dialog({
@@ -54,8 +59,7 @@ export default {
         cancel: true
       }).then(() => {
         this.$store.dispatch('user/deleteLesson', index)
-      }).catch(() => {
-      })
+      }).catch(() => {})
     }
     // remove (index) {
     //   this.$store.dispatch('user/deleteschdule', index)

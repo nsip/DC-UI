@@ -1,7 +1,7 @@
 <template>
 <q-page>
   <div id="search">
-  <div class="search">
+  <div class="scopesequnce">
     <div class="row" style="height:350px">
       <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
         <h5 class="q-ma-lg" style="margin-top:150px; color:gray"><b>Choose Learning area, Subject, Stage and Year to get the courses information</b></h5>
@@ -299,52 +299,3 @@ export default {
   // }
 }
 </script>
-<style scoped>
-.search {
-  margin: 50px 200px 0px 200px
-}
-.search-btn {
-  height: 56px;
-}
-.select {
-  box-shadow: none;
-  border-radius: 0px
-}
-.input {
-  border-right: 1px lightgray solid
-}
-.searchbox {
-  margin-top: 50px
-}
-.line {
-  margin: 50px 0 0 0
-}
-.list {
-  margin: 50px 200px 0 200px
-}
-.q-card {
-  height: auto;
-}
-.q-card-main {
-  height: auto;
-  text-align: justify;
-}
-.search p {
-    font-size: 18px;
-    color: grey
-}
-.search-btn{
-  text-align: center;
-  justify-content:center;
-  align-items:center
-}
-.course-card {
-  border: whitesmoke 1px solid;
-  box-shadow: none;
-  transition: box-shadow 1s, border 1s;
-}
-.course-card:hover {
-  box-shadow: 0 5px 5px rgba(0,0,0,0.2), 0 5px 5px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
-  border: whitesmoke 1px solid
-}
-</style>
