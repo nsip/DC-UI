@@ -1,26 +1,27 @@
 <template>
 <q-page id="schedule">
   <h4 style="margin-left:50px; margin-top: 100px; color:gray">
+      <img src="../../assets/planner.png" class="img-item">
       <b>Schedule Your Lessons</b>
-      <i class="fas fa-calendar-alt q-ma-md"></i>
+      <!-- <i class="fas fa-calendar-alt q-ma-md"></i> -->
   </h4>
-  <hr style="color:gray">
+  <hr class="line">
   <div class="schedule">
     <div class="row">
       <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div>
       <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
           <q-card class="q-ma-lg lessonlist">
           <q-card-media>
-            <q-parallax :src="'../../assets/Knowledge04.jpg'" :height="300" class="pic">
+            <q-parallax :src="'../../assets/2409650-2.jpg'" :height="280" class="pic">
               <div slot="loading">Loading...</div>
             </q-parallax>
-          </q-card-media>
-            <q-card-title>
+            <q-card-title slot="overlay">
               <q-item>
             <q-item-side></q-item-side>
               <b>{{coursename}}</b>
               </q-item>
               </q-card-title>
+          </q-card-media>
             <div class="lesson-list">
               <q-list v-for="(lesson, index) in lessonlist" :key="index" text-color="dark" class="course">
                   <q-item>
@@ -31,6 +32,7 @@
                         color="deep-purple-6"
                       >
                       <q-datetime
+                        modal
                         color="deep-purple-6"
                         v-model="lesson.start.dateTime"
                         type="datetime"
@@ -41,7 +43,9 @@
                         color="deep-purple-6"
                       >
                       <q-datetime
+                        modal
                         color="deep-purple-6"
+                        :min="lesson.start.dateTime"
                         v-model="lesson.end.dateTime"
                         type="datetime"
                         float-label="Pick End Date&Time"
@@ -52,6 +56,26 @@
                   </q-item>
                 </q-list>
               </div>
+              <!-- <q-field
+                  color="deep-purple-6"
+                >
+                <q-datetime
+                  color="deep-purple-6"
+                  v-model="startdateTime"
+                  type="datetime"
+                  float-label="Pick Start Date&Time"
+                />
+                </q-field>
+                <q-field
+                  color="deep-purple-6"
+                >
+                <q-datetime
+                  color="deep-purple-6"
+                  v-model="enddateTime"
+                  type="datetime"
+                  float-label="Pick End Date&Time"
+                />
+                </q-field> -->
               <q-card-separator />
                 <q-card-title>
                   <q-btn @click="save" outline rounded slot="right" icon="fas fa-save" color="deep-purple-6" label="Save"/>
@@ -66,6 +90,7 @@
 
 <script>
 import { QSpinnerPie } from 'quasar'
+
 export default {
   props: ['lessonId', 'username'],
   components: {
@@ -74,7 +99,8 @@ export default {
   },
   data () {
     return {
-      // showschdule: [],
+      // startdateTime: undefined,
+      // enddateTime: undefined,
       coursename: undefined,
       schdule: [],
       isempty: false,

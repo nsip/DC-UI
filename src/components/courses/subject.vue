@@ -1,7 +1,7 @@
 <template>
     <div id="mainpage">
         <div class="coursedetail">
-            <q-page-sticky class="right-btn">
+            <q-page-sticky class="left-btn">
                 <q-btn push icon="lightbulb_outline" align="between" label="Go lesson plan" color="deep-purple-9" :to="{name:'courseplaner',params: {course, selectedarea, selectedcourse, selectedstage, username: username}}">
             </q-btn>
             </q-page-sticky>
@@ -54,7 +54,7 @@
         </div>
             <div style="margin-top:80px">
             <h5><b>Course Name: {{ course.name }}</b></h5>
-            <hr>
+            <hr class="vertical-lines">
             </div>
             <div class="courseinfo">
             <transition name="component-fade" mode="out-in">

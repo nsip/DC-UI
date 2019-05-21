@@ -1,8 +1,8 @@
 <template>
     <div class="concept">
         <h6><b>Concepts</b></h6>
-        <div class="row">
-            <q-card inline class="q-ma-sm" v-for="concept in Overview.concepts" :key="concept.name">
+        <div class="row" v-for="concept in Overview.concepts" :key="concept.name">
+            <q-card inline class="q-ma-sm">
                 <q-card-title>
                     <b>{{concept.name}}</b>
                 </q-card-title>

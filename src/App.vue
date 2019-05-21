@@ -12,7 +12,7 @@
             <router-view v-if="!$route.meta.keepAlive" class="child-view"></router-view>
         </transition>
     </q-page-container>
-      <q-page-sticky position="right" :offset="[18, 18]">
+      <q-page-sticky position="bottom-right" :offset="[18, 18]">
         <q-btn
           color="deep-purple-6"
           size="md"
@@ -82,9 +82,10 @@ body {
   font-size:100%; */
   height: 100%;
   width: 100%;
-  background-color:whitesmoke;
+  background-color: white;
   font-family: Verdana, Geneva, sans-serif;
   font-size: 16px;
+  background: url('./assets/9210.jpg')
 }
 .body {
   height: 100%;

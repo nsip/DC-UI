@@ -1,8 +1,8 @@
 <template>
     <div class="course">
         <h6><b>Outcomes</b></h6>
-            <div class="outcome-list" v-for="outcome in course.outcomes" :key="outcome.id">
-                <q-list>
+            <div class="outcome-list">
+                <q-list  v-for="outcome in course.outcomes" :key="outcome.id">
                 <q-item>
                     <q-item-side>
                         <q-item-tile>
@@ -13,7 +13,7 @@
                         A student {{outcome.description}}
                     </q-item-main>
                 </q-item>
-                <q-item-separator inset/>
+                <hr class="sep-2" />
                 </q-list>
             </div>
     </div>

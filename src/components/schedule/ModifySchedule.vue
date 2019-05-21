@@ -1,10 +1,11 @@
 <template>
   <div id="modifyschedule">
   <h4 style="margin-left:50px; margin-top: 100px; color:gray">
+      <img src="../../assets/planner.png" class="img-item">
       <b>Modify Your Sechdule</b>
-      <i class="fas fa-calendar-alt q-ma-md"></i>
+      <!-- <i class="fas fa-calendar-alt q-ma-md"></i> -->
   </h4>
-  <hr style="color:gray">
+  <hr class="line">
   <div class="schedule">
     <div class="row">
       <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
@@ -20,16 +21,22 @@
       <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
         <q-card class="q-ma-lg lessonlist">
           <q-card-media>
-            <q-parallax :src="'../../assets/Knowledge04.jpg'" :height="300">
+            <q-parallax :src="'../../assets/2409650-2.jpg'" :height="280" class="pic">
               <div slot="loading">Loading...</div>
             </q-parallax>
+            <q-card-title slot="overlay">
+              <q-item>
+            <q-item-side></q-item-side>
+              <b>{{title}}</b>
+              </q-item>
+              </q-card-title>
           </q-card-media>
-            <q-card-title>
+            <!-- <q-card-title>
               <q-item>
                 <q-item-side></q-item-side>
               <b>{{title}}</b>
               </q-item>
-              </q-card-title>
+              </q-card-title> -->
               <div v-for="(course, index) in localtimesheet" :key="index">
                 <q-list text-color="dark" class="time-sheet q-ma-sm">
                   <q-item>
@@ -41,6 +48,7 @@
                       >
                       <q-datetime
                         color="deep-purple-6"
+                        modal
                         v-model="course.start.dateTime"
                         type="datetime"
                         float-label="Pick Start Date&Time"
@@ -51,6 +59,8 @@
                       >
                       <q-datetime
                         color="deep-purple-6"
+                        modal
+                        :min="course.start.dateTime"
                         v-model="course.end.dateTime"
                         type="datetime"
                         float-label="Pick End Date&Time"

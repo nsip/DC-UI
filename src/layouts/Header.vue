@@ -1,8 +1,8 @@
 <template>
-    <div>
-    <q-layout-header reveal>
+    <div class="header">
+    <q-layout-header reveal @scroll="handleSCroll">
       <q-toolbar
-        color="grey-11"
+        color="white"
         :inverted="$q.theme === 'mat' & 'ios'"
       >
         <q-btn
@@ -22,80 +22,100 @@
           <div slot="subtitle"></div>
         </q-toolbar-title>
         <div v-if="auth">
-            <q-btn
+            <!-- <q-btn
                 flat
                 color="deep-purple-7"
                 size="md"
                 icon="fas fa-user"
-                :label="user.name" />
+                :label="user.name" /> -->
                 <q-btn
                   flat
-                  color="deep-purple-7"
+                  color="purple-14"
                   size="md"
-                  label="My Dashboard"
-                  icon="fas fa-crown"
-                  @click="$router.push({ name: 'dashboard', params: { username: user.name } })"/>
+                  rounded
+                  class="log-btn"
+                  @click="$router.push({ name: 'dashboard', params: { username: user.name } })">
+                  <img src="../assets/crown.png">
+                  <p>My Dashboard</p>
+                </q-btn>
                 <!-- <span v-if="user.name">{{ user.name }}</span> -->
             <q-btn
                 outline
-                color="deep-purple-7"
+                color="purple-14"
                 size="md"
-                label="Logout"
-                icon="fas fa-sign-in-alt"
-                @click="logout" />
+                rounded
+                class="log-btn"
+                @click="logout" >
+                  <img src="../assets/logout.png">
+                  <p>Logout</p>
+            </q-btn>
         </div>
         <div v-else>
           <q-btn
-            class="q-ma-sm"
+            class="q-ma-sm log-btn"
             flat
-            color="deep-purple-7"
-            label="Register"
-            icon="fas fa-user-plus"
-            @click="$router.push('/auth/register')"
-          />
+            rounded
+            color="purple-14"
+            @click="$router.push('/auth/register')">
+            <img src="../assets/register-2.png">
+            <p>Register</p>
+          </q-btn>
         <q-btn
-            class="q-ma-sm"
+            class="q-ma-sm log-btn"
             outline
-            color="deep-purple-7"
-            label="Login"
-            icon="fas fa-sign-in-alt"
-            @click="$router.push('/auth/login')"
-            >
+            rounded
+            color="purple-14"
+            @click="$router.push('/auth/login')">
+            <img src="../assets/login-2.png">
+            <p>Login</p>
         </q-btn>
         </div>
       </q-toolbar>
     </q-layout-header>
     <q-layout-drawer
       v-model="leftDrawerOpen"
-      :content-class="['bg-grey-11', 'q-pa-sm']"
+      :content-class="['bg-white', 'q-pa-sm']"
       class="leftdrawer"
+      width="300"
     >
       <q-list
         no-border
         link
         inset-delimiter
+        class="drawer"
       >
-        <q-list-header style="text-align:center; margin-top:30px">
-          <i class="fab fa-reddit" style="font-size:55px"></i>
-          <i class="fab fa-reddit" style="font-size:45px"></i>
-          <i class="fab fa-reddit" style="font-size:35px"></i>
-          <i class="fab fa-reddit" style="font-size:20px"></i>
-          <i class="fab fa-reddit" style="font-size:15px"></i>
+        <q-list-header style="text-align:center; padding: 0px">
+          <img src="../assets/logo-2.jpg">
+          <!-- <i class="fab fa-reddit" style="font-size:20px"></i>
+          <i class="fab fa-reddit" style="font-size:15px"></i> -->
         </q-list-header>
         <!-- <q-item @click.native="$router.push('/scope&sequnce')" style="margin-top:50px">
           <q-item-side icon="fas fa-graduation-cap" />
           <q-item-main label="Scope & Sequence" />
         </q-item> -->
+        <q-list-header />
+        <q-list-header v-if="auth">
+          <div class="user">
+            <img src="https://img.icons8.com/dusk/64/000000/son-goku.png">
+            <p>Hello, {{user.name}} !</p>
+          </div>
+        </q-list-header>
+        <q-list-header v-else>
+          <div class="user">
+            <img src="../assets/login.png">
+            <p>Please Login First</p>
+          </div>
+        </q-list-header>
         <q-item @click.native="$router.push({ name: 'scopeandsequnce', params: { username: user.name } })">
-          <q-item-side icon="fas fa-republican" />
+          <q-item-side><img src="../assets/sequece.png"></q-item-side>
           <q-item-main label="Scope & Sequence" />
         </q-item>
         <q-item @click.native="$router.push({ name: 'coursesummary', params: { username: user.name } })">
-          <q-item-side icon="fas fa-republican" />
+          <q-item-side><img src="../assets/summary.png"></q-item-side>
           <q-item-main label="Course Summary" />
         </q-item>
         <q-item @click.native="$router.push({ name: 'dashboard', params: { username: user.name } })">
-          <q-item-side icon="fas fa-republican" />
+          <q-item-side><img src="../assets/crown-2.png"></q-item-side>
           <q-item-main label="My Dashboard" />
         </q-item>
         <!-- <q-item @click.native="$router.push('/account-setting')">
@@ -152,8 +172,30 @@ export default {
   },
   methods: {
     logout () {
-      this.$store.dispatch('user/logout')
+      this.$q.dialog({
+        title: 'Comfirm',
+        message: 'Are you sure to log out?',
+        color: 'deep-purple-6',
+        ok: true,
+        cancel: true
+      }).then(() => {
+        this.$store.dispatch('user/logout')
+      }).catch(() => {})
+    },
+    handleSCroll (event) {
+      let header = document.querySelector('.q-layout-header')
+      if (window.scrollY > 100 && !header.className.includes('act')) {
+        header.classList.add('act')
+      } else if (window.scrollY < 100) {
+        header.classList.remove('act')
+      }
     }
+  },
+  created () {
+    window.addEventListener('scroll', this.handleSCroll)
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.handleSCroll)
   },
   beforeRouteUpdate (to, from, next) {
   // if isBack = true，user click back，slide-right transition

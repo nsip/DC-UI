@@ -1,12 +1,14 @@
 <template>
   <div id="courseplan">
         <div style="margin:100px 0 0 100px; color:gray">
-            <h4><b>{{coursename}} Lesson Planer
-              <i class="fas fa-scroll q-ma-sm"></i>
-            </b></h4>
+            <h4>
+              <img src="../../assets/plan-2.png" class="img-item">
+              <b>{{coursename}} Lesson Planner
+              <!-- <i class="fas fa-scroll q-ma-sm"></i> --></b>
+            </h4>
             <p><i>Design the lesson in the editor, add the lesson by clicking the add button, and delete the lesson by clicking the delete button</i></p>
         </div>
-        <hr>
+        <hr class="line">
         <div class="row courseplan">
             <transition name="slide-fade">
             <div v-if="!isShow" class="col-3" style="padding-right:10px">
@@ -25,8 +27,8 @@
                 <q-editor
                   toolbar-text-color="white"
                   toolbar-outline
-                  toolbar-bg="deep-purple-9"
-                  min-height="42rem"
+                  toolbar-bg="deep-purple-4"
+                  min-height="40rem"
                   v-model="lesson.editcontent"
                   :toolbar="[
                     ['bold', 'italic', 'underline'],
@@ -83,7 +85,7 @@
                   </q-item>
                 </q-list>
                 <div style="float:right; margin:30px 0">
-                  <q-btn label="Save this lesson" color="deep-purple-9" icon="save" @click="save(index)" />
+                  <q-btn label="Save this lesson" outline rounded color="deep-purple-9" icon="save" @click="save(index)" />
                 </div>
               </div>
                 <!-- <q-btn label="save" @click="print"/> -->
@@ -91,7 +93,7 @@
             <div class="col-3" style="padding-left:10px;">
                 <q-chips-input
                   inverted
-                  color="deep-purple-9"
+                  color="deep-purple-4"
                   chips-color="dark"
                   chips-bg-color="white"
                   v-model="keywords"
@@ -124,23 +126,25 @@
                 </q-list>
                 </div>
             </div>
-            <q-card class="col-9 l" style="margin-bottom: 50px">
+            <q-card class="col-9 l list-of-lesson">
                 <q-card-title class="relative-position q-ma-sm">
                     <b style="color:gray">List of {{coursename}} Lesson</b>
                      <q-btn
                         class="absolute"
                         icon="fas fa-plus"
                         outline
+                        rounded
                         flat
                         color="deep-purple-9"
                         style="right: 8px;"
                         @click="add"/>
                     <q-card-separator style="margin-top: 15px; margin-bottom: 15px"/>
                     <span slot="subtitle">
+                      <img src="../../assets/list.png" class="lesson-sequence-logo">
                       <q-field
                         :label-width="2"
-                        icon="far fa-file-alt"
                         label="Lesson Sequence"
+                        class="lesson-sequence-input"
                       >
                         <q-input
                           v-model="description"
@@ -174,6 +178,7 @@
                                         <q-btn
                                             outline
                                             style="color: #4527a0; width:100%"
+                                            rounded
                                             @click='selectedLesson(index)'>Lesson {{ index + 1 }}</q-btn>
                                     </q-item>
                                     <q-item>
@@ -203,9 +208,10 @@
                   </div>
                 </q-card-title>
             </q-card>
-            <q-card class="col-3 l" style="margin-bottom: 50px; border-left:none">
+            <q-card class="col-3 l list-of-link">
                 <q-card-title class="relative-position q-ma-sm">
-                  <i style="color:#ffc107; margin-right:10px" class="fas fa-link" />
+                  <img src="../../assets/link-resource.png" class="img-item link-logo">
+                  <!-- <i style="color:#ffc107; margin-right:10px" class="fas fa-link" /> -->
                   <b style="color:gray">Related Resouse Link</b>
                   <q-card-separator style="margin-top: 15px; margin-bottom: 15px" />
                 </q-card-title>
@@ -226,7 +232,7 @@
             </q-card >
         </div>
         <div class="left-btn">
-            <q-btn push icon="adb" align="between" label="Get lesson inforamtion" color="deep-purple-9" @click="isShow=!isShow"></q-btn>
+            <q-btn push icon="fas fa-info-circle" align="between" label="Get lesson inforamtion" color="deep-purple-9" @click="isShow=!isShow"></q-btn>
         </div>
     </div>
 </template>

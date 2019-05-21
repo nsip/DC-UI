@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style scope>
-.course-calendar {
+/* .course-calendar {
   box-shadow: 0 5px 5px rgba(0,0,0,0.2), 0 5px 5px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
-}
+} */
 </style>

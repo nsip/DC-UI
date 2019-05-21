@@ -27,7 +27,7 @@
                     <q-item>
                         <q-item-side>
                             <q-item-tile>
-                                Lesson Description
+                                Lesson Sequence
                             </q-item-tile>
                         </q-item-side>
                         <q-item-main>

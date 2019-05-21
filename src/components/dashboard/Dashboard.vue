@@ -1,16 +1,23 @@
 <template>
     <q-page id="dash">
         <h4 style="margin-left:50px; margin-top: 100px; color:gray">
+            <img src="../../assets/crown-3.png" class="img-item">
             <b>My Dashboard</b>
-            <i class="fas fa-tachometer-alt q-ma-md"></i>
-            </h4>
-        <hr style="color:gray">
+        </h4>
+        <hr class="line">
         <div class="dashboard">
-            <q-card class="q-ma-sm">
+            <q-card class="q-ma-sm banner">
                 <q-card-media>
-                    <q-parallax src="../../assets/gray-background.jpg" :height="300">
+                    <q-parallax src="../../assets/9210-2.jpg" :height="300">
                         <div slot="loading">Loading...</div>
                     </q-parallax>
+                    <q-card-title slot="overlay">
+                    <q-item>
+                    <b>Hello, {{username}} !
+                      <img src="../../assets/happy.png" class="happy-logo">
+                    </b>
+                    </q-item>
+                    </q-card-title>
                 </q-card-media>
             </q-card>
             <div class="q-ma-sm">
@@ -18,11 +25,11 @@
                 <b>My Course</b>
                 <i class="fas fa-chalkboard-teacher q-ma-sm"></i>
                 <q-btn-group outline class="course-list-title-btn">
-                <q-btn outline icon="fas fa-list-ul" color="deep-purple-6" class="course-list-title-q-btn" @click='selectedComponent = "appCourseList"' label="Course List" />
-                <q-btn outline icon="fas fa-calendar-alt" color="deep-purple-6" class="course-list-title-q-btn" @click='selectedComponent = "appCourseCalender"' label="Course Calendar" />
+                <q-btn outline rounded icon="fas fa-list-ul" color="deep-purple-6" class="course-list-title-q-btn" @click='selectedComponent = "appCourseList"' label="Course List" />
+                <q-btn outline rounded icon="fas fa-calendar-alt" color="deep-purple-6" class="course-list-title-q-btn" @click='selectedComponent = "appCourseCalender"' label="Course Calendar" />
                 </q-btn-group>
             </h5>
-            <hr>
+            <hr class="sep-2" />
             </div>
             <div v-if="isCourse">
               <div class="nocourse">
