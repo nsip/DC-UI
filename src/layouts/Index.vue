@@ -18,16 +18,16 @@
               </p>
             </q-card-main>
             <q-card-actions v-if="auth" class="home-btn-right">
-              <q-btn size="md" rounded outline color="deep-purple-9" class="log-btn" @click="$router.push({ name: 'dashboard', params: { username: user.name } })" >
+              <q-btn size="md" rounded outline class="log-btn btn" color="deep-purple-9" @click="$router.push({ name: 'dashboard', params: { username: user.name } })" >
               <p>Go to my dashboard</p>
               </q-btn>
             </q-card-actions>
             <q-card-actions v-else class="home-btn-right">
-              <q-btn size="md" class="log-btn" rounded outline color="deep-purple-9" @click="$router.push('/auth/login')" >
+              <q-btn size="md" class="log-btn btn" rounded outline color="deep-purple-9" @click="$router.push('/auth/login')" >
                 <img src="../assets/login-3.png">
                 <p>Login</p>
               </q-btn>
-              <q-btn size="md" class="log-btn" rounded color="deep-purple-9" @click="$router.push('/auth/register')" >
+              <q-btn size="md" class="log-btn bc-btn" rounded  color="deep-purple-9" @click="$router.push('/auth/register')" >
                 <img src="../assets/singup.png">
                 <p>Signup</p>
               </q-btn>

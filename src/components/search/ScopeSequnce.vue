@@ -290,12 +290,5 @@ export default {
       return years
     }
   }
-  // created () {
-  //   axios
-  //     .get('./../../demoData/stage5.json')
-  //     .then(response => {
-  //       this.$store.commit('stage/setStageData', response)
-  //     })
-  // }
 }
 </script>

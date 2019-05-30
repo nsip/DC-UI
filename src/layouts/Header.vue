@@ -72,6 +72,14 @@
         </div>
       </q-toolbar>
     </q-layout-header>
+    <!-- <q-layout-footer class="footer-container">
+    <div class="row footer">
+      <div class="col-3">1</div>
+      <div class="col-3">2</div>
+      <div class="col-3">3</div>
+      <div class="col-3">4</div>
+    </div>
+  </q-layout-footer> -->
     <q-layout-drawer
       v-model="leftDrawerOpen"
       :content-class="['bg-white', 'q-pa-sm']"
@@ -188,6 +196,13 @@ export default {
         header.classList.add('act')
       } else if (window.scrollY < 100) {
         header.classList.remove('act')
+      }
+    }
+  },
+  watch: {
+    mask () {
+      if (this.leftDrawerOpen === true) {
+        console.log('mask')
       }
     }
   },

@@ -1,6 +1,6 @@
 <template>
-  <div id="q-app">
-    <q-layout view="lhr Lpr fFf">
+<div id="q-app">
+    <q-layout view="lhr Lpr lFf">
     <app-header></app-header>
     <q-page-container>
       <transition :name="transitionName" mode="out-in">
@@ -23,6 +23,7 @@
           <q-icon name="keyboard_arrow_up" />
         </q-btn>
       </q-page-sticky>
+      <!-- <app-footer></app-footer> -->
     <!-- <vue-particles
         color="#dedede"
         :particleOpacity="1"
@@ -41,16 +42,19 @@
         clickMode="push">
     </vue-particles> -->
     </q-layout>
-  </div>
+    </div>
 </template>
 
 <script>
 import Header from './layouts/Header.vue'
+// import Footer from './layouts/Footer.vue'
+
 export default {
   name: 'App',
   props: ['username'],
   components: {
     appHeader: Header
+    // appFooter: Footer
   },
   data () {
     return {
@@ -85,7 +89,8 @@ body {
   background-color: white;
   font-family: Verdana, Geneva, sans-serif;
   font-size: 16px;
-  background: url('./assets/9210.jpg')
+  background: url('./assets/9210-1.jpg');
+  /* background-blend-mode: lighten */
 }
 .body {
   height: 100%;
