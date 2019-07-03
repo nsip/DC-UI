@@ -89,7 +89,7 @@
 <script>
 import { QSpinnerPie } from 'quasar'
 export default {
-  props: ['schduleId', 'username'],
+  props: ['scheduleId', 'username', 'schedule'],
   data () {
     return {
       localschdule: [],
@@ -99,21 +99,28 @@ export default {
     }
   },
   created () {
-    this.localschdule = JSON.parse(localStorage.lessonschdule)
-    console.log(this.localschdule)
-    for (let i of this.localschdule) {
-      this.title = i.thecourse
-      if (parseInt(i.schduleId) === this.schduleId) {
-        console.log(i.lessontimesheet)
-        this.localtimesheet = i.lessontimesheet
-        break
-      }
-    }
+    console.log(this.scheduleId)
+    console.log(this.schedule)
+    this.title = this.schedule.thecourse
+    this.localtimesheet = this.schedule.lessontimesheet
+    // this.localschdule = JSON.parse(localStorage.lessonschdule)
+    // console.log(this.localschdule)
+    // for (let i of this.localschdule) {
+    //   this.title = i.thecourse
+    //   if (i.schduleId === this.schduleId) {
+    //     console.log(i.lessontimesheet)
+    //     this.localtimesheet = i.lessontimesheet
+    //     break
+    //   }
+    // }
   },
   methods: {
     save () {
       const submmitschdule = this.localtimesheet
-      const schduleId = this.schduleId
+      const lessonId = this.schedule.lessonId
+      const color = this.schedule.thecolor
+      const course = this.schedule.thecourse
+      const schduleId = this.scheduleId
       const userid = this.username
       this.$q.loading.show({
         spinner: QSpinnerPie,
@@ -123,11 +130,12 @@ export default {
       })
       setTimeout(() => {
         this.$q.loading.hide()
-        this.$store.dispatch('user/postschedule', {submmitschdule, schduleId, userid})
+        this.$store.dispatch('user/postschedule', {submmitschdule, schduleId, lessonId, color, course, userid})
       }, 3000)
     },
     remove () {
-      const index = this.schduleId
+      const index = this.scheduleId
+      const userid = this.username
       this.$q.dialog({
         title: 'Comfirm',
         message: 'Are you sure to delete this schedule?',
@@ -135,7 +143,7 @@ export default {
         ok: true,
         cancel: true
       }).then(() => {
-        this.$store.dispatch('user/deleteschdule', index)
+        this.$store.dispatch('user/deleteschdule', {index, userid})
       }).catch(() => {
       })
     }

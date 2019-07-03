@@ -25,7 +25,7 @@ const routes = [
   { path: '/scopeandsequnce', name: 'scopeandsequnce', component: () => import('components/search/ScopeSequnce.vue'), meta: { auth: true }, props: true },
   { path: '/courseplaner/:username', name: 'courseplaner', component: () => import('components/courseplan/CoursePlan.vue'), meta: { auth: true }, props: true },
   { path: ':username/:lessonId/schedule', name: 'schedule', component: () => import('components/schedule/Schedule.vue'), meta: { auth: true }, props: true },
-  { path: ':username/:schduleId/modifyschedule', name: 'modifyschedule', component: () => import('components/schedule/ModifySchedule.vue'), meta: { auth: true }, props: true },
+  { path: ':username/:scheduleId/modifyschedule', name: 'modifyschedule', component: () => import('components/schedule/ModifySchedule.vue'), meta: { auth: true }, props: true },
   // Undefine router
   {
     path: '*',

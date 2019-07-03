@@ -5,7 +5,7 @@ export let areas = [
   },
   {
     label: 'HSIE',
-    value: 'hsie'
+    value: 'HSIE'
   }
 ]
 
@@ -32,7 +32,7 @@ export let courses = [
   },
   {
     label: 'Geography',
-    value: 'geography'
+    value: 'Geography'
   },
   {
     label: 'History',

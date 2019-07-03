@@ -20,14 +20,14 @@
             </transition>
             <div :class="isShow?'col-9':'col-6'">
               <div
-                  class="editor" v-for="(lesson, index) in lessons" :key="index"
-                  :style="lesson.isDisplay?'display:block':'display:none'">
+                  class="editor" v-for="(l, index) in lessons" :key="index"
+                  :style="l.isDisplay ? 'display:block' : 'display:none'">
                 <q-editor
                   toolbar-text-color="white"
                   toolbar-outline
                   toolbar-bg="deep-purple-4"
                   min-height="40rem"
-                  v-model="lesson.editcontent"
+                  v-model="l.editcontent"
                   :toolbar="[
                     ['bold', 'italic', 'underline'],
                     ['token', 'hr', 'link', 'custom_btn'],
@@ -72,7 +72,7 @@
                 <q-list class="bottom-tips">
                   <q-item>
                     <q-item-side>
-                      <p>Title: {{ lesson.summary }}</p>
+                      <p>Title: {{ l.summary }}</p>
                     </q-item-side>
                     <q-item-main style="text-align:center" text-color="dark">
                       <p style="font-size:14px;"><i class="far fa-smile" style="margin-right:10px;"/>Please remeber click save button, when you make any changes.</p>
@@ -151,7 +151,7 @@
                 <q-item-separator />
                 <q-card-main class="lesson-list">
                         <draggable class="row" v-model="lessons" :options="{handle:'.my-handle'}" style="text-align:center; position: relative;">
-                            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12" v-for="(lesson, index) in lessons" :key="index">
+                            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12" v-for="(l, index) in lessons" :key="index">
                                 <q-list class="q-ma-xs addLesson">
                                     <q-item>
                                     <q-item-side left>
@@ -182,7 +182,7 @@
                                                 class="q-ma-sm"
                                                 color="deep-purple-5"
                                                 placeholder="Lesson title"
-                                                v-model="lesson.summary"/>
+                                                v-model="l.summary"/>
                                         </div>
                                     </q-item>
                                 </q-list>
@@ -239,12 +239,13 @@ import CouserRemainder from './CourseRemainder.vue'
 import draggable from 'vuedraggable'
 import { QSpinnerPie } from 'quasar'
 export default {
-  props: {
-    lesson: {
-      type: Object,
-      default: () => {}
-    }
-  },
+  // props: {
+  //   lesson: {
+  //     type: Object,
+  //     default: () => {}
+  //   }
+  // },
+  props: [ 'lesson' ],
   components: {
     appCouserReminder: CouserRemainder,
     // appCouserEditor: CouserEditor,
@@ -255,15 +256,7 @@ export default {
     return {
       lessonId: undefined,
       username: undefined,
-      lessons: [
-        {
-          courseid: 0,
-          summary: 'A',
-          editcontent: '',
-          isDisplay: true,
-          url: ''
-        }
-      ],
+      lessons: undefined,
       isShow: true,
       blockRemoval: true,
       coursename: '',
@@ -278,10 +271,16 @@ export default {
     }
   },
   created () {
+    console.log(this.lesson)
     this.username = this.lesson.userId
     this.lessonId = this.lesson.lessonId
-    this.lessons = this.lesson.lesson
+    this.lessons = this.lesson.lessonList
     this.j = this.lessons.length
+    for (let i = 0; i < this.j; i++) {
+      this.lessons[i].isDisplay = false
+    }
+    this.lessons[this.j - 1].isDisplay = true
+    console.log(this.lesson)
   },
   // computed: {
   //   seletedurl () {
@@ -294,13 +293,13 @@ export default {
       console.log(this.lessons[index].url)
     },
     add () {
-      var index = this.lessons.length
+      // var index = this.lessons.length
       var i
       for (i = 0; i < this.lessons.length; i++) {
         this.lessons[i].isDisplay = false
       }
       this.seletedurl = []
-      this.lessons.push({courseid: index++, editcontent: '', summary: '', isDisplay: true, url: '', start: {dateTime: ''}, end: {dateTime: ''}})
+      this.lessons.push({editcontent: '', summary: '', isDisplay: true, url: [{DisplayURL: '', Name: '', Snippet: '', URL: ''}], start: {dateTime: ''}, end: {dateTime: ''}})
     },
     selectedLesson (selectedId) {
       var i
@@ -317,7 +316,7 @@ export default {
     submit () {
       const lessonId = this.lessonId
       const userid = this.username
-      const description = this.lesson.thedescription
+      const des = this.lesson.thedescription
       const submitLessons = this.lessons
       const area = this.lesson.thearea
       const course = this.lesson.thecourse
@@ -331,7 +330,7 @@ export default {
       })
       setTimeout(() => {
         this.$q.loading.hide()
-        this.$store.dispatch('user/post', {submitLessons, area, course, subject, stage, description, userid, lessonId})
+        this.$store.dispatch('user/postlessons', {submitLessons, area, course, subject, stage, des, userid, lessonId})
       }, 3000)
     },
     removeLesson (index) {
