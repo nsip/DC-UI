@@ -2,7 +2,7 @@
     <div id="mainpage">
         <div class="coursedetail">
             <q-page-sticky class="left-btn">
-                <q-btn push icon="lightbulb_outline" align="between" label="Go lesson plan" color="deep-purple-9" :to="{name:'courseplaner',params: {course, selectedarea, selectedcourse, selectedstage, username: username}}">
+                <q-btn push icon="lightbulb_outline" align="between" label="Go lesson plan" color="deep-purple-9" :to="{name:'courseplaner',params: {course, Overview, selectedarea, selectedcourse, selectedstage, username: username}}">
             </q-btn>
             </q-page-sticky>
         <div class="row">
@@ -81,13 +81,14 @@ import Tools from './Tools.vue'
 // import axios from 'axios'
 
 export default {
-  props: ['course', 'selectedarea', 'selectedcourse', 'selectedstage', 'username'],
+  props: ['course', 'selectedarea', 'selectedcourse', 'selectedstage', 'Overviewuid', 'username'],
   components: {
     appCourse: Course,
     appConcept: Concept,
     appOutcomes: Outcomes,
     appSkills: Skills,
-    appTools: Tools
+    appTools: Tools,
+    Overviewuid: ''
     // vueCanvasNest
   },
   data: () => {
@@ -97,42 +98,90 @@ export default {
       info: null
     }
   },
-  mounted () {
+  created () {
+    console.log(this.Overviewuid)
     const axios = require('axios')
+    // axios({
+    //   url: 'http://192.168.76.37:1323/id?learning_area=' + this.selectedarea + '&subject=' + this.selectedcourse + '&stage=' + this.selectedstage + '&object=Overview',
+    //   methods: 'get'
+    // }).then((res) => {
+    //   this.Overviewuid = res.data[0]
+    //   console.log(this.Overviewuid)
+    // })
     axios({
-      url: 'http://localhost:1330/graphql',
+      // url: 'http://localhost:1330/graphql',
+      url: 'http://192.168.76.37:1323/gql',
       method: 'post',
       data: {
-        query: `query ContentQuery($state: String!, $learning_area: String!, $subject: String!, $stage: String!) {
-                overview(state: $state, learning_area: $learning_area, subject: $subject, stage: $stage){
-                    concepts {
-                        name
-                        description
-                    }
-                    inquiry_skills {
-                        name
-                        skills {
-                            skill
-                            ac
-                        }
-                    }
-                    tools {
-                        name
-                        examples
-                    }
-                }
-            }`,
+        query: `{
+          Overview {
+            concepts {
+              name
+              description
+            }
+            inquiry_skills {
+              name
+              skills {
+                skill
+              }
+            }
+            tools {
+              name
+              examples
+            }
+          }
+        }`,
         variables: {
-          state: 'nsw',
-          learning_area: this.selectedarea,
-          subject: this.selectedcourse,
-          stage: this.selectedstage
+          objid: this.Overviewuid
         }
       }
     }).then((result) => {
-      this.Overview = result.data.data.overview
-      console.log(result.data.data.overview)
+      // this.Overview = result.data.data.overview
+      console.log(result.data.data.Overview)
+      this.Overview = result.data.data.Overview
+    }).catch((error) => {
+      // handle error
+      console.log(error)
     })
+  },
+  mounted () {
+    // const axios = require('axios')
+    // // axios({
+    // //   url: 'http://192.168.76.37:1323/id?learning_area=' + this.selectedarea + '&subject=' + this.selectedcourse + '&stage=' + this.selectedstage + '&object=Overview',
+    // //   methods: 'get'
+    // // }).then((res) => {
+    // //   this.Overviewuid = res.data[0]
+    // //   console.log(this.Overviewuid)
+    // // })
+    // axios({
+    //   // url: 'http://localhost:1330/graphql',
+    //   url: 'http://192.168.76.37:1323/gql',
+    //   method: 'post',
+    //   data: {
+    //     query: `{
+    //       Overview {
+    //         concepts {
+    //           name
+    //         }
+    //         inquiry_skills {
+    //           name
+    //         }
+    //         tools {
+    //           name
+    //         }
+    //       }
+    //     }`,
+    //     variables: {
+    //       objid: this.Overviewuid
+    //     }
+    //   }
+    // }).then((result) => {
+    //   // this.Overview = result.data.data.overview
+    //   console.log(result)
+    // }).catch((error) => {
+    //   // handle error
+    //   console.log(error)
+    // })
   }
 }
 </script>

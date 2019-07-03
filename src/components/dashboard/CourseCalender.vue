@@ -1,11 +1,11 @@
 <template>
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-    <div v-for="schdule in lessonschdule" :key="schdule.schduleId" class="q-ma-sm">
-          <q-card inline class="course-card" :text-color="schdule.thecolor">
+    <div v-for="schedule in lessonschdule" :key="schedule.scheduleId" class="q-ma-sm">
+          <q-card inline class="course-card" :text-color="schedule.thecolor">
             <q-card-title>
-                <b>{{schdule.thecourse}}</b>
-                <q-btn round flat icon="fas fa-pencil-alt" slot="right" color="deep-purple-6" :to="{name: 'modifyschedule', params:{ schduleId: schdule.schduleId, username: username, schdule }}">
+                <b>{{schedule.thecourse}}</b>
+                <q-btn round flat icon="fas fa-pencil-alt" slot="right" color="deep-purple-6" :to="{name: 'modifyschedule', params:{ scheduleId: schedule.scheduleId, username: username, schedule }}">
                     <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
                       Modify Schedule
                     </q-tooltip>
@@ -33,7 +33,7 @@
 <script>
 import { CalendarMonth } from 'quasar-calendar'
 export default {
-  props: ['coursetime', 'lessonschdule', 'username'],
+  props: ['lessonschdule', 'username', 'coursetime'],
   components: {
     CalendarMonth
   }

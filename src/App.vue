@@ -89,7 +89,7 @@ body {
   background-color: white;
   font-family: Verdana, Geneva, sans-serif;
   font-size: 16px;
-  background: url('./assets/9210-1.jpg');
+  background: url('./assets/9210.jpg');
   /* background-blend-mode: lighten */
 }
 .body {

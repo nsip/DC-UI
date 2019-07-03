@@ -92,7 +92,7 @@
 import { QSpinnerPie } from 'quasar'
 
 export default {
-  props: ['lessonId', 'username'],
+  props: ['lessonId', 'username', 'lesson'],
   components: {
     // vueCanvasNest,
     // CalendarMonth
@@ -108,7 +108,7 @@ export default {
       obj: undefined,
       description: undefined,
       des: undefined,
-      lessonsArray: [],
+      lessonsArray: undefined,
       lessonlist: [],
       schduledatetime: undefined,
       j: 0,
@@ -118,23 +118,27 @@ export default {
   },
   created () {
     this.lessonid = this.lessonId
+    this.coursename = this.lesson.thecourse
     console.log(this.lessonid)
-    this.lessonsArray = JSON.parse(localStorage.lessons)
-    console.log(this.lessonsArray)
-    for (let i of this.lessonsArray) {
-      if (parseInt(i.lessonId) === this.lessonid) {
-        console.log(i.lesson)
-        this.des = i.thedescription
-        this.lessonlist = i.lesson
-        this.coursename = i.thecourse
-        break
-      }
-    }
+    console.log(this.lesson)
+    console.log(this.lesson.lessonList)
+    this.lessonlist = this.lesson.lessonList
+    console.log(this.lessonlist)
+    // this.lessonsArray = JSON.parse(localStorage.lessons)
+    // for (let i of this.lessonsArray) {
+    //   if (i.lessonId === this.lessonid) {
+    //     console.log(i.lesson)
+    //     this.des = i.thedescription
+    //     this.lessonlist = i.lesson
+    //     this.coursename = i.thecourse
+    //     break
+    //   }
+    // }
     this.j = this.lessonlist.length
     this.seletedcolor = this.colorArray[Math.floor(Math.random() * this.colorArray.length)]
     console.log(this.seletedcolor)
     for (var i = 0; i < this.j; i++) {
-      this.lessonlist[i].description = this.des
+      this.lessonlist[i].description = this.lesson.thedescription
       this.lessonlist[i].color = this.seletedcolor
     }
   },

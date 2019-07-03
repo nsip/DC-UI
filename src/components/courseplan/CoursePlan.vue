@@ -14,6 +14,7 @@
             <div v-if="!isShow" class="col-3" style="padding-right:10px">
                 <app-couser-reminder
                   :course="course"
+                  :overview = "Overview"
                   :coursename="coursename"
                   :selectedarea="selectedarea"
                   :selectedcourse="selectedcourse"
@@ -147,7 +148,7 @@
                         class="lesson-sequence-input"
                       >
                         <q-input
-                          v-model="description"
+                          v-model="descript"
                           color="deep-purple-9" />
                       </q-field>
                     </span>
@@ -244,7 +245,7 @@ import draggable from 'vuedraggable'
 import { QSpinnerPie } from 'quasar'
 
 export default {
-  props: ['course', 'selectedarea', 'selectedcourse', 'selectedstage', 'username'],
+  props: ['course', 'Overview', 'selectedarea', 'selectedcourse', 'selectedstage', 'username'],
   components: {
     appCouserReminder: CouserRemainder,
     // appCouserEditor: CouserEditor,
@@ -256,11 +257,17 @@ export default {
       lessonId: undefined,
       lessons: [
         {
-          courseid: 0,
-          summary: 'A',
-          editcontent: 'Content 1',
+          summary: '',
+          editcontent: 'Click here to edit content',
           isDisplay: true,
-          url: '',
+          url: [
+            {
+              DisplayURL: '',
+              Name: '',
+              Snippet: '',
+              URL: ''
+            }
+          ],
           start: {dateTime: ''},
           end: {dateTime: ''}
         }
@@ -276,6 +283,8 @@ export default {
   },
   created () {
     this.coursename = this.course.name
+    console.log(this.course)
+    console.log(this.Overview)
   },
   watch: {
     lessons () {
@@ -292,16 +301,18 @@ export default {
   methods: {
     // save every single lesson
     save (index) {
+      this.lessons[index].url = this.seletedurl
+      console.log(this.lessons[index].url)
     },
     // create new lesson
     add () {
-      var index = this.lessons.length
+      // var index = this.lessons.length
       var i
       for (i = 0; i < this.lessons.length; i++) {
         this.lessons[i].isDisplay = false
       }
       this.seletedurl = []
-      this.lessons.push({courseid: index++, editcontent: '', summary: '', isDisplay: true, url: '', start: {dateTime: ''}, end: {dateTime: ''}})
+      this.lessons.push({editcontent: 'Click here to edit content', summary: '', isDisplay: true, url: [{DisplayURL: '', Name: '', Snippet: '', URL: ''}], start: {dateTime: ''}, end: {dateTime: ''}})
     },
     // select lesson
     selectedLesson (selectedId) {
@@ -319,7 +330,7 @@ export default {
     },
     // submit course plan to local storage
     submit () {
-      const description = this.description
+      const des = this.descript
       const submitLessons = this.lessons
       const area = this.selectedarea
       const course = this.course.name
@@ -334,7 +345,7 @@ export default {
       })
       setTimeout(() => {
         this.$q.loading.hide()
-        this.$store.dispatch('user/post', {submitLessons, area, course, subject, stage, description, userid})
+        this.$store.dispatch('user/postlessons', {submitLessons, area, course, subject, stage, des, userid})
       }, 3000)
     },
     // delete lesson

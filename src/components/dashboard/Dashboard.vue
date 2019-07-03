@@ -45,8 +45,8 @@
                 <component
                     :is="selectedComponent"
                     :username = "username"
-                    :coursetime = "coursetime"
                     :lessons = "lessons"
+                    :coursetime = "coursetime"
                     :lessonschdule = "lessonschdule"
                     >
                 </component>
@@ -77,10 +77,12 @@ export default {
     return {
       selectedComponent: 'appCourseList',
       wholelessons: [],
-      wholeschdule: [],
+      wholeSchedule: [],
       lessons: undefined,
       coursetime: [],
-      lessonschdule: []
+      lessonschdule: [],
+      lessonArray: [],
+      lessonsObject: undefined
     }
   },
   // mounted () {
@@ -88,43 +90,153 @@ export default {
   // },
   computed: {
     isCourse () {
-      if (this.$store.state.user.lessons.length === 0) {
+      if (this.wholelessons === null) {
         return true
       }
       return false
     }
   },
   created () {
-    console.log(this.$store.state.user.lessons.length)
-    console.log(this.isCourse)
-    this.coursetime = []
+    const axios = require('axios')
+    axios({
+      url: 'http://192.168.76.37:1323/id?userId=' + this.username + '&object=lesson',
+      method: 'get'
+    }).then((res) => {
+      // console.log(res)
+      if (res.data.length === 0) {
+        this.wholelessons = null
+      } else {
+        for (let a of res.data) {
+          // console.log(a)
+          axios({
+            url: 'http://192.168.76.37:1323/gql',
+            method: 'post',
+            data: {
+              query: `query {
+                lesson {
+                  lessonList {
+                    courseid
+                    editcontent
+                    summary
+                    isDisplay
+                    url {
+                      DisplayURL
+                      Name
+                      Snippet
+                      URL
+                    }
+                    start {
+                      dateTime
+                    }
+                    end {
+                      dateTime
+                    }
+                  }
+                  userId
+                  lessonId
+                  thearea
+                  thecourse
+                  thesubject
+                  thestage
+                  thedescription
+                }
+              }`,
+              variables: {
+                objid: a
+              }
+            }
+          }).then((result) => {
+            // console.log(result.data.data.lesson)
+            this.wholelessons.push(result.data.data.lesson)
+            // console.log(this.wholelessons)
+            this.lessons = this.wholelessons
+          })
+        }
+      }
+    })
+    axios({
+      url: 'http://192.168.76.37:1323/id?userId=' + this.username + '&object=schedule',
+      method: 'get'
+    }).then((r) => {
+      for (let i of r.data) {
+        // console.log(i)
+        axios({
+          url: 'http://192.168.76.37:1323/gql',
+          method: 'post',
+          data: {
+            query: `query {
+              schedule{
+                scheduleId
+                userId
+                thecolor
+                lessonId
+                thecourse
+                lessontimesheet {
+                  summary
+                  color
+                  start {
+                    dateTime
+                  }
+                  end {
+                    dateTime
+                  }
+                  description
+                }
+              }
+            }`,
+            variables: {
+              objid: i
+            }
+          }
+        }).then((res) => {
+          // console.log(res.data.data.schedule)
+          var timesheet = []
+          this.wholeSchedule.push(res.data.data.schedule)
+          timesheet.push(res.data.data.schedule)
+          for (let j of timesheet) {
+            console.log(j)
+            for (let b = 0; b < j.lessontimesheet.length; b++) {
+              this.coursetime.push(j.lessontimesheet[b])
+            }
+          }
+          for (let c = 0; c < this.coursetime.length; c++) {
+            this.coursetime[c].id = c
+          }
+          console.log(this.coursetime)
+        })
+        this.wholeSchedule = this.lessonschdule
+      }
+    })
+    // console.log(this.wholeSchedule)
     // this.wholelessons = JSON.parse(localStorage.lessons)
     // for (let i of this.wholelessons) {
     //   if (i.userId === this.username) {
     //     this.lessons.push(i)
     //   }
     // }
-    this.lessons = this.$store.state.user.lessons
+    // this.lessons = this.$store.state.user.lessons
     // for (let i of this.wholelessons) {
     //   if (i.userId === this.username) {
     //     this.lessons.push(i)
     //   }
     // }
-    this.wholeschdule = JSON.parse(localStorage.lessonschdule)
-    for (let a of this.wholeschdule) {
-      if (a.userId === this.username) {
-        this.lessonschdule.push(a)
-      }
-    }
-    for (let j of this.lessonschdule) {
-      for (let b = 0; b < j.lessontimesheet.length; b++) {
-        this.coursetime.push(j.lessontimesheet[b])
-      }
-    }
-    for (let c = 0; c < this.coursetime.length; c++) {
-      this.coursetime[c].id = c
-    }
-    console.log(this.coursetime)
+    // this.wholeschdule = JSON.parse(localStorage.lessonschdule)
+    // for (let a of this.wholeschdule) {
+    //   if (a.userId === this.username) {
+    //     this.lessonschdule.push(a)
+    //   }
+    // }
+    // this.wholeSchedule = this.lessonschdule
+    // console.log(this.lessonschdule)
+    // for (let j of this.lessonschdule) {
+    //   for (let b = 0; b < j.lessontimesheet.length; b++) {
+    //     this.coursetime.push(j.lessontimesheet[b])
+    //   }
+    // }
+    // for (let c = 0; c < this.coursetime.length; c++) {
+    //   this.coursetime[c].id = c
+    // }
+    // console.log(this.coursetime)
   },
   methods: {
     deleteLesson (index) {

@@ -10,7 +10,7 @@
                     Modify
                     </q-tooltip>
                 </q-btn>
-                <q-btn round flat icon="fas fa-calendar-plus" slot="right" color="deep-purple-6" :to="{name: 'schedule', params:{ lessonId: lesson.lessonId, username: username }}">
+                <q-btn round flat icon="fas fa-calendar-plus" slot="right" color="deep-purple-6" :to="{name: 'schedule', params:{ lessonId: lesson.lessonId, username: username, lesson }}">
                     <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
                     Add Schedule
                     </q-tooltip>
@@ -42,11 +42,14 @@
 </template>
 
 <script>
+import { QSpinnerFacebook } from 'quasar'
 export default {
   props: ['lessons', 'username'],
   data () {
     return {
-      blockRemoval: false
+      blockRemoval: false,
+      singlelesson: []
+      // loading: false
     }
   },
   methods: {
@@ -59,6 +62,18 @@ export default {
         cancel: true
       }).then(() => {
         this.$store.dispatch('user/deleteLesson', index)
+        // this.loading = true
+        this.$q.loading.show({
+          spinner: QSpinnerFacebook,
+          spinnerColor: 'amber',
+          spinnerSize: 100,
+          message: 'Loading...'
+        })
+        setTimeout(() => {
+          // this.loading = false
+          window.location.reload()
+          this.$q.loading.hide()
+        }, 3000)
       }).catch(() => {})
     }
     // remove (index) {

@@ -104,7 +104,7 @@
           <q-card-separator />
           <q-card-actions>
             <q-btn flat color='deep-purple-4'>
-              <router-link style="text-decoration: none; color:#9575cd" :to="{name: 'subject', params: {course, selectedarea, selectedcourse, selectedstage, username: username}}">Get more information</router-link>
+              <router-link style="text-decoration: none; color:#9575cd" :to="{name: 'subject', params: {course, selectedarea, selectedcourse, selectedstage, Overviewuid, username: username}}">Get more information</router-link>
             </q-btn>
         </q-card-actions>
         </q-card>
@@ -130,6 +130,8 @@ export default {
       selectedcourse: '',
       selectedstage: '',
       selectedyear: '',
+      Contentuid: '',
+      Overviewuid: '',
       areas,
       courses,
       stages,
@@ -154,6 +156,20 @@ export default {
     },
     getReslut () {
       const axios = require('axios')
+      axios({
+        url: 'http://192.168.76.37:1323/id?learning_area=' + this.selectedarea + '&subject=' + this.selectedcourse + '&stage=' + this.selectedstage + '&object=Content',
+        methods: 'get'
+      }).then((res) => {
+        this.Contentuid = res.data[0]
+        console.log(this.Contentuid)
+      })
+      axios({
+        url: 'http://192.168.76.37:1323/id?learning_area=' + this.selectedarea + '&subject=' + this.selectedcourse + '&stage=' + this.selectedstage + '&object=Overview',
+        methods: 'get'
+      }).then((res) => {
+        this.Overviewuid = res.data[0]
+        console.log(this.Overviewuid)
+      })
       this.loading = true
       this.isshow = false
       this.$q.loading.show({
@@ -167,42 +183,68 @@ export default {
         this.isshow = true
         this.$q.loading.hide()
         axios({
-          url: 'http://localhost:1330/graphql',
+          // url: 'http://localhost:1330/graphql',
+          url: 'http://192.168.76.37:1323/gql',
           method: 'post',
+          // data: {
+          //   query: `query ContentQuery($state: String!, $learning_area: String!, $subject: String!, $stage: String!) {
+          //         content(state: $state, learning_area: $learning_area, subject: $subject, stage: $stage){
+          //             courses {
+          //                 name
+          //                 outcomes {
+          //                     id
+          //                     description
+          //                 }
+          //                 lifeskills_outcomes
+          //                 inquiry_questions
+          //                 focus
+          //                 content_areas {
+          //                     name
+          //                 }
+          //             }
+          //         }
+          //         overview(state: $state, learning_area: $learning_area, subject: $subject, stage: $stage){
+          //             concepts {
+          //                 name
+          //             }
+          //             inquiry_skills {
+          //                 name
+          //             }
+          //             tools {
+          //                 name
+          //             }
+          //         }
+          //     }`,
+          //   variables: {
+          //     state: 'nsw',
+          //     learning_area: this.selectedarea,
+          //     subject: this.selectedcourse,
+          //     stage: this.selectedstage
+          //   }
+          // }
           data: {
-            query: `query ContentQuery($state: String!, $learning_area: String!, $subject: String!, $stage: String!) {
-                  content(state: $state, learning_area: $learning_area, subject: $subject, stage: $stage){
-                      courses {
-                          name
-                          outcomes {
-                              id
-                              description
-                          }
-                          lifeskills_outcomes
-                          inquiry_questions
-                          focus
-                          content_areas {
-                              name
-                          }
-                      }
+            query: `{
+              Content {
+                stage
+                subject
+                learning_area
+                courses {
+                  name
+                  outcomes {
+                    id
+                    description
                   }
-                  overview(state: $state, learning_area: $learning_area, subject: $subject, stage: $stage){
-                      concepts {
-                          name
-                      }
-                      inquiry_skills {
-                          name
-                      }
-                      tools {
-                          name
-                      }
+                  lifeskills_outcomes
+                  inquiry_questions
+                  focus
+                  content_areas {
+                    name
                   }
-              }`,
+                }
+              }
+            }`,
             variables: {
-              state: 'nsw',
-              learning_area: this.selectedarea,
-              subject: this.selectedcourse,
-              stage: this.selectedstage
+              objid: this.Contentuid
             }
           }
         }).then((result) => {
@@ -216,11 +258,36 @@ export default {
               actions: [ { label: 'OK', handler: () => this.clearData() } ]
             })
           } else {
-            this.resultAll = result.data.data
-            this.resultCotent = result.data.data.content
-            this.resultOverview = result.data.data.overview
+          //   this.resultAll = result.data.data
+            this.resultCotent = result.data.data.Content
+            // this.resultOverview = result.data.data.overview
           }
         })
+        // axios({
+        //   url: 'http://192.168.76.37:1323/gql',
+        //   method: 'post',
+        //   data: {
+        //     query: `{
+        //       Overview {
+        //         concepts {
+        //           name
+        //         }
+        //         inquiry_skills {
+        //           name
+        //         }
+        //         tools {
+        //           name
+        //         }
+        //       }
+        //     }`,
+        //     variables: {
+        //       objid: this.Overviewuid
+        //     }
+        //   }
+        // }).then((result) => {
+        //   // this.resultOverview = r.data.data.Overview
+        //   console.log(result)
+        // })
       }, 3000)
     }
   },
