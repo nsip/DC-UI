@@ -1,6 +1,6 @@
 {
   "name": "education",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "A Quasar Framework app",
   "productName": "Quasar App",
   "cordovaId": "org.cordova.quasar.app",
@@ -9,7 +9,11 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
     "test": "echo \"No test specified\" && exit 0",
-    "dev": "quasar dev"
+    "dev": "quasar dev",
+    "start": "./node_modules/.bin/quasar dev",
+    "debug": "./node_modules/.bin/quasar dev",
+    "update-version": "git checkout master && npm version patch && git add package.json && git commit -m 'Auto update' && git push && git push --tags",
+    "update-prod": "git checkout production && git merge master -m 'Auto Merged' && git push && git checkout master"
   },
   "dependencies": {
     "axios": "^0.18.1",

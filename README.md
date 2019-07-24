@@ -6,10 +6,10 @@ Please download dc-curriculum-service and run it first
 
 url: https://github.com/nsip/dc-curriculum-service
 
-install application: 
+install application:
 
 $ npm install
 
-start application: 
+start application:
 
 $ quasar dev
