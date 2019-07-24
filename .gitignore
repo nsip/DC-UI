@@ -1,3 +1,5 @@
+.quasar/artifacts.json
+*.swp
 dist
 *~
 *.old
