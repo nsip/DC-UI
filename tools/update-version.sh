@@ -15,8 +15,8 @@ git checkout master
 echo "STEP: Patch version (auto increment)"
 npm version patch
 echo "STEP: Commit package version changes"
-git add package.json
-git commit -m 'Auto update'
+git add package.json || echo "Error1 $?"
+git commit -m 'Auto update' || echo "Error2 $?"
 echo "STEP: Pushing repository and tags"
 git push
 git push --tags
