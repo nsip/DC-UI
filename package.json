@@ -12,8 +12,7 @@
     "dev": "quasar dev",
     "start": "./node_modules/.bin/quasar dev",
     "debug": "./node_modules/.bin/quasar dev",
-    "update-version": "git checkout master && npm version patch && git add package.json && git commit -m 'Auto update' && git push && git push --tags",
-    "update-prod": "git checkout production && git merge master -m 'Auto Merged' && git push && git checkout master"
+    "update-version": "git status --porcelain && git checkout master && npm version patch && git add package.json && git commit -m 'Auto update' && git push && git push --tags"
   },
   "dependencies": {
     "axios": "^0.18.1",
