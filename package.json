@@ -1,6 +1,6 @@
 {
   "name": "education",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A Quasar Framework app",
   "productName": "Quasar App",
   "cordovaId": "org.cordova.quasar.app",
