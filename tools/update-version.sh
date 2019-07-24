@@ -13,5 +13,8 @@ git checkout master
 npm version patch
 git add package.json
 git commit -m 'Auto update'
+echo "Pushing repository and tags"
 git push
-git push --tags"
+git push --tags
+
+echo "COMPLETE"
