@@ -12,6 +12,7 @@
     "dev": "quasar dev",
     "start": "./node_modules/.bin/quasar dev",
     "debug": "./node_modules/.bin/quasar dev",
+    "build": "./node_modules/.bin/quasar build",
     "update-version": "bash tools/update-version.sh"
   },
   "dependencies": {
