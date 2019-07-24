@@ -3,46 +3,46 @@
     <!--Without Login-->
     <div class>
         <div v-if="auth">
-            <q-btn-dropdown
-                flat
-                color="withe"
-                size="md"
-                :label="user.name"
-            >
-                <q-list link>
-                    <q-item>
-                        <q-item-main>
-                            <q-item-tile><router-link to="/dashboard" style="text-decoration: none; color:#9575cd">My Dashboard</router-link></q-item-tile>
-                        </q-item-main>
-                    </q-item>
-                </q-list>
-                <!-- <span v-if="user.name">{{ user.name }}</span> -->
-            </q-btn-dropdown>
             <q-btn
                 flat
-                color="white"
+                color="deep-purple-7"
+                size="md"
+                icon="fas fa-user"
+                :label="user.name" />
+                <q-btn
+                  flat
+                  color="deep-purple-7"
+                  size="md"
+                  label="My Dashboard"
+                  icon="fas fa-crown"
+                  @click="$router.push({ name: 'dashboard', params: { username: user.name } })"/>
+                <!-- <span v-if="user.name">{{ user.name }}</span> -->
+            <q-btn
+                outline
+                color="deep-purple-7"
                 size="md"
                 label="Logout"
                 icon="fas fa-sign-in-alt"
                 @click="logout" />
         </div>
         <div v-else>
-        <q-btn
+          <q-btn
+            class="q-ma-sm"
             flat
-            color="withe"
+            color="deep-purple-7"
+            label="Registe"
+            icon="fas fa-user-plus"
+            @click="$router.push('/auth/register')"
+          />
+        <q-btn
+            class="q-ma-sm"
+            outline
+            color="deep-purple-7"
             label="Login"
-            size="md"
             icon="fas fa-sign-in-alt"
             @click="$router.push('/auth/login')"
             >
         </q-btn>
-        <q-btn
-            flat
-            color="withe"
-            label="Registe"
-            icon="fas fa-user-plus"
-            @click="$router.push('/auth/register')"
-            />
         </div>
     </div>
 </template>
@@ -50,6 +50,7 @@
 
 export default {
   name: 'Entry',
+  props: [ 'username' ],
   computed: {
     auth () {
       return this.$store.state.user.auth
@@ -67,7 +68,13 @@ export default {
 </script>
 
 <style scoped>
-    .q-btn {
-        margin-right: 5px;
-    }
+.q-btn {
+  margin-right: 5px;
+}
+/* .userlist {
+  background-color: #4527a0;
+  padding-top:10px;
+  box-shadow: none;
+  border-radius: 0px;
+} */
 </style>

@@ -5,34 +5,38 @@ export let areas = [
   },
   {
     label: 'HSIE',
-    value: 'hsie'
+    value: 'HSIE'
   }
 ]
 
 export let courses = [
   {
     label: 'English',
-    value: 'eng'
+    value: 'english'
   },
   {
     label: 'Science',
-    value: 'scien'
+    value: 'science'
   },
   {
     label: 'Mathematics',
-    value: 'math'
+    value: 'mathematics'
   },
   {
     label: 'Technologies',
-    value: 'tech'
+    value: 'technologies'
   },
   {
     label: 'Languages',
-    value: 'lang'
+    value: 'languages'
   },
   {
     label: 'Geography',
-    value: 'geography'
+    value: 'Geography'
+  },
+  {
+    label: 'History',
+    value: 'history'
   }
 ]
 
@@ -43,27 +47,27 @@ export let stages = [
   },
   {
     label: 'Satge 1',
-    value: 1
+    value: '1'
   },
   {
     label: 'Satge 2',
-    value: 2
+    value: '2'
   },
   {
     label: 'Satge 3',
-    value: 3
+    value: '3'
   },
   {
     label: 'Satge 4',
-    value: 4
+    value: '4'
   },
   {
     label: 'Satge 5',
-    value: 5
+    value: '5'
   },
   {
     label: 'Satge 6',
-    value: 6
+    value: '6'
   }
 ]
 

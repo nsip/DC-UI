@@ -1,10 +1,10 @@
 <template>
-    <div class="">
+    <div id="mainpage">
         <div class="coursedetail">
-            <div class="right-btn">
-                <q-btn push icon="lightbulb_outline" align="between" label="lesson plan" color="deep-purple-9" :to="{name:'courseplaner',params: {item, selectedstage}}">
+            <q-page-sticky class="left-btn">
+                <q-btn push icon="lightbulb_outline" align="between" label="Go lesson plan" color="deep-purple-9" :to="{name:'courseplaner',params: {course, Overview, selectedarea, selectedcourse, selectedstage, username: username}}">
             </q-btn>
-            </div>
+            </q-page-sticky>
         <div class="row">
             <div class="col-xs-12 col-zdlg-2-5">
                 <q-btn
@@ -53,20 +53,21 @@
             </div>
         </div>
             <div style="margin-top:80px">
-            <h5><b>Course Name: {{ item.name }}</b></h5>
-            <hr>
+            <h5><b>Course Name: {{ course.name }}</b></h5>
+            <hr class="vertical-lines">
             </div>
             <div class="courseinfo">
             <transition name="component-fade" mode="out-in">
                 <component
                     :is="selectedComponent"
-                    :item="item"
-                    :overviewData="overviewData"
+                    :course="course"
+                    :Overview="Overview"
                     >
                 </component>
             </transition>
             </div>
         </div>
+        <!-- <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 299}" :el="'#mainpage'"></vue-canvas-nest> -->
     </div>
 </template>
 
@@ -76,62 +77,120 @@ import Concept from './Concept.vue'
 import Outcomes from './Outcomes.vue'
 import Skills from './Skills.vue'
 import Tools from './Tools.vue'
-import axios from 'axios'
+// import vueCanvasNest from 'vue-canvas-nest'
+// import axios from 'axios'
 
 export default {
-  props: ['item', 'selectedstage'],
+  props: ['course', 'selectedarea', 'selectedcourse', 'selectedstage', 'Overviewuid', 'username'],
   components: {
     appCourse: Course,
     appConcept: Concept,
     appOutcomes: Outcomes,
     appSkills: Skills,
-    appTools: Tools
+    appTools: Tools,
+    Overviewuid: ''
+    // vueCanvasNest
   },
   data: () => {
     return {
       selectedComponent: 'appCourse',
+      Overview: [],
       info: null
     }
   },
-  created (selectedstage) {
-    axios.get(`./../../demoData/stage${selectedstage}/overview.json`)
-      .then(res => {
-        this.$store.commit('stage/setStageData', res)
-        console.log(res)
-      })
-      .catch(error => console.log(error))
+  created () {
+    console.log(this.Overviewuid)
+    const axios = require('axios')
+    // axios({
+    //   url: 'http://192.168.76.37:1323/id?learning_area=' + this.selectedarea + '&subject=' + this.selectedcourse + '&stage=' + this.selectedstage + '&object=Overview',
+    //   methods: 'get'
+    // }).then((res) => {
+    //   this.Overviewuid = res.data[0]
+    //   console.log(this.Overviewuid)
+    // })
+    axios({
+      // url: 'http://localhost:1330/graphql',
+      url: 'http://192.168.76.37:1323/gql',
+      method: 'post',
+      data: {
+        query: `{
+          Overview {
+            concepts {
+              name
+              description
+            }
+            inquiry_skills {
+              name
+              skills {
+                skill
+              }
+            }
+            tools {
+              name
+              examples
+            }
+          }
+        }`,
+        variables: {
+          objid: this.Overviewuid
+        }
+      }
+    }).then((result) => {
+      // this.Overview = result.data.data.overview
+      console.log(result.data.data.Overview)
+      this.Overview = result.data.data.Overview
+    }).catch((error) => {
+      // handle error
+      console.log(error)
+    })
+  },
+  mounted () {
+    // const axios = require('axios')
+    // // axios({
+    // //   url: 'http://192.168.76.37:1323/id?learning_area=' + this.selectedarea + '&subject=' + this.selectedcourse + '&stage=' + this.selectedstage + '&object=Overview',
+    // //   methods: 'get'
+    // // }).then((res) => {
+    // //   this.Overviewuid = res.data[0]
+    // //   console.log(this.Overviewuid)
+    // // })
+    // axios({
+    //   // url: 'http://localhost:1330/graphql',
+    //   url: 'http://192.168.76.37:1323/gql',
+    //   method: 'post',
+    //   data: {
+    //     query: `{
+    //       Overview {
+    //         concepts {
+    //           name
+    //         }
+    //         inquiry_skills {
+    //           name
+    //         }
+    //         tools {
+    //           name
+    //         }
+    //       }
+    //     }`,
+    //     variables: {
+    //       objid: this.Overviewuid
+    //     }
+    //   }
+    // }).then((result) => {
+    //   // this.Overview = result.data.data.overview
+    //   console.log(result)
+    // }).catch((error) => {
+    //   // handle error
+    //   console.log(error)
+    // })
   }
 }
 </script>
 
 <style scoped>
-.q-btn {
- border-radius: 0
-}
-.coursedetail {
-    margin: 100px 200px
-}
-h5 {
-    color: #4527a0
-}
 @media (min-width: 1200px) {
     .col-zdlg-2-5 {
         float:left;
         width:20%;
     }
-}
-.component-fade-enter-active, .component-fade-leave-active {
-  transition: opacity 1s ease;
-}
-.component-fade-enter, .component-fade-leave-to {
-  opacity: 0;
-}
-.courseinfo {
-    text-align: justify
-}
-.right-btn{
-    position:fixed;
-    bottom: -4px;
-    right: 10px
 }
 </style>

@@ -9,7 +9,8 @@ module.exports = function (ctx) {
       'particles',
       'vuelidate',
       'grid',
-      'before-each'
+      'before-each',
+      'authentication'
     ],
     css: [
       'app.styl'
@@ -28,7 +29,7 @@ module.exports = function (ctx) {
     supportIE: false,
     build: {
       scopeHoisting: true,
-      // vueRouterMode: 'history',
+      vueRouterMode: 'history',
       // vueCompiler: true,
       // gzip: true,
       // analyze: true,
@@ -52,6 +53,7 @@ module.exports = function (ctx) {
       components: [
         'QLayout',
         'QLayoutHeader',
+        'QLayoutFooter',
         'QLayoutDrawer',
         'QPageContainer',
         'QPage',
@@ -74,6 +76,7 @@ module.exports = function (ctx) {
         'QSelect',
         'QField',
         'QChipsInput',
+        'QAutocomplete',
         'QCheckbox',
         'QPopover',
         'QItemSeparator',
@@ -82,15 +85,36 @@ module.exports = function (ctx) {
         'QTooltip',
         'QSearch',
         'QBtnDropdown',
-        'QParallax'
+        'QParallax',
+        'QSpinner',
+        'QSpinnerAudio',
+        'QFab',
+        'QFabAction',
+        'QInnerLoading',
+        'QSpinnerGears',
+        'QBreadcrumbs',
+        'QBreadcrumbsEl',
+        'QDatetimePicker',
+        'QDatetime',
+        'QPagination',
+        'QTable',
+        'QTh',
+        'QTr',
+        'QTd',
+        'QTableColumns',
+        'QBtnGroup',
+        'QPageSticky'
       ],
       directives: [
         'Ripple',
-        'CloseOverlay'
+        'CloseOverlay',
+        'BackToTop'
       ],
       // Quasar plugins
       plugins: [
-        'Notify'
+        'Notify',
+        'Dialog',
+        'Loading'
       ],
       iconSet: 'fontawesome'
       // i18n: 'de' // Quasar language

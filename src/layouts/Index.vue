@@ -1,36 +1,46 @@
 <template>
-  <q-page class="flex flex-center">
-    <div class="row top">
-    <div class="col-6">
-        <h2>Title</h2>
-        <p>................</p>
-        <p>................................</p>
-        <div class="row">
-          <div class="col-6">
-            <q-btn color="deep-purple-9" text-color="white" label="Login" />
+  <!-- <q-page class="flex flex-center"> -->
+  <q-page id="landingpage">
+    <div>
+        <q-card class="row top" text-color="dark">
+          <div class="col-7" style="height:503px">
+            <q-card-title>
+              <h2>
+                <img src="../assets/logo-2.jpg">
+              </h2>
+            </q-card-title>
+            <q-card-main>
+              <p>
+                You will find here below a number of short paragraphs on the topic Importance of Education of varying word lengths. We hope these paragraphs on Importance of Education will help students in completing their school assignments. These will also help children write and read out paragraphs in simple words and with small sentences. Students can select any paragraph on Importance of Education according to their particular requirement.
+              </p>
+              <p>
+                You will find here below a number of short paragraphs on the topic Importance of Education of varying word lengths. We hope these paragraphs on Importance of Education will help students in completing their school assignments. These will also help children write and read out paragraphs in simple words and with small sentences. Students can select any paragraph on Importance of Education according to their particular requirement.
+              </p>
+            </q-card-main>
+            <q-card-actions v-if="auth" class="home-btn-right">
+              <q-btn size="md" rounded outline class="log-btn btn" color="deep-purple-9" @click="$router.push({ name: 'dashboard', params: { username: user.name } })" >
+              <p>Go to my dashboard</p>
+              </q-btn>
+            </q-card-actions>
+            <q-card-actions v-else class="home-btn-right">
+              <q-btn size="md" class="log-btn btn" rounded outline color="deep-purple-9" @click="$router.push('/auth/login')" >
+                <img src="../assets/login-3.png">
+                <p>Login</p>
+              </q-btn>
+              <q-btn size="md" class="log-btn bc-btn" rounded  color="deep-purple-9" @click="$router.push('/auth/register')" >
+                <img src="../assets/singup.png">
+                <p>Signup</p>
+              </q-btn>
+            </q-card-actions>
           </div>
-          <div class="col-6">
-            <q-btn outline color="deep-purple-9" label="Signup" />
+          <div class="col-5">
+              <q-card-media class="img-position">
+                <img src="../assets/enducation.png" style="height:503px; width:503px"/>
+              </q-card-media>
           </div>
-        </div>
-      </div>
-    <div class="col-6">
-      <q-card inline class="q-ma-sm">
-      <q-card-media overlay-position="full">
-        <img src="../assets/dog.png">
-        <q-card-title>
-          <!--
-          Title
-          <span slot="subtitle">Subtitle</span>
-          -->
-        </q-card-title>
-      </q-card-media>
-    </q-card>
+        </q-card>
+    <!-- <vue-canvas-nest :config="{color:'0,0,255', opacity: 1, count: 199}" :el="'#landingpage'"></vue-canvas-nest> -->
     </div>
-    </div>
-    <!--
-    <img src="~assets/pig.png">
-    -->
   </q-page>
 </template>
 
@@ -38,19 +48,18 @@
 </style>
 
 <script>
+// import vueCanvasNest from 'vue-canvas-nest'
 
 export default {
-  name: 'PageIndex'
+  name: 'PageIndex',
+  // components: { vueCanvasNest }
+  computed: {
+    auth () {
+      return this.$store.state.user.auth
+    },
+    user () {
+      return this.$store.state.user.user
+    }
+  }
 }
 </script>
-<style scoped>
-img {
-
-}
-.q-card {
-  box-shadow: none
-}
-.top {
-  margin: 100px 200px 0 200px
-}
-</style>

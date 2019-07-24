@@ -1,15 +1,13 @@
 <template>
-<q-page class="card-postion">
-    <div class="row card" style="margin:100px auto; height:600px; width:1000px">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 background">
-            <div style="color:white">
-                <h5>Welcome to our website</h5>
-            </div>
+<q-page class="card-postion" id="signup">
+    <q-card class="row card" style="height:650px">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+          <img src="../../assets/register.png" alt="">
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 sign-up">
             <div>
-                <img src="../../assets/115.jpg" style="height:100px; width:100px">
-                <h6 style="margin: 10px 0">Please enter your information</h6>
+                <img src="../../assets/homelogo.png" style="height:100px; width:100px">
+                <h6 style="margin: 10px 0; color:gray"><b>Please enter your information</b></h6>
             </div>
             <div>
                 <q-field
@@ -25,29 +23,29 @@
                     @blur="$v.username.$touch"/>
                 </q-field>
                 <q-field
-                    :error="$v.email.$error"
+                    :error="$v.useremail.$error"
                     error-label="Please type a valid email"
                 >
                 <q-input
                     color="deep-purple-9"
-                    v-model="email"
+                    v-model="useremail"
                     type="email"
                     :before="[{icon: 'mail'}]"
                     float-label="Enter your email address"
-                    @blur="$v.email.$touch" />
+                    @blur="$v.useremail.$touch" />
                 </q-field>
                 <q-field
-                    :error="$v.password.$error"
+                    :error="$v.userpassword.$error"
                     error-label="Please type a valid password"
                 >
                 <q-input
                     id="password"
                     color="deep-purple-9"
-                    v-model="password"
+                    v-model="userpassword"
                     type="password"
                     :before="[{icon: 'fas fa-unlock'}]"
                     float-label="Set your password"
-                    @blur="$v.password.$touch" />
+                    @blur="$v.userpassword.$touch" />
                 </q-field>
                 <q-field
                     :error="$v.cpassword.$error"
@@ -61,24 +59,18 @@
                     float-label="Confirm your password"
                     @blur="$v.cpassword.$touch" />
                 </q-field>
-                <!--
-                <q-input
-                    color="deep-purple-9"
-                    v-model.trim="captcha"
-                    v-validator.required="{ title: 'Picture' }"
-                    type="text"
-                    :before="[{icon: 'fas fa-image'}]"
-                    float-label="Enter the picture Number" />
-                <div title="Press and get new picture" @click="getCaptcha">
-                    <div class="captcha" v-html="captchaTpl"></div>
-                </div>
-                -->
             </div>
-            <div style="text-align: center; margin-top:30px">
-                <q-btn @click="register" icon="fas fa-user-plus" label="SIGN UP" style="width: 50%" color="deep-purple-9" />
+            <div style="text-align: center; margin-top:20px">
+                <q-btn @click="register" :loading="loading" :percentage="percentage" icon="fas fa-user-plus" label="SIGN UP" style="width: 50%" color="deep-purple-9">
+                  <span slot="loading">
+                    <q-spinner class="on-left" />
+                    SIGN UP
+                  </span>
+                </q-btn>
             </div>
             </div>
-    </div>
+    </q-card>
+    <!-- <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 299}" :el="'#signup'"></vue-canvas-nest> -->
 </q-page>
 </template>
 <script>
@@ -86,55 +78,88 @@
 // import ls from '../../utils/localStorage'
 
 import { required, sameAs, email, alphaNum } from 'vuelidate/lib/validators'
+// import vueCanvasNest from 'vue-canvas-nest'
 
 export default {
+  // components: { vueCanvasNest },
   data () {
     return {
       username: '',
-      email: '',
-      password: '',
-      cpassword: ''
+      useremail: '',
+      userpassword: '',
+      cpassword: '',
+      loading: false,
+      percentage: 0
     }
   },
   validations: {
     username: { required, alphaNum },
-    email: { required, email },
-    password: { required },
+    useremail: { required, email },
+    userpassword: { required },
     cpassword: {
-      sameAsPassword: sameAs('password')
+      sameAsPassword: sameAs('userpassword')
     }
   },
   methods: {
-    //  Register
+    // Register
     // provide data to local storage
     register () {
-      // check picture
-      // if (this.captcha.toUpperCase() !== this.localCaptcha) {
-      //   this.getCaptcha()
-      // } else {
-      // check user
-      const user = {
-        name: this.username,
-        email: this.email,
-        password: this.password
-        // avatar: `https://api.adorable.io/avatars/200/${this.username}.png`
-      }
-      const localUser = this.$store.state.user.user
-      if (localUser) {
-        if (localUser.name === user.name) {
-          this.$q.notify({
-            message: `User is already exsiting`,
-            color: 'pink-5',
-            icon: 'fas fa-info-circle',
-            position: 'top'
-          })
-        } else {
-          this.login(user)
-        }
+      if (this.username === '' || this.useremail === '' || this.userpassword === '') {
+        this.$q.notify({
+          message: `Please fill all the empty box`,
+          color: 'pink-5',
+          icon: 'fas fa-info-circle',
+          position: 'top'
+        })
       } else {
-        this.login(user)
+        const user = {
+          name: this.username,
+          email: this.useremail,
+          password: this.userpassword
+        }
+        // const username = this.username
+        // const useremail = this.useremail
+        // const userpassword = this.userpassword
+        // const localUser = JSON.parse(localStorage.user)
+        const localUser = this.$store.state.user.user
+        this.loading = true
+        this.percentage = 0
+        const interval = setInterval(() => {
+          this.percentage += Math.floor(Math.random() * 8 + 10)
+          if (this.percentage >= 100) {
+            if (localUser) {
+              if (localUser.name === user.name) {
+                this.$q.notify({
+                  message: `User is already exsiting`,
+                  color: 'pink-5',
+                  icon: 'fas fa-info-circle',
+                  position: 'top'
+                })
+              } else {
+                // this.$store.dispatch('user/login', {username, useremail, userpassword})
+                // this.$q.notify({
+                //   message: `Thank you for signup`,
+                //   color: 'amber-5',
+                //   icon: 'far fa-laugh-wink',
+                //   position: 'top'
+                // })
+                this.login(user)
+              }
+            } else {
+              this.login(user)
+              // this.$store.dispatch('user/login', {username, useremail, userpassword})
+              // this.$q.notify({
+              //   message: `Thank you for signup`,
+              //   color: 'amber-5',
+              //   icon: 'far fa-laugh-wink',
+              //   position: 'top'
+              // })
+            }
+            clearInterval(interval)
+            this.loading = false
+          }
+        }, 700)
       }
-      // }
     },
     login (user) {
       this.$store.dispatch('user/login', user)
@@ -148,22 +173,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-.background{
-    border-radius: 9px 0 0 9px;
-    background-image: url("../../assets/register.png");
-    -webkit-filter: brightness(0.90);
-    filter: brightness(0.90);
-    background-repeat: no-repeat;
-    padding: 20px;
-}
-.card {
-    background-color: white;
-    border:1px solid rgb(185, 172, 202);
-    border-radius:10px;
-    box-shadow: 2px 2px 2px #888888;
-}
-.sign-up {
-     padding: 50px 50px 50px 10px;
-}
-</style>

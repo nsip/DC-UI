@@ -203,6 +203,8 @@ import pGrid from 'src/plugins/grid'
 
 import pBeforeeach from 'src/plugins/before-each'
 
+import pAuthentication from 'src/plugins/authentication'
+
 
 
 
@@ -227,7 +229,7 @@ const { app, store, router } = createApp()
 
 
 
-;[pMessage,pValidator,pParticles,pVuelidate,pGrid,pBeforeeach].forEach(plugin => {
+;[pMessage,pValidator,pParticles,pVuelidate,pGrid,pBeforeeach,pAuthentication].forEach(plugin => {
   plugin({
     app,
     router,
