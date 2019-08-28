@@ -73,11 +73,8 @@
   </div>
   </div>
     <hr class="line">
-    <!-- <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 199}" :el="'#search'"></vue-canvas-nest> -->
   </div>
     <div class="row list">
-      <!-- <q-input v-model="selectedstage" /> -->
-      <!-- {{resultData}} -->
         <transition-group
           appear
           enter-active-class="animated fadeInUp"
@@ -116,10 +113,9 @@
 
 <script>
 import { required } from 'vuelidate/lib/validators'
-import {areas, courses, stages, years} from '../../data'
+import {areas, courses, stages, years, baseUrl, auth} from '../../data'
 import { QSpinnerFacebook } from 'quasar'
-// import vueCanvasNest from 'vue-canvas-nest'
-// import axios from 'axios'
+import axios from 'axios'
 
 export default {
   // components: { vueCanvasNest },
@@ -141,7 +137,9 @@ export default {
       resultCotent: [],
       resultOverview: [],
       resultAll: [],
-      isshow: false
+      isshow: false,
+      baseUrl,
+      auth
     }
   },
   validations: {
@@ -155,17 +153,19 @@ export default {
       this.selectedarea = this.selectedcourse = this.selectedstage = this.selectedyear = ''
     },
     getReslut () {
-      const axios = require('axios')
+      // const axios = require('axios')
       axios({
-        url: 'http://192.168.76.37:1323/id?learning_area=' + this.selectedarea + '&subject=' + this.selectedcourse + '&stage=' + this.selectedstage + '&object=Content',
-        methods: 'get'
+        url: this.baseUrl + '/id?learning_area=' + this.selectedarea + '&subject=' + this.selectedcourse + '&stage=' + this.selectedstage + '&object=Content',
+        methods: 'get',
+        auth: this.auth
       }).then((res) => {
         this.Contentuid = res.data[0]
         console.log(this.Contentuid)
       })
       axios({
-        url: 'http://192.168.76.37:1323/id?learning_area=' + this.selectedarea + '&subject=' + this.selectedcourse + '&stage=' + this.selectedstage + '&object=Overview',
-        methods: 'get'
+        url: this.baseUrl + '/id?learning_area=' + this.selectedarea + '&subject=' + this.selectedcourse + '&stage=' + this.selectedstage + '&object=Overview',
+        methods: 'get',
+        auth: this.auth
       }).then((res) => {
         this.Overviewuid = res.data[0]
         console.log(this.Overviewuid)
@@ -183,45 +183,9 @@ export default {
         this.isshow = true
         this.$q.loading.hide()
         axios({
-          // url: 'http://localhost:1330/graphql',
-          url: 'http://192.168.76.37:1323/gql',
+          url: this.baseUrl + '/gql',
           method: 'post',
-          // data: {
-          //   query: `query ContentQuery($state: String!, $learning_area: String!, $subject: String!, $stage: String!) {
-          //         content(state: $state, learning_area: $learning_area, subject: $subject, stage: $stage){
-          //             courses {
-          //                 name
-          //                 outcomes {
-          //                     id
-          //                     description
-          //                 }
-          //                 lifeskills_outcomes
-          //                 inquiry_questions
-          //                 focus
-          //                 content_areas {
-          //                     name
-          //                 }
-          //             }
-          //         }
-          //         overview(state: $state, learning_area: $learning_area, subject: $subject, stage: $stage){
-          //             concepts {
-          //                 name
-          //             }
-          //             inquiry_skills {
-          //                 name
-          //             }
-          //             tools {
-          //                 name
-          //             }
-          //         }
-          //     }`,
-          //   variables: {
-          //     state: 'nsw',
-          //     learning_area: this.selectedarea,
-          //     subject: this.selectedcourse,
-          //     stage: this.selectedstage
-          //   }
-          // }
+          auth: this.auth,
           data: {
             query: `{
               Content {
@@ -244,7 +208,7 @@ export default {
               }
             }`,
             variables: {
-              objid: this.Contentuid
+              id: this.Contentuid
             }
           }
         }).then((result) => {
@@ -263,31 +227,6 @@ export default {
             // this.resultOverview = result.data.data.overview
           }
         })
-        // axios({
-        //   url: 'http://192.168.76.37:1323/gql',
-        //   method: 'post',
-        //   data: {
-        //     query: `{
-        //       Overview {
-        //         concepts {
-        //           name
-        //         }
-        //         inquiry_skills {
-        //           name
-        //         }
-        //         tools {
-        //           name
-        //         }
-        //       }
-        //     }`,
-        //     variables: {
-        //       objid: this.Overviewuid
-        //     }
-        //   }
-        // }).then((result) => {
-        //   // this.resultOverview = r.data.data.Overview
-        //   console.log(result)
-        // })
       }, 3000)
     }
   },

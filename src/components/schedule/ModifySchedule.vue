@@ -130,7 +130,7 @@ export default {
       })
       setTimeout(() => {
         this.$q.loading.hide()
-        this.$store.dispatch('user/postschedule', {submmitschdule, schduleId, lessonId, color, course, userid})
+        this.$store.dispatch('user/modifyschedule', {submmitschdule, schduleId, lessonId, color, course, userid})
       }, 3000)
     },
     remove () {

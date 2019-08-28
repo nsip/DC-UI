@@ -10,7 +10,8 @@ module.exports = function (ctx) {
       'vuelidate',
       'grid',
       'before-each',
-      'authentication'
+      'authentication',
+      'axios'
     ],
     css: [
       'app.styl'

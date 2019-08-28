@@ -67,18 +67,17 @@
             </transition>
             </div>
         </div>
-        <!-- <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 299}" :el="'#mainpage'"></vue-canvas-nest> -->
     </div>
 </template>
 
 <script>
+import {baseUrl, auth} from '../../data'
 import Course from './Course.vue'
 import Concept from './Concept.vue'
 import Outcomes from './Outcomes.vue'
 import Skills from './Skills.vue'
 import Tools from './Tools.vue'
-// import vueCanvasNest from 'vue-canvas-nest'
-// import axios from 'axios'
+import axios from 'axios'
 
 export default {
   props: ['course', 'selectedarea', 'selectedcourse', 'selectedstage', 'Overviewuid', 'username'],
@@ -89,29 +88,22 @@ export default {
     appSkills: Skills,
     appTools: Tools,
     Overviewuid: ''
-    // vueCanvasNest
   },
   data: () => {
     return {
       selectedComponent: 'appCourse',
       Overview: [],
-      info: null
+      info: null,
+      baseUrl,
+      auth
     }
   },
   created () {
-    console.log(this.Overviewuid)
-    const axios = require('axios')
-    // axios({
-    //   url: 'http://192.168.76.37:1323/id?learning_area=' + this.selectedarea + '&subject=' + this.selectedcourse + '&stage=' + this.selectedstage + '&object=Overview',
-    //   methods: 'get'
-    // }).then((res) => {
-    //   this.Overviewuid = res.data[0]
-    //   console.log(this.Overviewuid)
-    // })
+    // console.log(this.Overviewuid)
     axios({
-      // url: 'http://localhost:1330/graphql',
-      url: 'http://192.168.76.37:1323/gql',
+      url: this.baseUrl + '/gql',
       method: 'post',
+      auth: this.auth,
       data: {
         query: `{
           Overview {
@@ -132,7 +124,7 @@ export default {
           }
         }`,
         variables: {
-          objid: this.Overviewuid
+          id: this.Overviewuid
         }
       }
     }).then((result) => {
@@ -143,45 +135,6 @@ export default {
       // handle error
       console.log(error)
     })
-  },
-  mounted () {
-    // const axios = require('axios')
-    // // axios({
-    // //   url: 'http://192.168.76.37:1323/id?learning_area=' + this.selectedarea + '&subject=' + this.selectedcourse + '&stage=' + this.selectedstage + '&object=Overview',
-    // //   methods: 'get'
-    // // }).then((res) => {
-    // //   this.Overviewuid = res.data[0]
-    // //   console.log(this.Overviewuid)
-    // // })
-    // axios({
-    //   // url: 'http://localhost:1330/graphql',
-    //   url: 'http://192.168.76.37:1323/gql',
-    //   method: 'post',
-    //   data: {
-    //     query: `{
-    //       Overview {
-    //         concepts {
-    //           name
-    //         }
-    //         inquiry_skills {
-    //           name
-    //         }
-    //         tools {
-    //           name
-    //         }
-    //       }
-    //     }`,
-    //     variables: {
-    //       objid: this.Overviewuid
-    //     }
-    //   }
-    // }).then((result) => {
-    //   // this.Overview = result.data.data.overview
-    //   console.log(result)
-    // }).catch((error) => {
-    //   // handle error
-    //   console.log(error)
-    // })
   }
 }
 </script>

@@ -121,3 +121,11 @@ export let years = [
     value: 12
   }
 ]
+// api url
+export let baseUrl = 'http://192.168.78.15:1323/api/v0.1.0'
+
+// api auth
+export let auth = {
+  username: 'user',
+  password: 'user'
+}

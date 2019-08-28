@@ -205,6 +205,7 @@ import pBeforeeach from 'src/plugins/before-each'
 
 import pAuthentication from 'src/plugins/authentication'
 
+import pAxios from 'src/plugins/axios'
 
 
 
@@ -215,6 +216,13 @@ import pAuthentication from 'src/plugins/authentication'
 
 
 
+
+Vue.config.devtools = true
+Vue.config.productionTip = false
+
+
+
+console.info('[Quasar] Running SPA with MAT theme.')
 
 
 
@@ -223,7 +231,7 @@ const { app, store, router } = createApp()
 
 
 
-;[pMessage,pValidator,pParticles,pVuelidate,pGrid,pBeforeeach,pAuthentication].forEach(plugin => {
+;[pMessage,pValidator,pParticles,pVuelidate,pGrid,pBeforeeach,pAuthentication,pAxios].forEach(plugin => {
   plugin({
     app,
     router,

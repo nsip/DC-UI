@@ -36,6 +36,9 @@ export default {
   props: ['lessonschdule', 'username', 'coursetime'],
   components: {
     CalendarMonth
+  },
+  created () {
+    console.log(this.lessonschdule)
   }
 }
 </script>

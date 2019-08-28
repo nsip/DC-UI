@@ -140,6 +140,11 @@ export default {
     for (var i = 0; i < this.j; i++) {
       this.lessonlist[i].description = this.lesson.thedescription
       this.lessonlist[i].color = this.seletedcolor
+      // this.lessonlist[i].durationDays = 1
+      // this.lessonlist[i].timeSpansOvernight = true
+      // this.lessonlist[i].durationMinutes = 'PT1440M'
+      // this.lessonlist[i].numberOfOverlaps = 0
+      // this.lessonlist[i].overlapIteration = 1
     }
   },
   methods: {
@@ -152,7 +157,7 @@ export default {
         delete a[i].url
         this.schdule.push(a[i])
       }
-      console.log(this.schdule)
+      // console.log(this.schdule)
       for (let i = 0; i < this.schdule.length; i++) {
         // console.log(submmitschdule[i] + i)
         if (this.schdule[i].end.dateTime === '' || this.schdule[i].start.dateTime === '') {
@@ -180,6 +185,7 @@ export default {
         })
         setTimeout(() => {
           this.$q.loading.hide()
+          console.log(submmitschdule)
           this.$store.dispatch('user/postschedule', {submmitschdule, lessonId, color, course, userid})
         }, 3000)
       }
