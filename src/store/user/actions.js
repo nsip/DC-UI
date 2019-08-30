@@ -170,6 +170,9 @@ export function modifyschedule ({commit, state}, {modifyschdule, lessonId, color
     delete i.hasNext
     delete i.hasPrev
     delete i.slot
+    delete i.end.dateObject
+    delete i.start.dateObject
+    delete i.allowEditing
   }
   axios({
     url: baseUrl + '/pub?dfltRoot=schedule',
