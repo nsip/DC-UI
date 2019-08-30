@@ -99,7 +99,7 @@ export default {
     }
   },
   created () {
-    console.log(this.scheduleId)
+    // console.log(this.scheduleId)
     console.log(this.schedule)
     this.title = this.schedule.thecourse
     this.localtimesheet = this.schedule.lessontimesheet
@@ -116,7 +116,7 @@ export default {
   },
   methods: {
     save () {
-      const submmitschdule = this.localtimesheet
+      const modifyschdule = this.localtimesheet
       const lessonId = this.schedule.lessonId
       const color = this.schedule.thecolor
       const course = this.schedule.thecourse
@@ -130,8 +130,12 @@ export default {
       })
       setTimeout(() => {
         this.$q.loading.hide()
-        this.$store.dispatch('user/modifyschedule', {submmitschdule, schduleId, lessonId, color, course, userid})
+        this.$store.dispatch('user/modifyschedule', {modifyschdule, schduleId, lessonId, color, course, userid})
       }, 3000)
+      // console.log(modifyschdule)
+      // for (let i of modifyschdule) {
+      //   console.log(i)
+      // }
     },
     remove () {
       const index = this.scheduleId

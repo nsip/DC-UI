@@ -99,7 +99,7 @@ export function deleteLesson ({commit, state}, payload) {
     method: 'delete'
   })
 }
-// create or modify schedule for lessson
+// create schedule for lessson
 export function postschedule ({commit, state}, {submmitschdule, lessonId, color, course, userid, schduleId}) {
   if (schduleId === undefined) {
     var d = new Date().getTime()
@@ -157,21 +157,34 @@ export function postschedule ({commit, state}, {submmitschdule, lessonId, color,
   // }
   this.$router.push({ name: 'dashboard', params: {username: userid} })
 }
-export function modifyschedule ({commit, state}, {submmitschdule, lessonId, color, course, userid, schduleId}) {
+export function modifyschedule ({commit, state}, {modifyschdule, lessonId, color, course, userid, schduleId}) {
+  for (let i of modifyschdule) {
+    delete i.durationMinutes
+    delete i.id
+    delete i.numberOfOverlaps
+    delete i.overlapIteration
+    delete i.durationDays
+    delete i.timeSpansOvernight
+    delete i.timeSpansMultipleDays
+    delete i.daysFromStart
+    delete i.hasNext
+    delete i.hasPrev
+    delete i.slot
+  }
   axios({
     url: baseUrl + '/pub?dfltRoot=schedule',
     method: 'post',
     auth: auth,
     data: {
       scheduleId: schduleId,
-      lessontimesheet: submmitschdule,
+      lessontimesheet: modifyschdule,
       lessonId: lessonId,
       userId: userid,
       thecolor: color,
       thecourse: course
     }
   })
-  console.log(submmitschdule)
+  console.log(modifyschdule)
   this.$router.push({ name: 'dashboard', params: {username: userid} })
 }
 // delete schedule
