@@ -46,27 +46,27 @@ export let stages = [
     value: 'es'
   },
   {
-    label: 'Satge 1',
+    label: 'Stage 1',
     value: '1'
   },
   {
-    label: 'Satge 2',
+    label: 'Stage 2',
     value: '2'
   },
   {
-    label: 'Satge 3',
+    label: 'Stage 3',
     value: '3'
   },
   {
-    label: 'Satge 4',
+    label: 'Stage 4',
     value: '4'
   },
   {
-    label: 'Satge 5',
+    label: 'Stage 5',
     value: '5'
   },
   {
-    label: 'Satge 6',
+    label: 'Stage 6',
     value: '6'
   }
 ]
