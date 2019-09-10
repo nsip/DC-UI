@@ -61,6 +61,8 @@
 import CourseList from './CourseList.vue'
 import Setting from './Setting.vue'
 import CourseCalender from './CourseCalender.vue'
+import {baseUrl, auth} from '../../data'
+import axios from 'axios'
 // import vueCanvasNest from 'vue-canvas-nest'
 // import { CalendarMonth } from 'quasar-calendar'
 
@@ -82,7 +84,9 @@ export default {
       coursetime: [],
       lessonschdule: [],
       lessonArray: [],
-      lessonsObject: undefined
+      lessonsObject: undefined,
+      baseUrl,
+      auth
     }
   },
   // mounted () {
@@ -97,10 +101,11 @@ export default {
     }
   },
   created () {
-    const axios = require('axios')
+    // const axios = require('axios')
     axios({
-      url: 'http://192.168.76.37:1323/id?userId=' + this.username + '&object=lesson',
-      method: 'get'
+      url: this.baseUrl + '/id?userId=' + this.username + '&object=lesson',
+      method: 'get',
+      auth: this.auth
     }).then((res) => {
       // console.log(res)
       if (res.data.length === 0) {
@@ -109,8 +114,9 @@ export default {
         for (let a of res.data) {
           // console.log(a)
           axios({
-            url: 'http://192.168.76.37:1323/gql',
+            url: this.baseUrl + '/gql',
             method: 'post',
+            auth: this.auth,
             data: {
               query: `query {
                 lesson {
@@ -142,7 +148,7 @@ export default {
                 }
               }`,
               variables: {
-                objid: a
+                id: a
               }
             }
           }).then((result) => {
@@ -154,15 +160,18 @@ export default {
         }
       }
     })
+    // get schedule
     axios({
-      url: 'http://192.168.76.37:1323/id?userId=' + this.username + '&object=schedule',
-      method: 'get'
+      url: this.baseUrl + '/id?userId=' + this.username + '&object=schedule',
+      method: 'get',
+      auth: this.auth
     }).then((r) => {
       for (let i of r.data) {
         // console.log(i)
         axios({
-          url: 'http://192.168.76.37:1323/gql',
+          url: this.baseUrl + '/gql',
           method: 'post',
+          auth: this.auth,
           data: {
             query: `query {
               schedule{
@@ -185,7 +194,7 @@ export default {
               }
             }`,
             variables: {
-              objid: i
+              id: i
             }
           }
         }).then((res) => {
@@ -194,7 +203,7 @@ export default {
           this.wholeSchedule.push(res.data.data.schedule)
           timesheet.push(res.data.data.schedule)
           for (let j of timesheet) {
-            console.log(j)
+            // console.log(j)
             for (let b = 0; b < j.lessontimesheet.length; b++) {
               this.coursetime.push(j.lessontimesheet[b])
             }
@@ -202,41 +211,12 @@ export default {
           for (let c = 0; c < this.coursetime.length; c++) {
             this.coursetime[c].id = c
           }
-          console.log(this.coursetime)
+          // console.log(this.coursetime)
         })
         this.wholeSchedule = this.lessonschdule
+        console.log(this.lessonschdule)
       }
     })
-    // console.log(this.wholeSchedule)
-    // this.wholelessons = JSON.parse(localStorage.lessons)
-    // for (let i of this.wholelessons) {
-    //   if (i.userId === this.username) {
-    //     this.lessons.push(i)
-    //   }
-    // }
-    // this.lessons = this.$store.state.user.lessons
-    // for (let i of this.wholelessons) {
-    //   if (i.userId === this.username) {
-    //     this.lessons.push(i)
-    //   }
-    // }
-    // this.wholeschdule = JSON.parse(localStorage.lessonschdule)
-    // for (let a of this.wholeschdule) {
-    //   if (a.userId === this.username) {
-    //     this.lessonschdule.push(a)
-    //   }
-    // }
-    // this.wholeSchedule = this.lessonschdule
-    // console.log(this.lessonschdule)
-    // for (let j of this.lessonschdule) {
-    //   for (let b = 0; b < j.lessontimesheet.length; b++) {
-    //     this.coursetime.push(j.lessontimesheet[b])
-    //   }
-    // }
-    // for (let c = 0; c < this.coursetime.length; c++) {
-    //   this.coursetime[c].id = c
-    // }
-    // console.log(this.coursetime)
   },
   methods: {
     deleteLesson (index) {

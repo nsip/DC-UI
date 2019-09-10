@@ -60,19 +60,9 @@
                     </div>
                     </div>
                 </div>
-                    <!-- <q-select
-                            class="select"
-                            stack-label="Select the learning area"
-                            color="white"
-                            inverted-light
-                            separator
-                            v-model="selectedteacher"
-                            :options="teachers"
-                      /> -->
         </div>
         <hr class="line">
-        <!-- <vue-canvas-nest :config="{color:'49,27,146', opacity: 1, count: 199}" :el="'#summary'"></vue-canvas-nest> -->
-      </div>
+        </div>
         <div class="summary row list">
         <transition-group
           appear
@@ -125,33 +115,27 @@
             </q-card>
         </transition-group>
         </div>
-        <!-- <q-inner-loading :visible="visible">
-            <q-spinner-hourglass size="50px" color="primary" />
-        </q-inner-loading> -->
-        <!-- <vueCanvasNest :config="{color:'0,0,255', count: 199, opacity: 1, zIndex: -10}" :el="'#list'"></vueCanvasNest> -->
-    </q-page>
+      </q-page>
 </template>
 
 <script>
-import {areas, courses, stages} from '../../data'
+import {areas, courses, stages, baseUrl, auth} from '../../data'
 import { required } from 'vuelidate/lib/validators'
-// import vueCanvasNest from 'vue-canvas-nest'
 import { QSpinnerFacebook } from 'quasar'
-// import axios from 'axios'
+import axios from 'axios'
 
 export default {
-  // components: { vueCanvasNest },
   props: ['username'],
   data: () => {
     return {
       selectedarea: '',
       selectedcourse: '',
       selectedstage: '',
-      // teachers: [],
-      // selectedteacher: '',
       areas,
       courses,
       stages,
+      baseUrl,
+      auth,
       loading: false,
       isdisable: true,
       resultCotent: [],
@@ -160,7 +144,6 @@ export default {
       isshow: false,
       Contentid: undefined,
       Overviewid: undefined
-      // visible: false
     }
   },
   validations: {
@@ -181,7 +164,6 @@ export default {
       this.selectedarea = this.selectedcourse = this.selectedstage = ''
     },
     getReslut () {
-      const axios = require('axios')
       this.loading = true
       this.isshow = false
       this.$q.loading.show({
@@ -195,14 +177,16 @@ export default {
         this.isshow = true
         this.$q.loading.hide()
         axios({
-          url: 'http://192.168.76.37:1323/id?learning_area=' + this.selectedarea + '&subject=' + this.selectedcourse + '&stage=' + this.selectedstage + '&object=Content',
-          methods: 'get'
+          url: this.baseUrl + '/id?learning_area=' + this.selectedarea + '&subject=' + this.selectedcourse + '&stage=' + this.selectedstage + '&object=Content',
+          methods: 'get',
+          auth: this.auth
         }).then((res) => {
           this.Contentid = res.data[0]
           console.log(this.Contentid)
           axios({
-            url: 'http://192.168.76.37:1323/gql',
+            url: this.baseUrl + '/gql',
             method: 'post',
+            auth: this.auth,
             data: {
               query: `{
                 Content {
@@ -225,7 +209,7 @@ export default {
                 }
               }`,
               variables: {
-                objid: this.Contentid
+                id: this.Contentid
               }
             }
           }).then((r) => {
@@ -234,14 +218,16 @@ export default {
           })
         })
         axios({
-          url: 'http://192.168.76.37:1323/id?learning_area=' + this.selectedarea + '&subject=' + this.selectedcourse + '&stage=' + this.selectedstage + '&object=Overview',
-          methods: 'get'
+          url: this.baseUrl + '/id?learning_area=' + this.selectedarea + '&subject=' + this.selectedcourse + '&stage=' + this.selectedstage + '&object=Overview',
+          methods: 'get',
+          auth: this.auth
         }).then((res) => {
           console.log(res.data[0])
           this.Overviewid = res.data[0]
           axios({
-            url: 'http://192.168.76.37:1323/gql',
+            url: this.baseUrl + '/gql',
             method: 'post',
+            auth: this.auth,
             data: {
               query: `{
                 Overview {
@@ -262,7 +248,7 @@ export default {
                 }
               }`,
               variables: {
-                objid: this.Overviewid
+                id: this.Overviewid
               }
             }
           }).then((r) => {
@@ -271,153 +257,6 @@ export default {
           })
         })
       }, 3000)
-      // axios({
-      //   url: 'http://192.168.76.37:1323/gql',
-      //   methods: 'post',
-      //   data: {
-      //     query: `{
-      //       Content {
-      //         stage
-      //         subject
-      //         learning_area
-      //         courses {
-      //           name
-      //           outcomes {
-      //             id
-      //             description
-      //           }
-      //           lifeskills_outcomes
-      //           inquiry_questions
-      //           focus
-      //         }
-      //       }
-      //     }`,
-      //     variables: {
-      //       objid: this.Contentid
-      //     }
-      //   }
-      // }).then((result) => {
-      //   console.log(result)
-      // })
-      // axios({
-      //   url: 'http://192.168.76.37:1323/gql',
-      //   method: 'post',
-      //   data: {
-      //     query: `{
-      //       Overview {
-      //         concepts {
-      //           name
-      //           description
-      //         }
-      //         inquiry_skills {
-      //           name
-      //           skills {
-      //             skill
-      //           }
-      //         }
-      //         tools {
-      //           name
-      //           examples
-      //         }
-      //       }
-      //     }`,
-      //     variables: {
-      //       objid: this.Overviewid
-      //     }
-      //   }
-      // }).then((result) => {
-      //   console.log(result)
-      // this.loading = true
-      // this.isshow = false
-      // this.$q.loading.show({
-      //   spinner: QSpinnerFacebook,
-      //   spinnerColor: 'amber',
-      //   spinnerSize: 100,
-      //   message: 'Searching...'
-      // })
-      // this.visible = true
-      // setTimeout(() => {
-      //   this.loading = false
-      //   this.$q.loading.hide()
-      //   // this.visible = false
-      //   this.isshow = true
-      //   axios({
-      //     // url: 'http://localhost:1330/graphql',
-      //     url: 'http://192.168.76.37:1323/gql',
-      //     method: 'post',
-      //     // data: {
-      //     //   query: `query ContentQuery($state: String!, $learning_area: String!, $subject: String!, $stage: String!) {
-      //     //       content(state: $state, learning_area: $learning_area, subject: $subject, stage: $stage){
-      //     //           courses {
-      //     //               name
-      //     //               outcomes {
-      //     //                   id
-      //     //               }
-      //     //               inquiry_questions
-      //     //               focus
-      //     //               content_areas {
-      //     //                   name
-      //     //               }
-      //     //           }
-      //     //       }
-      //     //       overview(state: $state, learning_area: $learning_area, subject: $subject, stage: $stage){
-      //     //           concepts {
-      //     //               name
-      //     //           }
-      //     //           inquiry_skills {
-      //     //               name
-      //     //           }
-      //     //           tools {
-      //     //               name
-      //     //           }
-      //     //       }
-      //     //   }`,
-      //     //   variables: {
-      //     //     state: 'nsw',
-      //     //     learning_area: this.selectedarea,
-      //     //     subject: this.selectedcourse,
-      //     //     stage: this.selectedstage
-      //     //   }
-      //     // }
-      //     // data: {
-      //     //   query: `{
-      //     //     Content {
-      //     //       stage
-      //     //       subject
-      //     //       learning_area
-      //     //       courses {
-      //     //         name
-      //     //         outcomes {
-      //     //           id
-      //     //           description
-      //     //         }
-      //     //         lifeskills_outcomes
-      //     //         inquiry_questions
-      //     //         focus
-      //     //       }
-      //     //     }
-      //     //   }`,
-      //     //   variables: {
-      //     //     objid: this.Contentid
-      //     //   }
-      //     // }
-      //   }).then((result) => {
-      //     if (result.data.data.content === null) {
-      //       this.$q.notify({
-      //         color: 'amber',
-      //         textColor: 'white',
-      //         icon: 'fas fa-info',
-      //         message: 'The results do not exist, please click here to choose others',
-      //         position: 'bottom',
-      //         actions: [ { label: 'OK', handler: () => this.clearData() } ]
-      //       })
-      //     } else {
-      //       this.resultAll = result.data.data
-      //       this.resultCotent = result.data.data.content
-      //       this.resultOverview = result.data.data.overview
-      //     }
-      //   })
-      // }, 3000)
     }
   }
 }
