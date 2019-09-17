@@ -11,9 +11,9 @@ mkdir -p build/Linux64/DC-UI
 mkdir -p build/Mac/DC-UI
 mkdir -p build/Win64/DC-UI
 ./node_modules/.bin/quasar build
-rsync -av dist/spa-mta/* build/Linux64/DC-UI/
-rsync -av dist/spa-mta/* build/Mac/DC-UI/
-rsync -av dist/spa-mta/* build/Win64/DC-UI/
+rsync -av dist/spa-mat/* build/Linux64/DC-UI/
+rsync -av dist/spa-mat/* build/Mac/DC-UI/
+rsync -av dist/spa-mat/* build/Win64/DC-UI/
 
 echo "Building Linux64 binaries..."
 GOOS=linux
