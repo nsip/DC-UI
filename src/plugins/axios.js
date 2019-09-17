@@ -4,7 +4,8 @@ import axios from 'axios'
 export default ({ app, router, Vue }) => {
   // something to do
   Vue.prototype.$axios = axios.create({
-    baseURL: 'http://192.168.78.15:1323/api/v0.1.0',
+    // baseURL: 'http://192.168.78.15:1323/api/v0.1.0',
+    baseURL: N3BASEURL,
     withCredentials: true
   })
 }

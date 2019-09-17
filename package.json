@@ -1,8 +1,8 @@
 {
   "name": "education",
   "version": "1.0.13",
-  "description": "A Quasar Framework app",
-  "productName": "Quasar App",
+  "description": "NSIP: Digital Classroom",
+  "productName": "Digital Classroom",
   "cordovaId": "org.cordova.quasar.app",
   "author": "Angie Y <angiey1212@gmail.com>",
   "private": true,
