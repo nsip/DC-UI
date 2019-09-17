@@ -122,7 +122,8 @@ export let years = [
   }
 ]
 // api url
-export let baseUrl = 'http://192.168.78.15:1323/api/v0.1.0'
+// export let baseUrl = 'http://192.168.78.15:1323/api/v0.1.0'
+export let baseUrl = 'http://localhost:1323/api/v0.1.0'
 
 // api auth
 export let auth = {

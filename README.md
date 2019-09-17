@@ -14,3 +14,11 @@ $ npm install --only=dev
 start application:
 
 $ quasar dev
+
+
+
+
+* Display portnumber and url
+* build.sh to create zip
+* Mac, Linux, Windows (start linux 64)
+* baseURL 
