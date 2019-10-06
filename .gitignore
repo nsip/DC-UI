@@ -8,3 +8,4 @@ tmp
 node_modules
 .quasar/client-entry.js
 package-lock.json
+package.json

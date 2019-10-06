@@ -64,11 +64,12 @@ export let stages = [
   {
     label: 'Stage 5',
     value: '5'
-  },
-  {
-    label: 'Stage 6',
-    value: '6'
   }
+  // ,
+  // {
+  //   label: 'Stage 6',
+  //   value: '6'
+  // }
 ]
 
 export let years = [
@@ -124,6 +125,10 @@ export let years = [
 // api url
 // export let baseUrl = 'http://192.168.78.15:1323/api/v0.1.0'
 export let baseUrl = 'http://localhost:1323/api/v0.1.0'
+
+export let n3baseUrl = 'http://localhost:1323/n3'
+
+export let authHeader = {'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkZW1vIiwiY25hbWUiOiJteVNjaG9vbCIsInVuYW1lIjoibjNEZW1vIn0.VTD8C6pwbkQ32u-vvuHnxq3xijdwNTd54JAyt1iLF3I`}
 
 // api auth
 export let auth = {

@@ -207,7 +207,7 @@
                 <q-card-title class="relative-position q-ma-sm">
                   <!-- <i style="color:#ffc107; margin-right:10px" class="fas fa-link" /> -->
                   <img src="../../assets/link-resource.png" class="img-item link-logo">
-                  <b style="color:gray">Related Resouse Link</b>
+                  <b style="color:gray">Related Resource Link</b>
                   <q-card-separator style="margin-top: 15px; margin-bottom: 15px" />
                 </q-card-title>
                 <q-card-main class="link-list q-ma-xs" style="color:gray">

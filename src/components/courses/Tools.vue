@@ -2,7 +2,7 @@
     <div class="tool">
         <h6><b>Tools</b></h6>
         <div class="row">
-            <q-card inline class="q-ma-sm" v-for="tool in Overview.tools" :key="tool.name">
+            <q-card inline class="q-ma-sm" v-for="tool in resultOverview.tools" :key="tool.name">
                 <q-card-title>
                     <b>{{tool.name}}</b>
                 </q-card-title>
@@ -17,6 +17,6 @@
 </template>
 <script>
 export default {
-  props: ['Overview']
+  props: ['resultOverview']
 }
 </script>

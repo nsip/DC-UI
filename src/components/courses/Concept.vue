@@ -1,7 +1,7 @@
 <template>
     <div class="concept">
         <h6><b>Concepts</b></h6>
-        <div class="row" v-for="concept in Overview.concepts" :key="concept.name">
+        <div class="row" v-for="concept in resultOverview.concepts" :key="concept.name">
             <q-card inline class="q-ma-sm">
                 <q-card-title>
                     <b>{{concept.name}}</b>
@@ -16,6 +16,7 @@
 
 <script>
 export default {
-  props: ['Overview']
+  props: ['resultOverview']
+  // props: ['course']
 }
 </script>
