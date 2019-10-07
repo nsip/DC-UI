@@ -4,7 +4,7 @@
             <div class="scopesequnce">
                 <div class="row" style="height:350px">
                     <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-                        <h5 class="q-ma-lg" style="margin-top:150px; color:gray"><b>Choose Learning area, Subject, Stage and Year to see the course information</b></h5>
+                        <h5 class="q-ma-lg" style="margin-top:150px; color:gray"><b>Choose Learning area, Subject, Stage and Year to see the full course information</b></h5>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12" style="text-align:right">
                         <img src="../../assets/searchlogo.png" style="max-height:350px">

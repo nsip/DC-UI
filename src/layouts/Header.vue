@@ -1,10 +1,8 @@
 <template>
     <div class="header">
     <q-layout-header reveal @scroll="handleSCroll">
-      <q-toolbar
-        color="white"
-        :inverted="$q.theme === 'mat' & 'ios'"
-      >
+      <!-- <q-toolbar color="white" :inverted= "$q.theme === 'mat' & 'ios'"> -->
+      <q-toolbar color="white" :inverted='true'>        
         <q-btn
           flat
           dense
@@ -82,9 +80,10 @@
   </q-layout-footer> -->
     <q-layout-drawer
       v-model="leftDrawerOpen"
+      persistent="false"
       :content-class="['bg-white', 'q-pa-sm']"
       class="leftdrawer"
-      width="300"
+      :width='300'
     >
       <q-list
         no-border

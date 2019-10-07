@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { auth, baseUrl } from '../../data.js'
+import { auth, baseUrl, n3baseUrl, authHeader } from '../../data.js'
 
 // register & login
 export function login ({commit}, user) {
@@ -31,22 +31,11 @@ export function postlessons ({commit, state}, {submitLessons, area, course, subj
       return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16)
     })
     console.log(submitLessons, area, course, subject, stage, des, userid, lessonId)
-    // axios
-    //   .post(baseUrl + '/pub?idmark=lessonId&dfltRoot=lesson', {
-    //     lessonId: lessonId,
-    //     lessonList: submitLessons,
-    //     thearea: area,
-    //     thecourse: course,
-    //     thesubject: subject,
-    //     thestage: stage,
-    //     thedescription: des,
-    //     userId: userid
-    //   })
     axios({
-      url: baseUrl + '/pub?dfltRoot=lesson',
+      url: n3baseUrl + '/publish',
       method: 'post',
-      auth: auth,
-      data: {
+      headers: authHeader,
+      data: [{
         lessonId: lessonId,
         lessonList: submitLessons,
         thearea: area,
@@ -55,29 +44,34 @@ export function postlessons ({commit, state}, {submitLessons, area, course, subj
         thestage: stage,
         thedescription: des,
         userId: userid
-      }
+      }]
     })
+
   } else {
     for (let i = 0; i < submitLessons.length; i++) {
       if (submitLessons[i].start.dateTime === null || submitLessons[i].end.dateTime === null) {
         submitLessons[i].start.dateTime = ''
         submitLessons[i].end.dateTime = ''
       }
-      for (let j of submitLessons[i].url) {
-        console.log(j)
-        if (j.DisplayURL === null || j.Name === null || j.Snippet === null || j.URL === null) {
-          j.DisplayURL = ''
-          j.Name = ''
-          j.Snippet = ''
-          j.URL = ''
-        }
-      }
+      // 
+      // sadly, never passed through from editor...needs fixing!
+      // 
+      // for (let j of submitLessons[i].url) {
+      //   console.log(j)
+      //   if (j.DisplayURL === null || j.Name === null || j.Snippet === null || j.URL === null) {
+      //     j.DisplayURL = ''
+      //     j.Name = ''
+      //     j.Snippet = ''
+      //     j.URL = ''
+      //   }
+      // }
     }
+
     axios({
-      url: baseUrl + '/pub?dfltRoot=lesson',
+      url: n3baseUrl + '/publish',
       method: 'post',
-      auth: auth,
-      data: {
+      headers: authHeader,
+      data: [{
         lessonId: lessonId,
         lessonList: submitLessons,
         thearea: area,
@@ -86,8 +80,9 @@ export function postlessons ({commit, state}, {submitLessons, area, course, subj
         thestage: stage,
         thedescription: des,
         userId: userid
-      }
+      }]
     })
+
   }
   this.$router.push({ name: 'dashboard', params: {username: userid} })
 }

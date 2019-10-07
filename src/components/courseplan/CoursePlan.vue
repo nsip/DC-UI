@@ -14,7 +14,7 @@
             <div v-if="!isShow" class="col-3" style="padding-right:10px">
                 <app-couser-reminder
                   :course="course"
-                  :overview = "resultOverview"
+                  :resultOverview = "resultOverview"
                   :coursename="coursename"
                   :selectedarea="selectedarea"
                   :selectedcourse="selectedcourse"
@@ -129,7 +129,7 @@
             </div>
             <q-card class="col-9 l list-of-lesson">
                 <q-card-title class="relative-position q-ma-sm">
-                    <b style="color:gray">List of {{coursename}} Lesson</b>
+                    <b style="color:gray">List of {{coursename}} Lessons</b>
                      <q-btn
                         class="absolute"
                         icon="fas fa-plus"
@@ -155,7 +155,8 @@
                 </q-card-title>
                 <q-item-separator />
                 <q-card-main class="lesson-list">
-                        <draggable class="row" v-model="lessons" :options="{handle:'.my-handle'}" style="text-align:center; position: relative;">
+                        <!-- <draggable class="row" v-model="lessons" :options="{handle:'.my-handle'}" style="text-align:center; position: relative;"> -->
+                        <draggable class="row" v-model="lessons" style="text-align:center; position: relative;">
                             <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12" v-for="(lesson, index) in lessons" :key="index">
                                 <q-list class="q-ma-xs addLesson">
                                     <q-item>
@@ -255,6 +256,7 @@ export default {
   data () {
     return {
       lessonId: undefined,
+      descript: '',
       lessons: [
         {
           summary: '',
@@ -283,6 +285,7 @@ export default {
   },
   created () {
     this.coursename = this.course.name
+    this.descript = ''
     console.log(this.course)
     console.log(this.resultOverview)
   },
@@ -334,7 +337,7 @@ export default {
       const submitLessons = this.lessons
       const area = this.selectedarea
       const course = this.course.name
-      const subject = this.selectedcourse
+      const subject = this.selectedcourse.toLowerCase()
       const stage = this.selectedstage
       const userid = this.username
       this.$q.loading.show({
@@ -346,7 +349,7 @@ export default {
       setTimeout(() => {
         this.$q.loading.hide()
         this.$store.dispatch('user/postlessons', {submitLessons, area, course, subject, stage, des, userid})
-      }, 3000)
+      }, 500)
     },
     // delete lesson
     removeLesson (index) {

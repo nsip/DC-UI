@@ -4,7 +4,7 @@
             <div class="summary">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <h5 class="q-ma-lg" style="margin-top:150px; color:gray"><b>Choose Learning area, Subject and Stage to get the courses summary</b></h5>
+                        <h5 class="q-ma-lg" style="margin-top:150px; color:gray"><b>Choose Learning area, Subject and Stage to see the course summary</b></h5>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="text-align:center">
@@ -38,7 +38,7 @@
         </div>
         <div class="summary row list">
             <transition-group appear enter-active-class="animated fadeInRight" class="group">
-                <q-card inline class="q-ma-sm course-card" color="white" text-color="dark" v-for="course in resultCotent.courses" :key="course.name" v-show="isshow">
+                <q-card inline class="q-ma-sm course-card" color="white" text-color="dark" v-for="course in resultContent.courses" :key="course.name" v-show="isshow">
                     <q-card-title class="relative-position text-deep-purple-6">
                         <p><b>{{course.name}}</b></p>
                         <span slot="subtitle">10 weeks - 25 hours</span>
@@ -47,7 +47,7 @@
                                 <q-list link class="no-border">
                                     <q-item v-close-overlay>
                                         <q-item-main>
-                                            <router-link :to="{name:'courseplaner', params:{course, Overview, selectedarea, selectedcourse, selectedstage, username: username}}" class="link">Go to Lesson Planner</router-link>
+                                            <router-link :to="{name:'courseplaner', params:{course, Overview, resultOverview, selectedarea, selectedcourse, selectedstage, username: username}}" class="link">Go to Lesson Planner</router-link>
                                         </q-item-main>
                                     </q-item>
                                     <q-item v-close-overlay>
@@ -167,9 +167,10 @@ export default {
                     }
                 }).then((r) => {
                     // console.log(r);
-                    // assigne the full syallbus to each for now
+                    // assign the full syallbus to each for now
                     this.resultContent = r.data.data.q.Syllabus[0] //Content
                     this.Overview = r.data.data.q.Syllabus[0]
+                    this.resultOverview = r.data.data.q.Syllabus[0]
 
                 })
 
