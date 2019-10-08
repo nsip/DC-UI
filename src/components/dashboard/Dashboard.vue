@@ -94,8 +94,10 @@ export default {
         }
     },
     created() {
-        
+
+        // 
         // get my lesson sequences
+        // 
         axios({
             url: n3baseUrl + '/graphql',
             method: 'post',
@@ -122,66 +124,45 @@ export default {
             this.lessons = this.wholelessons
         })
 
-        // // get schedule
-        // axios({
-        //     url: this.baseUrl + '/id?userId=' + this.username + '&object=schedule',
-        //     method: 'get',
-        //     auth: this.auth
-        // }).then((r) => {
-        //     for (let i of r.data) {
-        //         // console.log(i)
-        //         axios({
-        //             url: this.baseUrl + '/gql',
-        //             method: 'post',
-        //             auth: this.auth,
-        //             data: {
-        //                 query: `query {
-        //       schedule{
-        //         scheduleId
-        //         userId
-        //         thecolor
-        //         lessonId
-        //         thecourse
-        //         lessontimesheet {
-        //           summary
-        //           color
-        //           start {
-        //             dateTime
-        //           }
-        //           end {
-        //             dateTime
-        //           }
-        //           description
-        //         }
-        //       }
-        //     }`,
-        //                 variables: {
-        //                     id: i
-        //                 }
-        //             }
-        //         }).then((res) => {
-        //             // console.log(res.data.data.schedule)
-        //             var timesheet = []
-        //             this.wholeSchedule.push(res.data.data.schedule)
-        //             timesheet.push(res.data.data.schedule)
-        //             for (let j of timesheet) {
-        //                 // console.log(j)
-        //                 for (let b = 0; b < j.lessontimesheet.length; b++) {
-        //                     this.coursetime.push(j.lessontimesheet[b])
-        //                 }
-        //             }
-        //             for (let c = 0; c < this.coursetime.length; c++) {
-        //                 this.coursetime[c].id = c
-        //             }
-        //             // console.log(this.coursetime)
-        //         })
-        //         this.wholeSchedule = this.lessonschdule
-        //         console.log(this.lessonschdule)
-        //     }
-        // })
-
-
-
+        // 
+        // get schedules for this user
+        // 
+        axios({
+            url: n3baseUrl + '/graphql',
+            method: 'post',
+            headers: authHeader,
+            data: {
+                query: scheduleQuery,
+                variables: {
+                    qspec: {
+                        queryType: "findByType",
+                        queryValue: "LessonSchedule",
+                        filters: [{
+                            eq: ["LessonSchedule", "userId", this.username]
+                        }]
+                    }
+                }
+            }
+        }).then((res) => {
+            // console.log(res)
+            for (let schedule of res.data.data.q.LessonSchedule) {
+                var timesheet = []
+                this.wholeSchedule.push(schedule)
+                timesheet.push(schedule)
+                for (let j of timesheet) {
+                    // console.log(j)
+                    for (let b = 0; b < j.lessontimesheet.length; b++) {
+                        this.coursetime.push(j.lessontimesheet[b])
+                    }
+                }
+                for (let c = 0; c < this.coursetime.length; c++) {
+                    this.coursetime[c].id = c
+                }
+                // console.log(this.coursetime)
+            }
+        })
+        this.wholeSchedule = this.lessonschdule
+        console.log(this.lessonschdule)
     },
     methods: {
         deleteLesson(index) {
@@ -219,6 +200,30 @@ query sequenceQuery($qspec: QueryInput!) {
           dateTime
         }
       }
+    }
+  }
+}
+`
+let scheduleQuery = `
+query scheduleQuery($qspec: QueryInput!) {
+  q(qspec: $qspec) {
+    LessonSchedule{
+      userId
+      lessonId
+      thecourse
+      thecolor
+      lessontimesheet {
+        summary
+        color
+        start {
+          dateTime
+        }
+        end {
+          dateTime
+        }
+        description
+      }
+      scheduleId
     }
   }
 }

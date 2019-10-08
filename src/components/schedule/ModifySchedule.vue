@@ -103,16 +103,6 @@ export default {
     console.log(this.schedule)
     this.title = this.schedule.thecourse
     this.localtimesheet = this.schedule.lessontimesheet
-    // this.localschdule = JSON.parse(localStorage.lessonschdule)
-    // console.log(this.localschdule)
-    // for (let i of this.localschdule) {
-    //   this.title = i.thecourse
-    //   if (i.schduleId === this.schduleId) {
-    //     console.log(i.lessontimesheet)
-    //     this.localtimesheet = i.lessontimesheet
-    //     break
-    //   }
-    // }
   },
   methods: {
     save () {
@@ -131,7 +121,7 @@ export default {
       setTimeout(() => {
         this.$q.loading.hide()
         this.$store.dispatch('user/modifyschedule', {modifyschdule, schduleId, lessonId, color, course, userid})
-      }, 3000)
+      }, 500)
       // console.log(modifyschdule)
       // for (let i of modifyschdule) {
       //   console.log(i)

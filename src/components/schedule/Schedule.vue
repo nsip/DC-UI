@@ -187,7 +187,7 @@ export default {
           this.$q.loading.hide()
           console.log(submmitschdule)
           this.$store.dispatch('user/postschedule', {submmitschdule, lessonId, color, course, userid})
-        }, 3000)
+        }, 500)
       }
     },
     clearData () {
