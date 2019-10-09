@@ -113,13 +113,13 @@
             <p>Please Login First</p>
           </div>
         </q-list-header>
-        <q-item @click.native="$router.push({ name: 'scopeandsequnce', params: { username: user.name } })">
-          <q-item-side><img src="../assets/sequece.png"></q-item-side>
-          <q-item-main label="Scope & Sequence" />
-        </q-item>
         <q-item @click.native="$router.push({ name: 'coursesummary', params: { username: user.name } })">
           <q-item-side><img src="../assets/summary.png"></q-item-side>
           <q-item-main label="Course Summary" />
+        </q-item>
+        <q-item @click.native="$router.push({ name: 'scopeandsequnce', params: { username: user.name } })">
+          <q-item-side><img src="../assets/sequece.png"></q-item-side>
+          <q-item-main label="Scope & Sequence" />
         </q-item>
         <q-item @click.native="$router.push({ name: 'dashboard', params: { username: user.name } })">
           <q-item-side><img src="../assets/crown-2.png"></q-item-side>
