@@ -121,7 +121,7 @@ export default {
       setTimeout(() => {
         this.$q.loading.hide()
         this.$store.dispatch('user/modifyschedule', {modifyschdule, schduleId, lessonId, color, course, userid})
-      }, 500)
+      }, 1500)
       // console.log(modifyschdule)
       // for (let i of modifyschdule) {
       //   console.log(i)
