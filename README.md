@@ -21,4 +21,12 @@ $ quasar dev
 * Display portnumber and url
 * build.sh to create zip
 * Mac, Linux, Windows (start linux 64)
-* baseURL 
+* baseURL
+
+
+
+= TODO =
+
+* Fix static to be static/ for assets, not /X
+  * https://quasar.dev/quasar-cli/cli-documentation/handling-assets
+  * 
