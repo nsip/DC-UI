@@ -349,7 +349,7 @@ export default {
       setTimeout(() => {
         this.$q.loading.hide()
         this.$store.dispatch('user/postlessons', {submitLessons, area, course, subject, stage, des, userid})
-      }, 1000)
+      }, 3000)
     },
     // delete lesson
     removeLesson (index) {
