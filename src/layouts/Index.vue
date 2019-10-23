@@ -11,10 +11,15 @@
             </q-card-title>
             <q-card-main>
               <p>
-                You will find here below a number of short paragraphs on the topic Importance of Education of varying word lengths. We hope these paragraphs on Importance of Education will help students in completing their school assignments. These will also help children write and read out paragraphs in simple words and with small sentences. Students can select any paragraph on Importance of Education according to their particular requirement.
+                Welcome.
+                This is a nias3 demostration application that consumes sylabus data from the nias3 infarstructure and allows users to build lessons based on available syallbus information.
+                Lessons can then be saved back into the nias3 data store to be triangulated against other school data such as classes, students, teaching-groups, attendance, assessment results etc.
               </p>
               <p>
-                You will find here below a number of short paragraphs on the topic Importance of Education of varying word lengths. We hope these paragraphs on Importance of Education will help students in completing their school assignments. These will also help children write and read out paragraphs in simple words and with small sentences. Students can select any paragraph on Importance of Education according to their particular requirement.
+                Note this demo version only contains machine-readable syllabuses for HSIE Geography and History, Stages 1-5.
+              </p>
+              <p>
+                The demo apps and infrastrucure have been created under the NSW Digital Classroom initiative.
               </p>
             </q-card-main>
             <q-card-actions v-if="auth" class="home-btn-right">

@@ -2,7 +2,7 @@
     <div id="mainpage">
         <div class="coursedetail">
             <q-page-sticky class="left-btn">
-                <q-btn push icon="lightbulb_outline" align="between" label="Go lesson plan" color="deep-purple-9" :to="{name:'courseplaner',params: {course, Overview, selectedarea, selectedcourse, selectedstage, username: username}}">
+                <q-btn push icon="lightbulb_outline" align="between" label="Go to lesson planner" color="deep-purple-9" :to="{name:'courseplaner',params: {course, resultOverview, selectedarea, selectedcourse, selectedstage, username: username}}">
             </q-btn>
             </q-page-sticky>
         <div class="row">
@@ -29,7 +29,7 @@
                     outline
                     color="deep-purple-9"
                     class="full-width"
-                    label="Concept"
+                    label="Concepts"
                     icon="far fa-file-alt"
                     @click='selectedComponent = "appConcept"' />
             </div>
@@ -61,7 +61,7 @@
                 <component
                     :is="selectedComponent"
                     :course="course"
-                    :Overview="Overview"
+                    :resultOverview="resultOverview"
                     >
                 </component>
             </transition>
@@ -80,7 +80,7 @@ import Tools from './Tools.vue'
 import axios from 'axios'
 
 export default {
-  props: ['course', 'selectedarea', 'selectedcourse', 'selectedstage', 'Overviewuid', 'username'],
+  props: ['course', 'selectedarea', 'selectedcourse', 'selectedstage', 'resultOverview','Overviewuid', 'username'],
   components: {
     appCourse: Course,
     appConcept: Concept,
@@ -99,42 +99,7 @@ export default {
     }
   },
   created () {
-    // console.log(this.Overviewuid)
-    axios({
-      url: this.baseUrl + '/gql',
-      method: 'post',
-      auth: this.auth,
-      data: {
-        query: `{
-          Overview {
-            concepts {
-              name
-              description
-            }
-            inquiry_skills {
-              name
-              skills {
-                skill
-              }
-            }
-            tools {
-              name
-              examples
-            }
-          }
-        }`,
-        variables: {
-          id: this.Overviewuid
-        }
-      }
-    }).then((result) => {
-      // this.Overview = result.data.data.overview
-      console.log(result.data.data.Overview)
-      this.Overview = result.data.data.Overview
-    }).catch((error) => {
-      // handle error
-      console.log(error)
-    })
+    // no web lookup required here, already done.
   }
 }
 </script>

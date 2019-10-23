@@ -14,7 +14,7 @@
             <div v-if="!isShow" class="col-3" style="padding-right:10px">
                 <app-couser-reminder
                   :course="course"
-                  :overview = "Overview"
+                  :resultOverview = "resultOverview"
                   :coursename="coursename"
                   :selectedarea="selectedarea"
                   :selectedcourse="selectedcourse"
@@ -129,7 +129,7 @@
             </div>
             <q-card class="col-9 l list-of-lesson">
                 <q-card-title class="relative-position q-ma-sm">
-                    <b style="color:gray">List of {{coursename}} Lesson</b>
+                    <b style="color:gray">List of {{coursename}} Lessons</b>
                      <q-btn
                         class="absolute"
                         icon="fas fa-plus"
@@ -155,7 +155,8 @@
                 </q-card-title>
                 <q-item-separator />
                 <q-card-main class="lesson-list">
-                        <draggable class="row" v-model="lessons" :options="{handle:'.my-handle'}" style="text-align:center; position: relative;">
+                        <!-- <draggable class="row" v-model="lessons" :options="{handle:'.my-handle'}" style="text-align:center; position: relative;"> -->
+                        <draggable class="row" v-model="lessons" style="text-align:center; position: relative;">
                             <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12" v-for="(lesson, index) in lessons" :key="index">
                                 <q-list class="q-ma-xs addLesson">
                                     <q-item>
@@ -197,7 +198,7 @@
                 </q-card-main>
                 <q-item-separator />
                 <q-card-title class="relative-position q-ma-sm">
-                  <b style="color:gray">Learning Arae: {{selectedarea}} | Subject: {{selectedcourse}} | Stage: {{selectedstage}}</b>
+                  <b style="color:gray">Learning Area: {{selectedarea}} | Subject: {{selectedcourse}} | Stage: {{selectedstage}}</b>
                   <div slot="right" class="row items-center">
                     <q-btn
                         flat
@@ -213,7 +214,7 @@
                 <q-card-title class="relative-position q-ma-sm">
                   <img src="../../assets/link-resource.png" class="img-item link-logo">
                   <!-- <i style="color:#ffc107; margin-right:10px" class="fas fa-link" /> -->
-                  <b style="color:gray">Related Resouse Link</b>
+                  <b style="color:gray">Resource Links</b>
                   <q-card-separator style="margin-top: 15px; margin-bottom: 15px" />
                 </q-card-title>
                 <q-card-main class="link-list q-ma-xs" style="color:gray">
@@ -233,7 +234,7 @@
             </q-card >
         </div>
         <div class="left-btn">
-            <q-btn push icon="fas fa-info-circle" align="between" label="Get lesson inforamtion" color="deep-purple-9" @click="isShow=!isShow"></q-btn>
+            <q-btn push icon="fas fa-info-circle" align="between" label="Syllabus Reminder" color="deep-purple-9" @click="isShow=!isShow"></q-btn>
         </div>
     </div>
 </template>
@@ -245,7 +246,7 @@ import draggable from 'vuedraggable'
 import { QSpinnerPie } from 'quasar'
 
 export default {
-  props: ['course', 'Overview', 'selectedarea', 'selectedcourse', 'selectedstage', 'username'],
+  props: ['course', 'resultOverview', 'selectedarea', 'selectedcourse', 'selectedstage', 'username'],
   components: {
     appCouserReminder: CouserRemainder,
     // appCouserEditor: CouserEditor,
@@ -255,6 +256,7 @@ export default {
   data () {
     return {
       lessonId: undefined,
+      descript: '',
       lessons: [
         {
           summary: '',
@@ -283,8 +285,9 @@ export default {
   },
   created () {
     this.coursename = this.course.name
+    this.descript = ''
     console.log(this.course)
-    console.log(this.Overview)
+    console.log(this.resultOverview)
   },
   watch: {
     lessons () {
@@ -334,7 +337,7 @@ export default {
       const submitLessons = this.lessons
       const area = this.selectedarea
       const course = this.course.name
-      const subject = this.selectedcourse
+      const subject = this.selectedcourse.toLowerCase()
       const stage = this.selectedstage
       const userid = this.username
       this.$q.loading.show({

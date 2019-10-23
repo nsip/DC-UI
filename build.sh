@@ -11,6 +11,7 @@ mkdir -p build/Linux64/DC-UI
 mkdir -p build/Mac/DC-UI
 mkdir -p build/Win64/DC-UI
 ./node_modules/.bin/quasar build
+rsync -av src/assets dist/spa-mat/
 rsync -av dist/spa-mat/* build/Linux64/DC-UI/
 rsync -av dist/spa-mat/* build/Mac/DC-UI/
 rsync -av dist/spa-mat/* build/Win64/DC-UI/

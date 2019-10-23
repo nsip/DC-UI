@@ -7,12 +7,11 @@
   "author": "Angie Y <angiey1212@gmail.com>",
   "private": true,
   "scripts": {
-    "lint": "eslint --ext .js,.vue src",
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
     "start": "./node_modules/.bin/quasar dev",
     "debug": "./node_modules/.bin/quasar dev",
-    "build": "./node_modules/.bin/quasar build",
+    "build": "./node_modules/.bin/quasar build && rsync -av src/assets dist/spa-mat/",
     "buildstatic": "go build -o dist/spa-mat/static tools/static.go",
     "update-version": "bash tools/update-version.sh"
   },
@@ -30,15 +29,6 @@
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
-    "eslint": "^4.18.2",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-friendly-formatter": "^4.0.1",
-    "eslint-loader": "^2.2.1",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.7.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "eslint-plugin-vue": "^4.3.0",
     "quasar-cli": "^0.17.26",
     "strip-ansi": "=3.0.1",
     "vue-particles": "^1.0.9"

@@ -1,7 +1,7 @@
 <template>
     <div class="skill">
         <h6><b>Skills</b></h6>
-            <q-list v-for="inquiry_skill in Overview.inquiry_skills" :key="inquiry_skill.name">
+            <q-list v-for="inquiry_skill in resultOverview.inquiry_skills" :key="inquiry_skill.name">
                 <q-list-header>
                         <b>{{inquiry_skill.name}}</b>
                     </q-list-header>
@@ -19,7 +19,7 @@
 </template>
 <script>
 export default {
-  props: ['Overview']
+  props: ['resultOverview']
 
 }
 </script>

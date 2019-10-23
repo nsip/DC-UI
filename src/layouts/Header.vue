@@ -1,10 +1,8 @@
 <template>
     <div class="header">
     <q-layout-header reveal @scroll="handleSCroll">
-      <q-toolbar
-        color="white"
-        :inverted="$q.theme === 'mat' & 'ios'"
-      >
+      <!-- <q-toolbar color="white" :inverted= "$q.theme === 'mat' & 'ios'"> -->
+      <q-toolbar color="white" :inverted='true'>        
         <q-btn
           flat
           dense
@@ -82,9 +80,10 @@
   </q-layout-footer> -->
     <q-layout-drawer
       v-model="leftDrawerOpen"
+      persistent="false"
       :content-class="['bg-white', 'q-pa-sm']"
       class="leftdrawer"
-      width="300"
+      :width='300'
     >
       <q-list
         no-border
@@ -114,13 +113,13 @@
             <p>Please Login First</p>
           </div>
         </q-list-header>
-        <q-item @click.native="$router.push({ name: 'scopeandsequnce', params: { username: user.name } })">
-          <q-item-side><img src="../assets/sequece.png"></q-item-side>
-          <q-item-main label="Scope & Sequence" />
-        </q-item>
         <q-item @click.native="$router.push({ name: 'coursesummary', params: { username: user.name } })">
           <q-item-side><img src="../assets/summary.png"></q-item-side>
           <q-item-main label="Course Summary" />
+        </q-item>
+        <q-item @click.native="$router.push({ name: 'scopeandsequnce', params: { username: user.name } })">
+          <q-item-side><img src="../assets/sequece.png"></q-item-side>
+          <q-item-main label="Scope & Sequence" />
         </q-item>
         <q-item @click.native="$router.push({ name: 'dashboard', params: { username: user.name } })">
           <q-item-side><img src="../assets/crown-2.png"></q-item-side>
