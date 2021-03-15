@@ -16,7 +16,7 @@
     "update-version": "bash tools/update-version.sh"
   },
   "dependencies": {
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "particles.js": "^2.0.0",
     "quasar-calendar": "^0.3.4",
     "semver": "^6.3.0",
